@@ -4,7 +4,7 @@ import android.content.Context
 import com.pavellukyanov.cinematic.BuildConfig
 import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitor
 import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitorImpl
-import com.pavellukyanov.cinematic.data.api.MovieService
+import com.pavellukyanov.cinematic.data.api.services.MovieService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -57,7 +57,7 @@ object NetworkModule {
     @Singleton
     fun provideNetworkMonitor(@ApplicationContext context: Context): NetworkMonitor = NetworkMonitorImpl(context)
 
-    //Api Services
+    //Provides Api Services
 
     @JvmStatic
     @Provides
