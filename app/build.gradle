@@ -66,13 +66,12 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rx_version"
     implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
 
-    // Networking
-    implementation "com.squareup.okhttp3:okhttp:4.9.1"
-    def retrofitVersion = "2.9.0"
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$converter_gson_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$interceptor_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rxjava_adapter_version"
+    implementation "com.squareup.retrofit2:converter-scalars:$converter_scalars_version"
 
     //Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
@@ -104,4 +103,7 @@ dependencies {
     //ViewPager2
     implementation "androidx.viewpager2:viewpager2:$view_pager_version"
 
+    //Paging Library
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+    implementation "androidx.paging:paging-rxjava2-ktx:$paging_version"
 }

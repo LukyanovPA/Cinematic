@@ -23,6 +23,16 @@ buildscript {
     //RxJava2
     ext.rx_version = '2.2.20'
     ext.rx_android_version = '2.1.1'
+    //Retrofit
+    ext {
+        retrofit_version = '2.9.0'
+        converter_gson_version = '2.9.0'
+        interceptor_version = '4.9.1'
+        rxjava_adapter_version = '2.6.4'
+        converter_scalars_version = '2.4.0'
+    }
+    //Paging Library
+    ext.paging_version = "2.1.2"
 
     repositories {
         google()
