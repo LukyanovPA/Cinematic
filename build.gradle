@@ -1,0 +1,53 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext.kotlin_version = "1.5.0"
+    ext.serialization_version = '1.0.1'
+    //Hilt
+    ext.hilt_version = '2.35.1'
+    //Navigation Components
+    ext.nav_version = '2.3.5'
+    //Room
+    ext.room_version = '2.3.0'
+    //Glide
+    ext.glide_version = '4.12.0'
+    //Worker
+    ext.worker_version = '2.6.0-beta01'
+    //ViewPager2
+    ext.view_pager_version = '1.1.0-alpha01'
+    //LiveData
+    ext.live_dada_version = '2.3.1'//AndroidX
+    ext.ktx_version = '1.5.0'
+    ext.ktx_fragment_version = '1.3.4'
+    ext.recycler_version = '1.2.1'
+    ext.cardview_version = '1.0.0'
+    //RxJava2
+    ext.rx_version = '2.2.20'
+    ext.rx_android_version = '2.1.1'
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.2.1"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        jcenter() // Warning: this repository is going to shut down soon
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
