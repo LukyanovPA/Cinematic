@@ -2,7 +2,6 @@ package com.pavellukyanov.cinematic.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.pavellukyanov.cinematic.data.api.pojo.MovieResponse
 import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovie
 
 @Entity(tableName = "popular_movie")
@@ -16,7 +15,7 @@ class PopularMovieEntity(
 
 fun PopularMovieEntity.toPopularMovie() = PopularMovie(
     id = id,
-    originalTitle = originalTitle,
+    title = originalTitle,
     posterPath = posterPath,
     releaseDate = releaseDate,
     voteAverage = voteAverage

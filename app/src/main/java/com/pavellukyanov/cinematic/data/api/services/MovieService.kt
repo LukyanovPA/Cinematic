@@ -13,5 +13,5 @@ interface MovieService {
     fun getPopularMovie(
         @Query("language") language: String = Language.LANGUAGE_RU,
         @Query("page") page: Int
-    ): Flowable<PopularMovieResponse>
+    ): Single<PopularMovieResponse>
 }

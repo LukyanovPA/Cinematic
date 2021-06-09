@@ -4,6 +4,7 @@ import android.content.Context
 import com.pavellukyanov.cinematic.BuildConfig
 import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitor
 import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitorImpl
+import com.pavellukyanov.cinematic.data.api.services.ConfigurationService
 import com.pavellukyanov.cinematic.data.api.services.MovieService
 import dagger.Module
 import dagger.Provides
@@ -64,4 +65,10 @@ object NetworkModule {
     @Singleton
     fun providePopularMovieApiService(retrofit: Retrofit): MovieService =
         retrofit.create(MovieService::class.java)
+
+    @JvmStatic
+    @Provides
+    @Singleton
+    fun provideConfigurationService(retrofit: Retrofit): ConfigurationService =
+        retrofit.create(ConfigurationService::class.java)
 }

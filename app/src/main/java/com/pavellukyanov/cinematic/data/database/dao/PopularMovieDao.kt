@@ -10,10 +10,10 @@ import io.reactivex.Single
 @Dao
 interface PopularMovieDao {
     @Query("SELECT * FROM popular_movie WHERE id = :id")
-    fun getMovie(id: Int): Flowable<PopularMovieEntity>
+    fun getMovie(id: Int): Single<PopularMovieEntity>
 
     @Query("SELECT * FROM popular_movie")
-    fun getAllMovies(): Flowable<List<PopularMovieEntity>>
+    fun getAllMovies(): Single<List<PopularMovieEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovie(photoEntity: PopularMovieEntity): Completable

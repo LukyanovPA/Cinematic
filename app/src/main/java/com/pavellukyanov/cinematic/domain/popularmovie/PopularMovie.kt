@@ -1,20 +1,21 @@
 package com.pavellukyanov.cinematic.domain.popularmovie
 
-import com.pavellukyanov.cinematic.data.api.pojo.MovieResponse
 import com.pavellukyanov.cinematic.data.database.entity.PopularMovieEntity
 
-class PopularMovie(
+data class PopularMovie(
     val id: Int,
-    val originalTitle: String,
+    val title: String,
     val posterPath: String,
-    var releaseDate : String,
-    var voteAverage : Double
+    val releaseDate : String?,
+    val voteAverage : Double
 )
 
-fun PopularMovie.toPopularMovieEntity() = PopularMovieEntity(
-    id = id,
-    originalTitle = originalTitle,
-    posterPath = posterPath,
-    releaseDate = releaseDate,
-    voteAverage = voteAverage
-)
+fun PopularMovie.toPopularMovieEntity() = releaseDate?.let {
+    PopularMovieEntity(
+        id = id,
+        originalTitle = title,
+        posterPath = posterPath,
+        releaseDate = it,
+        voteAverage = voteAverage
+    )
+}

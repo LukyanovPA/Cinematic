@@ -1,26 +1,33 @@
-package com.pavellukyanov.cinematic.data.repository
+package com.pavellukyanov.cinematic.data.repository.popularmovie
 
+import android.util.Log
 import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitor
-import com.pavellukyanov.cinematic.data.api.services.MovieService
 import com.pavellukyanov.cinematic.data.api.pojo.MovieResponse
+import com.pavellukyanov.cinematic.data.api.pojo.configuration.ConfigurationResponse
+import com.pavellukyanov.cinematic.data.api.pojo.setupMoviePoster
 import com.pavellukyanov.cinematic.data.api.pojo.toPopularMovie
+import com.pavellukyanov.cinematic.data.api.services.ConfigurationService
+import com.pavellukyanov.cinematic.data.api.services.MovieService
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
 import com.pavellukyanov.cinematic.data.database.entity.PopularMovieEntity
 import com.pavellukyanov.cinematic.data.database.entity.toPopularMovie
 import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovie
 import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovieRepo
 import com.pavellukyanov.cinematic.domain.popularmovie.toPopularMovieEntity
-import io.reactivex.Flowable
+import com.pavellukyanov.cinematic.utils.PosterSizeList
+import com.pavellukyanov.cinematic.utils.PosterSizes
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class PopularMovieRepoImpl @Inject constructor(
     private val api: MovieService,
+    private val config: ConfigurationService,
     private val networkMonitor: NetworkMonitor,
     private val database: MovieDatabase
 ) : PopularMovieRepo {
-    override fun getPopularMovie(page: Int): Flowable<List<PopularMovie>> {
-        return Flowable.just(networkMonitor.isNetworkAvailable())
+    override fun getPopularMovie(page: Int): Single<List<PopularMovie>> {
+        return Single.just(networkMonitor.isNetworkAvailable())
             .flatMap { isAvailable ->
                 if (!isAvailable) {
                     return@flatMap database.popularMovie().getAllMovies()
@@ -29,22 +36,33 @@ class PopularMovieRepoImpl @Inject constructor(
                         }
                 } else {
                     return@flatMap getPopularMovieInApi(page)
-                        .doOnNext {
+                        .doOnSuccess {
                             insertPopularMoviesInDatabase(it)
                         }
                 }
             }
     }
 
-    private fun getPopularMovieInApi(page: Int): Flowable<List<PopularMovie>> {
-        return api.getPopularMovie(page = page)
-            .subscribeOn(Schedulers.io())
-            .map { mappingPojoToDomain(it.results) }
+    private fun getPopularMovieInApi(page: Int): Single<List<PopularMovie>> {
+        return Single.zip(
+            api.getPopularMovie(page = page).subscribeOn(Schedulers.io()),
+            config.getConfiguration().subscribeOn(Schedulers.io())
+        ) { movies, config ->
+            mappingPojoToDomain(movies.results, config)
+        }
     }
 
-    private fun mappingPojoToDomain(listPopularMovieResponse: List<MovieResponse>): List<PopularMovie> {
+    private fun mappingPojoToDomain(
+        listPopularMovieResponse: List<MovieResponse>,
+        config: ConfigurationResponse
+    ): List<PopularMovie> {
         val mappingList = mutableListOf<PopularMovie>()
         listPopularMovieResponse.forEach {
+            Log.d("ttt", it.title)
+            it.setupMoviePoster(
+                config.images.posterSizes,
+                config.images.baseUrl
+            )
             mappingList.add(it.toPopularMovie())
         }
         return mappingList
@@ -60,10 +78,12 @@ class PopularMovieRepoImpl @Inject constructor(
 
     private fun insertPopularMoviesInDatabase(listPopularMovieResponse: List<PopularMovie>) {
         listPopularMovieResponse.forEach {
-            database.popularMovie()
-                .insertMovie(it.toPopularMovieEntity())
-                .subscribeOn(Schedulers.io())
-                .subscribe()
+            it.toPopularMovieEntity()?.let { it1 ->
+                database.popularMovie()
+                    .insertMovie(it1)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe()
+            }
         }
     }
 }
