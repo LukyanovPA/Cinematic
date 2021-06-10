@@ -14,8 +14,6 @@ import com.pavellukyanov.cinematic.data.database.entity.toPopularMovie
 import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovie
 import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovieRepo
 import com.pavellukyanov.cinematic.domain.popularmovie.toPopularMovieEntity
-import com.pavellukyanov.cinematic.utils.PosterSizeList
-import com.pavellukyanov.cinematic.utils.PosterSizes
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
