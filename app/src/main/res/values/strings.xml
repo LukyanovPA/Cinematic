@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Cinematic</string>
+    <string name="error_toast">Что-то пошло не так: %1s</string>
 </resources>

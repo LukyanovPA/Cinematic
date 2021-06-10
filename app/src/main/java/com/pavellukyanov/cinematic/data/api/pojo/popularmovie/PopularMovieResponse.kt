@@ -1,6 +1,7 @@
-package com.pavellukyanov.cinematic.data.api.pojo
+package com.pavellukyanov.cinematic.data.api.pojo.popularmovie
 
 import com.google.gson.annotations.SerializedName
+import com.pavellukyanov.cinematic.data.api.pojo.MovieResponse
 
 data class PopularMovieResponse(
     @SerializedName("page") var page : Int,
