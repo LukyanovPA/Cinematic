@@ -1,7 +1,7 @@
 package com.pavellukyanov.cinematic.data.api.pojo
 
 import com.google.gson.annotations.SerializedName
-import com.pavellukyanov.cinematic.data.database.entity.PopularMovieEntity
+import com.pavellukyanov.cinematic.data.database.entity.MovieEntity
 import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovie
 import com.pavellukyanov.cinematic.utils.PosterSizeList
 import com.pavellukyanov.cinematic.utils.PosterSizes
@@ -37,13 +37,3 @@ fun MovieResponse.toPopularMovie() = PopularMovie(
     releaseDate = releaseDate,
     voteAverage = voteAverage
 )
-
-fun MovieResponse.toPopularMovieEntity() = releaseDate?.let {
-    PopularMovieEntity(
-        id = id,
-        originalTitle = title,
-        posterPath = moviePoster,
-        releaseDate = it,
-        voteAverage = voteAverage
-    )
-}

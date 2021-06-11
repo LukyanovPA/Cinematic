@@ -4,8 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovie
 
-@Entity(tableName = "popular_movie")
-class PopularMovieEntity(
+@Entity(tableName = "movie")
+class MovieEntity(
     @PrimaryKey val id: Int,
     val originalTitle: String,
     val posterPath: String,
@@ -13,7 +13,7 @@ class PopularMovieEntity(
     var voteAverage: Double
 )
 
-fun PopularMovieEntity.toPopularMovie() = PopularMovie(
+fun MovieEntity.toPopularMovie() = PopularMovie(
     id = id,
     title = originalTitle,
     posterPath = posterPath,

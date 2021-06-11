@@ -1,17 +1,17 @@
 package com.pavellukyanov.cinematic.domain.popularmovie
 
-import com.pavellukyanov.cinematic.data.database.entity.PopularMovieEntity
+import com.pavellukyanov.cinematic.data.database.entity.MovieEntity
 
 data class PopularMovie(
     val id: Int,
-    val title: String,
+    var title: String,
     val posterPath: String,
     val releaseDate : String?,
     val voteAverage : Double
 )
 
 fun PopularMovie.toPopularMovieEntity() = releaseDate?.let {
-    PopularMovieEntity(
+    MovieEntity(
         id = id,
         originalTitle = title,
         posterPath = posterPath,
