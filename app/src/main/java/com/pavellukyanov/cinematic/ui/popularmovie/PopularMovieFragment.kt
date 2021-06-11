@@ -8,11 +8,14 @@ import androidx.fragment.app.viewModels
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentPopularMovieBinding
 import com.pavellukyanov.cinematic.domain.ResourceState
+import com.pavellukyanov.cinematic.domain.genre.Genre
 import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovie
-import com.pavellukyanov.cinematic.ui.popularmovie.adapters.PopularMovieAdapter
+import com.pavellukyanov.cinematic.ui.adapters.GenresListAdapter
+import com.pavellukyanov.cinematic.ui.adapters.MovieListAdapter
 import com.pavellukyanov.cinematic.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,45 +24,83 @@ class PopularMovieFragment : Fragment(R.layout.fragment_popular_movie) {
     private var _binding: FragmentPopularMovieBinding? = null
     private val binding get() = _binding!!
     private val viewModel: PopularMovieViewModel by viewModels()
-    private val popAdapter by lazy { PopularMovieAdapter(PopularMovieComparator) }
+    private val popAdapter by lazy { MovieListAdapter(PopularMovieComparator) }
+    private val genresAdapter by lazy { GenresListAdapter(listOf()) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentPopularMovieBinding.bind(view)
         initRecycler()
-        subscribePopularMovies()
+        subscribeViewModel()
     }
 
     private fun initRecycler() {
-        binding.recyPopularMovie.apply {
-            adapter = popAdapter
-            layoutManager = GridLayoutManager(context, Constants.POPULAR_GRID_COLUMN)
+        with(binding) {
+            recyPopularMovie.apply {
+                adapter = popAdapter
+                layoutManager = GridLayoutManager(context, Constants.POPULAR_GRID_COLUMN)
+            }
+            recyGenres.apply {
+                adapter = genresAdapter
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            }
         }
     }
 
-    private fun subscribePopularMovies() {
-        viewModel.getMovies().observe(viewLifecycleOwner, (this::onStateReceive))
+    private fun subscribeViewModel() {
+        viewModel.getMovies().observe(viewLifecycleOwner, (this::onStateReceivePopularMovie))
+        viewModel.getAllGenres().observe(viewLifecycleOwner, (this::onStateReceiveGenres))
     }
 
-    private fun onStateReceive(resourceState: ResourceState<PagingData<PopularMovie>>) {
+    private fun onStateReceivePopularMovie(resourceState: ResourceState<PagingData<PopularMovie>>) {
         when (resourceState) {
-            is ResourceState.Success -> handleSuccessState(resourceState.data)
-            is ResourceState.Loading -> handleLoadingState(true)
-            is ResourceState.Error -> handleErrorState(resourceState.error)
+            is ResourceState.Success -> handleSuccessStateMovies(resourceState.data)
+            is ResourceState.Loading -> handleLoadingStateMovies(true)
+            is ResourceState.Error -> handleErrorStateMovies(resourceState.error)
         }
     }
 
-    private fun handleSuccessState(data: PagingData<PopularMovie>) {
-        handleLoadingState(false)
+    private fun onStateReceiveGenres(resourceState: ResourceState<List<Genre>>) {
+        when (resourceState) {
+            is ResourceState.Success -> handleSuccessStateGenres(resourceState.data)
+            is ResourceState.Loading -> handleLoadingStateGenres(true)
+            is ResourceState.Error -> handleErrorStateGenres(resourceState.error)
+        }
+    }
+
+    private fun handleSuccessStateMovies(data: PagingData<PopularMovie>) {
+        handleLoadingStateMovies(false)
         popAdapter.submitData(lifecycle, data)
     }
 
-    private fun handleLoadingState(state: Boolean) {
+    private fun handleLoadingStateMovies(state: Boolean) {
 
     }
 
-    private fun handleErrorState(error: Throwable?) {
-        handleLoadingState(false)
+    private fun handleErrorStateMovies(error: Throwable?) {
+        handleLoadingStateMovies(false)
+        Toast.makeText(
+            requireContext(),
+            requireContext().getString(R.string.error_toast, error?.localizedMessage),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    private fun handleSuccessStateGenres(data: List<Genre>) {
+        handleLoadingStateMovies(false)
+        genresAdapter.apply {
+            addGenres(data)
+            notifyDataSetChanged()
+        }
+    }
+
+    private fun handleLoadingStateGenres(state: Boolean) {
+
+    }
+
+    private fun handleErrorStateGenres(error: Throwable?) {
+        handleLoadingStateGenres(false)
         Toast.makeText(
             requireContext(),
             requireContext().getString(R.string.error_toast, error?.localizedMessage),

@@ -3,7 +3,8 @@ package com.pavellukyanov.cinematic.core.di
 import android.content.Context
 import androidx.room.Room
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
-import com.pavellukyanov.cinematic.data.database.dao.PopularMovieDao
+import com.pavellukyanov.cinematic.data.database.dao.GenresDao
+import com.pavellukyanov.cinematic.data.database.dao.MovieDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,6 +31,10 @@ object DatabaseModule {
     // Provides Dao
 
     @Provides
-    fun providePopularMovie(database: MovieDatabase): PopularMovieDao =
-        database.popularMovie()
+    fun provideMovies(database: MovieDatabase): MovieDao =
+        database.movies()
+
+    @Provides
+    fun provideGenres(database: MovieDatabase): GenresDao =
+        database.genres()
 }

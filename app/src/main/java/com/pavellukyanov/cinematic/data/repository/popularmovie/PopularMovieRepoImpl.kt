@@ -9,7 +9,7 @@ import com.pavellukyanov.cinematic.data.api.pojo.toPopularMovie
 import com.pavellukyanov.cinematic.data.api.services.ConfigurationService
 import com.pavellukyanov.cinematic.data.api.services.MovieService
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
-import com.pavellukyanov.cinematic.data.database.entity.PopularMovieEntity
+import com.pavellukyanov.cinematic.data.database.entity.MovieEntity
 import com.pavellukyanov.cinematic.data.database.entity.toPopularMovie
 import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovie
 import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovieRepo
@@ -28,7 +28,7 @@ class PopularMovieRepoImpl @Inject constructor(
         return Single.just(networkMonitor.isNetworkAvailable())
             .flatMap { isAvailable ->
                 if (!isAvailable) {
-                    return@flatMap database.popularMovie().getAllMovies()
+                    return@flatMap database.movies().getAllMovies()
                         .map { result ->
                             mappingEntityToDomain(result)
                         }
@@ -66,9 +66,9 @@ class PopularMovieRepoImpl @Inject constructor(
         return mappingList
     }
 
-    private fun mappingEntityToDomain(listPopularMovieResponse: List<PopularMovieEntity>): List<PopularMovie> {
+    private fun mappingEntityToDomain(listMovieResponse: List<MovieEntity>): List<PopularMovie> {
         val mappingList = mutableListOf<PopularMovie>()
-        listPopularMovieResponse.forEach {
+        listMovieResponse.forEach {
             mappingList.add(it.toPopularMovie())
         }
         return mappingList
@@ -77,7 +77,7 @@ class PopularMovieRepoImpl @Inject constructor(
     private fun insertPopularMoviesInDatabase(listPopularMovieResponse: List<PopularMovie>) {
         listPopularMovieResponse.forEach {
             it.toPopularMovieEntity()?.let { it1 ->
-                database.popularMovie()
+                database.movies()
                     .insertMovie(it1)
                     .subscribeOn(Schedulers.io())
                     .subscribe()

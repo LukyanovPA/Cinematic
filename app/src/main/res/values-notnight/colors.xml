@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main color. -->
+    <color name="main_color">#12153D</color>
+    <color name="background_color">#DCDCDC</color>
+    <color name="genres_list_bg">#FFFFFF</color>
+    <color name="genres_list_text">#000000</color>
+
+</resources>

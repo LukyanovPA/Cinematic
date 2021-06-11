@@ -5,6 +5,7 @@ import com.pavellukyanov.cinematic.BuildConfig
 import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitor
 import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitorImpl
 import com.pavellukyanov.cinematic.data.api.services.ConfigurationService
+import com.pavellukyanov.cinematic.data.api.services.GenresService
 import com.pavellukyanov.cinematic.data.api.services.MovieService
 import dagger.Module
 import dagger.Provides
@@ -56,7 +57,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideNetworkMonitor(@ApplicationContext context: Context): NetworkMonitor = NetworkMonitorImpl(context)
+    fun provideNetworkMonitor(@ApplicationContext context: Context): NetworkMonitor =
+        NetworkMonitorImpl(context)
 
     //Provides Api Services
 
@@ -71,4 +73,10 @@ object NetworkModule {
     @Singleton
     fun provideConfigurationService(retrofit: Retrofit): ConfigurationService =
         retrofit.create(ConfigurationService::class.java)
+
+    @JvmStatic
+    @Provides
+    @Singleton
+    fun provideGenresService(retrofit: Retrofit): GenresService =
+        retrofit.create(GenresService::class.java)
 }

@@ -2,9 +2,12 @@ package com.pavellukyanov.cinematic.core.di
 
 import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitor
 import com.pavellukyanov.cinematic.data.api.services.ConfigurationService
+import com.pavellukyanov.cinematic.data.api.services.GenresService
 import com.pavellukyanov.cinematic.data.api.services.MovieService
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
+import com.pavellukyanov.cinematic.data.repository.genres.GenresRepoImpl
 import com.pavellukyanov.cinematic.data.repository.popularmovie.PopularMovieRepoImpl
+import com.pavellukyanov.cinematic.domain.genre.GenresRepo
 import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovieRepo
 import dagger.Module
 import dagger.Provides
@@ -22,4 +25,11 @@ object RepoModule {
         networkMonitor: NetworkMonitor,
         database: MovieDatabase
     ): PopularMovieRepo = PopularMovieRepoImpl(api, config, networkMonitor, database)
+
+    @Provides
+    fun provideGenresRepo(
+        api: GenresService,
+        networkMonitor: NetworkMonitor,
+        database: MovieDatabase
+    ): GenresRepo = GenresRepoImpl(api, networkMonitor, database)
 }
