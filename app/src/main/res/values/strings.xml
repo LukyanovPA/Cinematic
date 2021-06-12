@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Cinematic</string>
     <string name="error_toast">Что-то пошло не так: %1s</string>
+
+    <!--    Фрагменты-->
+    <string name="popular_movie">Популярно</string>
+    <string name="now_playing">Смотрят</string>
+    <string name="top_rated">Топ</string>
+    <string name="upcoming">Скоро</string>
 </resources>
