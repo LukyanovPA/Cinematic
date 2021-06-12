@@ -1,5 +1,6 @@
 package com.pavellukyanov.cinematic.utils
 
+
 object PosterSizeList {
     var posterSizes: List<String>? = emptyList()
 }

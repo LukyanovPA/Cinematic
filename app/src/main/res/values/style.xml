@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="TextAppearance.Cinematic" parent="TextAppearance.AppCompat">
-        <item name="android:fontFamily">@font/proxima_nova_semibold</item>
+        <item name="android:fontFamily">@font/gotham_pro</item>
         <item name="android:textColor">@color/main_color</item>
     </style>
 
@@ -9,13 +9,16 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="TextAppearance.Cinematic.TabLayout">
+        <item name="fontFamily">@font/gotham_pro</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
     <style name="TextAppearance.Cinematic.MovieSubtitle">
-        <item name="fontFamily">@font/proxima_nova_semibold</item>
         <item name="android:textSize">12sp</item>
     </style>
 
     <style name="TextAppearance.Cinematic.Rating">
-        <item name="fontFamily">@font/proxima_nova_semibold</item>
         <item name="android:textSize">8sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
@@ -23,7 +26,6 @@
 
     <style name="TextAppearance.Cinematic.GenreList">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/genres_list_text</item>
-        <item name="fontFamily">@font/proxima_nova_semibold</item>
+        <item name="android:textColor">@color/main_color</item>
     </style>
 </resources>
