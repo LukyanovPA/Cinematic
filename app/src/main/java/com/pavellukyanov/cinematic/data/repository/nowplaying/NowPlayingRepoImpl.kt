@@ -1,34 +1,34 @@
-package com.pavellukyanov.cinematic.data.repository.popularmovie
+package com.pavellukyanov.cinematic.data.repository.nowplaying
 
 import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitor
 import com.pavellukyanov.cinematic.data.api.services.ConfigurationService
-import com.pavellukyanov.cinematic.data.api.services.PopularMovieService
+import com.pavellukyanov.cinematic.data.api.services.NowPlayingService
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
-import com.pavellukyanov.cinematic.data.database.entity.category.PopularMovieEntity
+import com.pavellukyanov.cinematic.data.database.entity.category.NowPlayingEntity
 import com.pavellukyanov.cinematic.data.repository.configuration.toMovieList
 import com.pavellukyanov.cinematic.data.repository.movie.toMovieEntity
-import com.pavellukyanov.cinematic.data.repository.movie.toPopularMovie
+import com.pavellukyanov.cinematic.data.repository.movie.toNowPlaying
 import com.pavellukyanov.cinematic.domain.models.Movie
-import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovieRepo
+import com.pavellukyanov.cinematic.domain.nowplaying.NowPlayingRepo
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class PopularMovieRepoImpl @Inject constructor(
-    private val api: PopularMovieService,
+class NowPlayingRepoImpl @Inject constructor(
+    private val api: NowPlayingService,
     private val config: ConfigurationService,
     private val networkMonitor: NetworkMonitor,
     private val database: MovieDatabase
-) : PopularMovieRepo {
+) : NowPlayingRepo {
 
-    override fun getPopularMovie(page: Int): Single<List<Movie>> {
+    override fun getNowPlayingMovies(page: Int): Single<List<Movie>> {
         return Single.just(networkMonitor.isNetworkAvailable())
             .flatMap { isAvailable ->
                 if (!isAvailable) {
-                    return@flatMap getPopularMovieInDatabase()
+                    return@flatMap getNowPlayingMovieInDatabase()
                 } else {
-                    return@flatMap getPopularMovieInApi(page)
+                    return@flatMap getNowPlayingInApi(page)
                         .doOnSuccess { movieList ->
                             insertMoviesInDatabase(movieList)
                         }
@@ -36,18 +36,18 @@ class PopularMovieRepoImpl @Inject constructor(
             }
     }
 
-    private fun getPopularMovieInDatabase(): Single<List<Movie>> {
+    private fun getNowPlayingMovieInDatabase(): Single<List<Movie>> {
         return Single.zip(
-            database.popularMovie().getAllMovies().subscribeOn(Schedulers.io()),
+            database.nowPlaying().getAllMovies().subscribeOn(Schedulers.io()),
             database.movies().getAllMovies().subscribeOn(Schedulers.io())
         ) { popular, movie ->
             popular.comparison(movie)
         }
     }
 
-    private fun getPopularMovieInApi(page: Int): Single<List<Movie>> {
+    private fun getNowPlayingInApi(page: Int): Single<List<Movie>> {
         return Single.zip(
-            api.getPopularMovie(page = page).subscribeOn(Schedulers.io()),
+            api.getNowPlaying(page = page).subscribeOn(Schedulers.io()),
             config.getConfiguration().subscribeOn(Schedulers.io())
         ) { movies, config ->
             config.toMovieList(movies.results)
@@ -55,7 +55,7 @@ class PopularMovieRepoImpl @Inject constructor(
     }
 
     private fun insertMoviesInDatabase(listPopularMovieResponse: List<Movie>): Completable {
-        deleteTablePopularMovie()
+        deleteTableNowPlaying()
         return Completable.fromAction {
             listPopularMovieResponse.forEach { movie ->
                 movie.toMovieEntity()?.let { movieEntity ->
@@ -64,23 +64,24 @@ class PopularMovieRepoImpl @Inject constructor(
                         .subscribeOn(Schedulers.io())
                         .subscribe()
                 }
-                insertPopularMovieInDatabase(movie.toPopularMovie())
+                insertNowPlayingInDatabase(movie.toNowPlaying())
             }
         }
     }
 
-    private fun deleteTablePopularMovie(): Completable {
+    private fun deleteTableNowPlaying(): Completable {
         return Completable.fromAction {
-            database.popularMovie().deleteTable()
+            database.nowPlaying().deleteTable()
                 .subscribeOn(Schedulers.io())
                 .subscribe()
         }
     }
 
-    private fun insertPopularMovieInDatabase(popularMovieEntity: PopularMovieEntity) {
-        database.popularMovie()
+    private fun insertNowPlayingInDatabase(popularMovieEntity: NowPlayingEntity) {
+        database.nowPlaying()
             .insertMovie(popularMovieEntity)
             .subscribeOn(Schedulers.io())
             .subscribe()
     }
+
 }

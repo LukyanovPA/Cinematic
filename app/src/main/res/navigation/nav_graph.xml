@@ -14,4 +14,8 @@
         android:name="com.pavellukyanov.cinematic.ui.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/nowPlayingFragment"
+        android:name="com.pavellukyanov.cinematic.ui.nowplaying.NowPlayingFragment"
+        android:label="NowPlayingFragment" />
 </navigation>

@@ -21,4 +21,7 @@ interface NowPlayingDao {
 
     @Query("DELETE FROM now_playing WHERE movieId = :movieId")
     fun deleteMovie(movieId: Int)
+
+    @Query("DELETE FROM now_playing")
+    fun deleteTable(): Completable
 }
