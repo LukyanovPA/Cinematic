@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentPopularMovieBinding
 import com.pavellukyanov.cinematic.domain.ResourceState
-import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovie
+import com.pavellukyanov.cinematic.domain.models.Movie
 import com.pavellukyanov.cinematic.ui.adapters.MovieListAdapter
 import com.pavellukyanov.cinematic.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +43,7 @@ class PopularMovieFragment : Fragment(R.layout.fragment_popular_movie) {
         viewModel.getMovies().observe(viewLifecycleOwner, (this::onStateReceivePopularMovie))
     }
 
-    private fun onStateReceivePopularMovie(resourceState: ResourceState<PagingData<PopularMovie>>) {
+    private fun onStateReceivePopularMovie(resourceState: ResourceState<PagingData<Movie>>) {
         when (resourceState) {
             is ResourceState.Success -> handleSuccessStateMovies(resourceState.data)
             is ResourceState.Loading -> handleLoadingStateMovies(true)
@@ -51,7 +51,7 @@ class PopularMovieFragment : Fragment(R.layout.fragment_popular_movie) {
         }
     }
 
-    private fun handleSuccessStateMovies(data: PagingData<PopularMovie>) {
+    private fun handleSuccessStateMovies(data: PagingData<Movie>) {
         handleLoadingStateMovies(false)
         popAdapter.submitData(lifecycle, data)
     }
@@ -69,8 +69,8 @@ class PopularMovieFragment : Fragment(R.layout.fragment_popular_movie) {
         ).show()
     }
 
-    object PopularMovieComparator : DiffUtil.ItemCallback<PopularMovie>() {
-        override fun areItemsTheSame(oldItem: PopularMovie, newItem: PopularMovie): Boolean {
+    object PopularMovieComparator : DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return when {
                 oldItem.id == newItem.id -> true
                 oldItem.voteAverage == newItem.voteAverage -> true
@@ -78,7 +78,7 @@ class PopularMovieFragment : Fragment(R.layout.fragment_popular_movie) {
             }
         }
 
-        override fun areContentsTheSame(oldItem: PopularMovie, newItem: PopularMovie): Boolean {
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem == newItem
         }
     }

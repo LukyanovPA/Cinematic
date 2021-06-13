@@ -1,4 +1,4 @@
-package com.pavellukyanov.cinematic.domain.nowplaying
+package com.pavellukyanov.cinematic.ui.nowplaying
 
 import androidx.fragment.app.Fragment
 import com.pavellukyanov.cinematic.R

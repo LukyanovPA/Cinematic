@@ -3,7 +3,7 @@ package com.pavellukyanov.cinematic.core.di
 import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitor
 import com.pavellukyanov.cinematic.data.api.services.ConfigurationService
 import com.pavellukyanov.cinematic.data.api.services.GenresService
-import com.pavellukyanov.cinematic.data.api.services.MovieService
+import com.pavellukyanov.cinematic.data.api.services.PopularMovieService
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
 import com.pavellukyanov.cinematic.data.repository.genres.GenresRepoImpl
 import com.pavellukyanov.cinematic.data.repository.popularmovie.PopularMovieRepoImpl
@@ -20,7 +20,7 @@ object RepoModule {
 
     @Provides
     fun providePopularMovieRepo(
-        api: MovieService,
+        api: PopularMovieService,
         config: ConfigurationService,
         networkMonitor: NetworkMonitor,
         database: MovieDatabase

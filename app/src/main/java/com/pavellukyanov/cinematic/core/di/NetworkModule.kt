@@ -6,7 +6,8 @@ import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitor
 import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitorImpl
 import com.pavellukyanov.cinematic.data.api.services.ConfigurationService
 import com.pavellukyanov.cinematic.data.api.services.GenresService
-import com.pavellukyanov.cinematic.data.api.services.MovieService
+import com.pavellukyanov.cinematic.data.api.services.NowPlayingService
+import com.pavellukyanov.cinematic.data.api.services.PopularMovieService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -65,8 +66,8 @@ object NetworkModule {
     @JvmStatic
     @Provides
     @Singleton
-    fun providePopularMovieApiService(retrofit: Retrofit): MovieService =
-        retrofit.create(MovieService::class.java)
+    fun providePopularMovieApiService(retrofit: Retrofit): PopularMovieService =
+        retrofit.create(PopularMovieService::class.java)
 
     @JvmStatic
     @Provides
@@ -79,4 +80,10 @@ object NetworkModule {
     @Singleton
     fun provideGenresService(retrofit: Retrofit): GenresService =
         retrofit.create(GenresService::class.java)
+
+    @JvmStatic
+    @Provides
+    @Singleton
+    fun provideNowPlayingService(retrofit: Retrofit): NowPlayingService =
+        retrofit.create(NowPlayingService::class.java)
 }

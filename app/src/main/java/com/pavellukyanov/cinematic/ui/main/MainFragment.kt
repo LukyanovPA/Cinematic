@@ -14,7 +14,7 @@ import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentMainBinding
 import com.pavellukyanov.cinematic.domain.ResourceState
 import com.pavellukyanov.cinematic.domain.genre.Genre
-import com.pavellukyanov.cinematic.domain.nowplaying.NowPlayingFragment
+import com.pavellukyanov.cinematic.ui.nowplaying.NowPlayingFragment
 import com.pavellukyanov.cinematic.ui.adapters.GenresListAdapter
 import com.pavellukyanov.cinematic.ui.adapters.ViewPagerAdapter
 import com.pavellukyanov.cinematic.ui.popularmovie.PopularMovieFragment

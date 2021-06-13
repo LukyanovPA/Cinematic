@@ -10,7 +10,7 @@ import androidx.paging.rxjava2.cachedIn
 import androidx.paging.rxjava2.flowable
 import com.pavellukyanov.cinematic.data.repository.popularmovie.PopularMovieDataSource
 import com.pavellukyanov.cinematic.domain.ResourceState
-import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovie
+import com.pavellukyanov.cinematic.domain.models.Movie
 import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovieRepo
 import com.pavellukyanov.cinematic.ui.base.BaseViewModel
 import com.pavellukyanov.cinematic.utils.Page
@@ -24,11 +24,11 @@ import javax.inject.Inject
 class PopularMovieViewModel @Inject constructor(
     private val movieRepo: PopularMovieRepo
 ) : BaseViewModel() {
-    private var _popularMovies: MutableLiveData<ResourceState<PagingData<PopularMovie>>> =
+    private var _popularMovies: MutableLiveData<ResourceState<PagingData<Movie>>> =
         MutableLiveData()
-    private val popularMovies: LiveData<ResourceState<PagingData<PopularMovie>>> get() = _popularMovies
+    private val popularMovies: LiveData<ResourceState<PagingData<Movie>>> get() = _popularMovies
 
-    fun getMovies(): LiveData<ResourceState<PagingData<PopularMovie>>> {
+    fun getMovies(): LiveData<ResourceState<PagingData<Movie>>> {
         _popularMovies.postValue(ResourceState.Loading)
         dispose.add(getPopularMovies()
             .subscribeOn(Schedulers.io())
@@ -46,7 +46,7 @@ class PopularMovieViewModel @Inject constructor(
         return popularMovies
     }
 
-    private fun getPopularMovies(): Flowable<PagingData<PopularMovie>> {
+    private fun getPopularMovies(): Flowable<PagingData<Movie>> {
         return Pager(
             config = PagingConfig(pageSize = Page.PAGE_SIZE, enablePlaceholders = false),
             pagingSourceFactory = { PopularMovieDataSource(movieRepo) }

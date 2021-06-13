@@ -1,10 +1,6 @@
 package com.pavellukyanov.cinematic.data.api.pojo
 
 import com.google.gson.annotations.SerializedName
-import com.pavellukyanov.cinematic.data.database.entity.MovieEntity
-import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovie
-import com.pavellukyanov.cinematic.utils.PosterSizeList
-import com.pavellukyanov.cinematic.utils.PosterSizes
 
 data class MovieResponse(
     @SerializedName("adult") var adult: Boolean,
@@ -24,16 +20,3 @@ data class MovieResponse(
 ) {
     var moviePoster = ""
 }
-
-fun MovieResponse.setupMoviePoster(posterSizes: List<String>, baseUrl: String) {
-    PosterSizeList.posterSizes = posterSizes
-    moviePoster = "$baseUrl/${PosterSizes.W500.size}/$posterPath"
-}
-
-fun MovieResponse.toPopularMovie() = PopularMovie(
-    id = id,
-    title = title,
-    posterPath = moviePoster,
-    releaseDate = releaseDate,
-    voteAverage = voteAverage
-)

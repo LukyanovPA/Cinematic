@@ -9,8 +9,3 @@ class GenreEntity(
     @PrimaryKey val id: Int,
     val name: String
 )
-
-fun GenreEntity.toGenre() = Genre(
-    id = id,
-    name = name
-)
