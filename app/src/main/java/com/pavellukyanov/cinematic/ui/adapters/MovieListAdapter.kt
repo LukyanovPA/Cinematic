@@ -1,6 +1,7 @@
 package com.pavellukyanov.cinematic.ui.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -45,6 +46,12 @@ class MovieListAdapter @Inject constructor(
 
                 movieTitle.text = movie?.title
                 rating.text = movie?.voteAverage.toString()
+                if (movie?.isUpcoming == 1) {
+                    releaseDate.visibility = View.VISIBLE
+                    releaseDate.text = movie.releaseDate
+                } else {
+                    releaseDate.visibility = View.GONE
+                }
             }
         }
     }

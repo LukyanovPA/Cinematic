@@ -41,7 +41,7 @@ class NowPlayingRepoImpl @Inject constructor(
             database.nowPlaying().getAllMovies().subscribeOn(Schedulers.io()),
             database.movies().getAllMovies().subscribeOn(Schedulers.io())
         ) { popular, movie ->
-            popular.comparison(movie)
+            popular.comparison(movie, 0)
         }
     }
 
@@ -50,7 +50,7 @@ class NowPlayingRepoImpl @Inject constructor(
             api.getNowPlaying(page = page).subscribeOn(Schedulers.io()),
             config.getConfiguration().subscribeOn(Schedulers.io())
         ) { movies, config ->
-            config.toMovieList(movies.results)
+            config.toMovieList(movies.results, 0)
         }
     }
 
@@ -58,7 +58,7 @@ class NowPlayingRepoImpl @Inject constructor(
         deleteTableNowPlaying()
         return Completable.fromAction {
             listPopularMovieResponse.forEach { movie ->
-                movie.toMovieEntity()?.let { movieEntity ->
+                movie.toMovieEntity(0)?.let { movieEntity ->
                     database.movies()
                         .insertMovie(movieEntity)
                         .subscribeOn(Schedulers.io())
@@ -77,9 +77,9 @@ class NowPlayingRepoImpl @Inject constructor(
         }
     }
 
-    private fun insertNowPlayingInDatabase(popularMovieEntity: NowPlayingEntity) {
+    private fun insertNowPlayingInDatabase(nowPlayingEntity: NowPlayingEntity) {
         database.nowPlaying()
-            .insertMovie(popularMovieEntity)
+            .insertMovie(nowPlayingEntity)
             .subscribeOn(Schedulers.io())
             .subscribe()
     }

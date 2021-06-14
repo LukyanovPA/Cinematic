@@ -21,4 +21,7 @@ interface TopRatedDao {
 
     @Query("DELETE FROM top_rated WHERE movieId = :movieId")
     fun deleteMovie(movieId: Int)
+
+    @Query("DELETE FROM top_rated")
+    fun deleteTable(): Completable
 }

@@ -11,5 +11,6 @@ class MovieEntity(
     val originalTitle: String,
     val posterPath: String,
     var releaseDate: String,
-    var voteAverage: Double
+    var voteAverage: Double,
+    val isUpcoming: Int
 )

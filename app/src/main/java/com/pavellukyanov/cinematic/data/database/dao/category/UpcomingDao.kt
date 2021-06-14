@@ -21,4 +21,7 @@ interface UpcomingDao {
 
     @Query("DELETE FROM upcoming WHERE movieId = :movieId")
     fun deleteMovie(movieId: Int)
+
+    @Query("DELETE FROM upcoming")
+    fun deleteTable(): Completable
 }

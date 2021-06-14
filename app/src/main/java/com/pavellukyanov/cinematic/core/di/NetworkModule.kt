@@ -4,10 +4,7 @@ import android.content.Context
 import com.pavellukyanov.cinematic.BuildConfig
 import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitor
 import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitorImpl
-import com.pavellukyanov.cinematic.data.api.services.ConfigurationService
-import com.pavellukyanov.cinematic.data.api.services.GenresService
-import com.pavellukyanov.cinematic.data.api.services.NowPlayingService
-import com.pavellukyanov.cinematic.data.api.services.PopularMovieService
+import com.pavellukyanov.cinematic.data.api.services.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -86,4 +83,16 @@ object NetworkModule {
     @Singleton
     fun provideNowPlayingService(retrofit: Retrofit): NowPlayingService =
         retrofit.create(NowPlayingService::class.java)
+
+    @JvmStatic
+    @Provides
+    @Singleton
+    fun provideTopRatedService(retrofit: Retrofit): TopRatedService =
+        retrofit.create(TopRatedService::class.java)
+
+    @JvmStatic
+    @Provides
+    @Singleton
+    fun provideUpcomingService(retrofit: Retrofit): UpcomingService =
+        retrofit.create(UpcomingService::class.java)
 }

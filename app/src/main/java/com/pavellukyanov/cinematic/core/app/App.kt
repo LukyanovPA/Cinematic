@@ -9,6 +9,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-//        this.applicationContext.deleteDatabase("MovieDatabase.db")
+        //удалить все таблицы из базы
+        this.applicationContext.deleteDatabase("MovieDatabase.db")
     }
 }

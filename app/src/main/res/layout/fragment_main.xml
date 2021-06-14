@@ -62,19 +62,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@color/background_color"
             app:layout_collapseMode="pin"
-            app:tabGravity="fill"
+            app:tabGravity="start"
             app:tabIndicator="@color/pink"
             app:tabIndicatorColor="@color/pink"
             app:tabIndicatorHeight="2dp"
             app:tabMode="scrollable"
-            app:tabPaddingStart="8dp"
-            app:tabPaddingEnd="1dp"
+            app:tabPaddingStart="1dp"
+            app:tabPaddingEnd="0dp"
             app:tabSelectedTextColor="@color/main_color"
-            app:tabTextAppearance="@style/TextAppearance.Cinematic.TabLayout"
-            app:tabTextColor="@android:color/darker_gray" />
+            app:tabTextColor="@color/pink" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recy_genres"

@@ -7,13 +7,14 @@ import com.pavellukyanov.cinematic.domain.models.Movie
 
 
 fun List<PopularMovieEntity>.comparison(
-    listMovie: List<MovieEntity>
+    listMovie: List<MovieEntity>,
+    upcoming: Int
 ): List<Movie> {
     val finallyList = mutableListOf<Movie>()
     this.forEach { popular ->
         listMovie.forEach { movie ->
             if (movie.id == popular.movieId) {
-                finallyList.add(movie.toMovie())
+                finallyList.add(movie.toMovie(upcoming))
             }
         }
     }

@@ -15,29 +15,32 @@ fun MovieResponse.setupMoviePoster(posterSizes: List<String>, baseUrl: String) {
     moviePoster = "$baseUrl/${PosterSizes.W500.size}/$posterPath"
 }
 
-fun MovieResponse.toMovie() = Movie(
+fun MovieResponse.toMovie(upcoming: Int) = Movie(
     id = id,
     title = title,
     posterPath = moviePoster,
     releaseDate = releaseDate,
-    voteAverage = voteAverage
+    voteAverage = voteAverage,
+    isUpcoming = upcoming
 )
 
-fun MovieEntity.toMovie() = Movie(
+fun MovieEntity.toMovie(upcoming: Int) = Movie(
     id = id,
     title = originalTitle,
     posterPath = posterPath,
     releaseDate = releaseDate,
-    voteAverage = voteAverage
+    voteAverage = voteAverage,
+    isUpcoming = upcoming
 )
 
-fun Movie.toMovieEntity() = releaseDate?.let {
+fun Movie.toMovieEntity(upcoming: Int) = releaseDate?.let {
     MovieEntity(
         id = id,
         originalTitle = title,
         posterPath = posterPath,
         releaseDate = it,
-        voteAverage = voteAverage
+        voteAverage = voteAverage,
+        isUpcoming = upcoming
     )
 }
 

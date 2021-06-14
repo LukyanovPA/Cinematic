@@ -19,26 +19,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/movie_poster"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:srcCompat="@drawable/temp_movie" />
+        <ImageView
+            android:id="@+id/movie_poster"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:srcCompat="@drawable/temp_movie" />
 
         <TextView
             android:id="@+id/rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_rating_star"
-            android:textAppearance="@style/TextAppearance.Cinematic.Rating"
+            android:layout_gravity="top|right"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:background="@drawable/ic_rating_star"
             android:gravity="center"
-            android:layout_gravity="top|right"
             android:padding="3dp"
+            android:textAppearance="@style/TextAppearance.Cinematic.Rating"
             tools:text="8.9" />
 
     </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/release_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textAppearance="@style/TextAppearance.Cinematic.MovieRelease"
+        app:layout_constraintEnd_toEndOf="@+id/movie_poster_container"
+        app:layout_constraintStart_toStartOf="@+id/movie_poster_container"
+        app:layout_constraintTop_toBottomOf="@+id/movie_poster_container"
+        tools:text="2021-07-01" />
 
     <TextView
         android:id="@+id/movie_title"
@@ -48,9 +61,9 @@
         android:gravity="center"
         android:lines="2"
         android:textAppearance="@style/TextAppearance.Cinematic.MovieTitle"
-        app:layout_constraintEnd_toEndOf="@+id/movie_poster_container"
-        app:layout_constraintStart_toStartOf="@+id/movie_poster_container"
-        app:layout_constraintTop_toBottomOf="@+id/movie_poster_container"
+        app:layout_constraintEnd_toEndOf="@+id/release_date"
+        app:layout_constraintStart_toStartOf="@+id/release_date"
+        app:layout_constraintTop_toBottomOf="@+id/release_date"
         tools:text="Форд против Ферарри" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
