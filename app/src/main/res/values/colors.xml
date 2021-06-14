@@ -14,4 +14,6 @@
     <color name="genres_list_bg">#FFFFFF</color>
     <color name="genres_list_text">#000000</color>
     <color name="pink">#FE6D8E</color>
+    <color name="tab">#808080</color>
+    <color name="release_date">#3cb371</color>
 </resources>

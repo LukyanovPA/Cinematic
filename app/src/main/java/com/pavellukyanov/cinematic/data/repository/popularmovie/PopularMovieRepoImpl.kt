@@ -1,87 +1,86 @@
 package com.pavellukyanov.cinematic.data.repository.popularmovie
 
-import android.util.Log
 import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitor
-import com.pavellukyanov.cinematic.data.api.pojo.MovieResponse
-import com.pavellukyanov.cinematic.data.api.pojo.configuration.ConfigurationResponse
-import com.pavellukyanov.cinematic.data.api.pojo.setupMoviePoster
-import com.pavellukyanov.cinematic.data.api.pojo.toPopularMovie
 import com.pavellukyanov.cinematic.data.api.services.ConfigurationService
-import com.pavellukyanov.cinematic.data.api.services.MovieService
+import com.pavellukyanov.cinematic.data.api.services.PopularMovieService
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
-import com.pavellukyanov.cinematic.data.database.entity.MovieEntity
-import com.pavellukyanov.cinematic.data.database.entity.toPopularMovie
-import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovie
+import com.pavellukyanov.cinematic.data.database.entity.category.PopularMovieEntity
+import com.pavellukyanov.cinematic.data.repository.configuration.toMovieList
+import com.pavellukyanov.cinematic.data.repository.movie.toMovieEntity
+import com.pavellukyanov.cinematic.data.repository.movie.toPopularMovie
+import com.pavellukyanov.cinematic.domain.models.Movie
 import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovieRepo
-import com.pavellukyanov.cinematic.domain.popularmovie.toPopularMovieEntity
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class PopularMovieRepoImpl @Inject constructor(
-    private val api: MovieService,
+    private val api: PopularMovieService,
     private val config: ConfigurationService,
     private val networkMonitor: NetworkMonitor,
     private val database: MovieDatabase
 ) : PopularMovieRepo {
-    override fun getPopularMovie(page: Int): Single<List<PopularMovie>> {
+
+    override fun getPopularMovie(page: Int): Single<List<Movie>> {
         return Single.just(networkMonitor.isNetworkAvailable())
             .flatMap { isAvailable ->
                 if (!isAvailable) {
-                    return@flatMap database.movies().getAllMovies()
-                        .map { result ->
-                            mappingEntityToDomain(result)
-                        }
+                    return@flatMap getPopularMovieInDatabase()
                 } else {
                     return@flatMap getPopularMovieInApi(page)
-                        .doOnSuccess {
-                            insertPopularMoviesInDatabase(it)
+                        .doOnSuccess { movieList ->
+                            insertMoviesInDatabase(movieList)
                         }
                 }
             }
     }
 
-    private fun getPopularMovieInApi(page: Int): Single<List<PopularMovie>> {
+    private fun getPopularMovieInDatabase(): Single<List<Movie>> {
+        return Single.zip(
+            database.popularMovie().getAllMovies().subscribeOn(Schedulers.io()),
+            database.movies().getAllMovies().subscribeOn(Schedulers.io())
+        ) { popular, movie ->
+            popular.comparison(movie, 0)
+        }
+    }
+
+    private fun getPopularMovieInApi(page: Int): Single<List<Movie>> {
         return Single.zip(
             api.getPopularMovie(page = page).subscribeOn(Schedulers.io()),
             config.getConfiguration().subscribeOn(Schedulers.io())
         ) { movies, config ->
-            mappingPojoToDomain(movies.results, config)
+            config.toMovieList(movies.results, 0)
         }
     }
 
-    private fun mappingPojoToDomain(
-        listPopularMovieResponse: List<MovieResponse>,
-        config: ConfigurationResponse
-    ): List<PopularMovie> {
-        val mappingList = mutableListOf<PopularMovie>()
-        listPopularMovieResponse.forEach {
-            Log.d("ttt", it.title)
-            it.setupMoviePoster(
-                config.images.posterSizes,
-                config.images.baseUrl
-            )
-            mappingList.add(it.toPopularMovie())
-        }
-        return mappingList
-    }
-
-    private fun mappingEntityToDomain(listMovieResponse: List<MovieEntity>): List<PopularMovie> {
-        val mappingList = mutableListOf<PopularMovie>()
-        listMovieResponse.forEach {
-            mappingList.add(it.toPopularMovie())
-        }
-        return mappingList
-    }
-
-    private fun insertPopularMoviesInDatabase(listPopularMovieResponse: List<PopularMovie>) {
-        listPopularMovieResponse.forEach {
-            it.toPopularMovieEntity()?.let { it1 ->
-                database.movies()
-                    .insertMovie(it1)
-                    .subscribeOn(Schedulers.io())
-                    .subscribe()
+    private fun insertMoviesInDatabase(listPopularMovieResponse: List<Movie>): Completable {
+        deleteTablePopularMovie()
+        return Completable.fromAction {
+            listPopularMovieResponse.forEach { movie ->
+                movie.toMovieEntity(0)?.let { movieEntity ->
+                    database.movies()
+                        .insertMovie(movieEntity)
+                        .subscribeOn(Schedulers.io())
+                        .subscribe()
+                }
+                insertPopularMovieInDatabase(movie.toPopularMovie())
             }
         }
+    }
+
+    private fun deleteTablePopularMovie(): Completable {
+        return Completable.fromAction {
+            database.popularMovie().deleteTable()
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+        }
+    }
+
+    private fun insertPopularMovieInDatabase(popularMovieEntity: PopularMovieEntity) {
+        database.popularMovie()
+            .insertMovie(popularMovieEntity)
+            .subscribeOn(Schedulers.io())
+            .subscribe()
     }
 }

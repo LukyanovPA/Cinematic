@@ -1,14 +1,18 @@
 package com.pavellukyanov.cinematic.core.di
 
 import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitor
-import com.pavellukyanov.cinematic.data.api.services.ConfigurationService
-import com.pavellukyanov.cinematic.data.api.services.GenresService
-import com.pavellukyanov.cinematic.data.api.services.MovieService
+import com.pavellukyanov.cinematic.data.api.services.*
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
 import com.pavellukyanov.cinematic.data.repository.genres.GenresRepoImpl
+import com.pavellukyanov.cinematic.data.repository.nowplaying.NowPlayingRepoImpl
 import com.pavellukyanov.cinematic.data.repository.popularmovie.PopularMovieRepoImpl
+import com.pavellukyanov.cinematic.data.repository.toprated.TopRatedRepoImpl
+import com.pavellukyanov.cinematic.data.repository.upcoming.UpcomingRepoImpl
 import com.pavellukyanov.cinematic.domain.genre.GenresRepo
+import com.pavellukyanov.cinematic.domain.nowplaying.NowPlayingRepo
 import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovieRepo
+import com.pavellukyanov.cinematic.domain.toprated.TopRatedRepo
+import com.pavellukyanov.cinematic.domain.upcoming.UpcomingRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +24,7 @@ object RepoModule {
 
     @Provides
     fun providePopularMovieRepo(
-        api: MovieService,
+        api: PopularMovieService,
         config: ConfigurationService,
         networkMonitor: NetworkMonitor,
         database: MovieDatabase
@@ -32,4 +36,28 @@ object RepoModule {
         networkMonitor: NetworkMonitor,
         database: MovieDatabase
     ): GenresRepo = GenresRepoImpl(api, networkMonitor, database)
+
+    @Provides
+    fun provideNowPlayingRepo(
+        api: NowPlayingService,
+        config: ConfigurationService,
+        networkMonitor: NetworkMonitor,
+        database: MovieDatabase
+    ): NowPlayingRepo = NowPlayingRepoImpl(api, config, networkMonitor, database)
+
+    @Provides
+    fun provideTopRatedRepo(
+        api: TopRatedService,
+        config: ConfigurationService,
+        networkMonitor: NetworkMonitor,
+        database: MovieDatabase
+    ): TopRatedRepo = TopRatedRepoImpl(api, config, networkMonitor, database)
+
+    @Provides
+    fun provideUpcomingRepo(
+        api: UpcomingService,
+        config: ConfigurationService,
+        networkMonitor: NetworkMonitor,
+        database: MovieDatabase
+    ): UpcomingRepo = UpcomingRepoImpl(api, config, networkMonitor, database)
 }

@@ -1,6 +1,7 @@
 package com.pavellukyanov.cinematic.ui.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -8,12 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.pavellukyanov.cinematic.databinding.ItemMovieListBinding
-import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovie
+import com.pavellukyanov.cinematic.domain.models.Movie
 import javax.inject.Inject
 
 class MovieListAdapter @Inject constructor(
-    diffCallback: DiffUtil.ItemCallback<PopularMovie>
-) : PagingDataAdapter<PopularMovie, MovieListAdapter.ListMovieViewHolder>(diffCallback) {
+    diffCallback: DiffUtil.ItemCallback<Movie>
+) : PagingDataAdapter<Movie, MovieListAdapter.ListMovieViewHolder>(diffCallback) {
 
     override fun onBindViewHolder(holder: ListMovieViewHolder, position: Int) {
         val item = getItem(position)
@@ -34,7 +35,7 @@ class MovieListAdapter @Inject constructor(
         private val binding: ItemMovieListBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(movie: PopularMovie?) {
+        fun bind(movie: Movie?) {
             with(binding) {
                 Glide.with(itemView.context)
                     .asBitmap()
@@ -45,6 +46,12 @@ class MovieListAdapter @Inject constructor(
 
                 movieTitle.text = movie?.title
                 rating.text = movie?.voteAverage.toString()
+                if (movie?.isUpcoming == 1) {
+                    releaseDate.visibility = View.VISIBLE
+                    releaseDate.text = movie.releaseDate
+                } else {
+                    releaseDate.visibility = View.GONE
+                }
             }
         }
     }
