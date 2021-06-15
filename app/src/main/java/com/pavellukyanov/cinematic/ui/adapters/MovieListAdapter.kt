@@ -13,12 +13,18 @@ import com.pavellukyanov.cinematic.domain.models.Movie
 import javax.inject.Inject
 
 class MovieListAdapter @Inject constructor(
-    diffCallback: DiffUtil.ItemCallback<Movie>
+    diffCallback: DiffUtil.ItemCallback<Movie>,
+    private val movieItemClickListener: MovieItemClickListener
 ) : PagingDataAdapter<Movie, MovieListAdapter.ListMovieViewHolder>(diffCallback) {
 
     override fun onBindViewHolder(holder: ListMovieViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item)
+        holder.itemView.setOnClickListener {
+            item?.let { movie ->
+                movieItemClickListener.onItemClicked(movie.id)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListMovieViewHolder {

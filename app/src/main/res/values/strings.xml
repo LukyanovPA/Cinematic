@@ -7,4 +7,5 @@
     <string name="now_playing">Смотрят</string>
     <string name="top_rated">Топ</string>
     <string name="upcoming">Скоро</string>
+    <string name="release_and_director">%1$s - James Mangold</string>
 </resources>

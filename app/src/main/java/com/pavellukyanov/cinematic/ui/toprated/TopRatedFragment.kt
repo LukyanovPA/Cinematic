@@ -12,6 +12,7 @@ import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentTopRatedBinding
 import com.pavellukyanov.cinematic.domain.ResourceState
 import com.pavellukyanov.cinematic.domain.models.Movie
+import com.pavellukyanov.cinematic.ui.adapters.MovieItemClickListener
 import com.pavellukyanov.cinematic.ui.adapters.MovieListAdapter
 import com.pavellukyanov.cinematic.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +22,7 @@ class TopRatedFragment : Fragment(R.layout.fragment_top_rated) {
     private var _binding: FragmentTopRatedBinding? = null
     private val binding get() = _binding!!
     private val viewModel: TopRatedViewModel by viewModels()
-    private val popAdapter by lazy { MovieListAdapter(TopRatedComparator) }
+    private val popAdapter by lazy { MovieListAdapter(TopRatedComparator, movieItemClickListener) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -80,6 +81,12 @@ class TopRatedFragment : Fragment(R.layout.fragment_top_rated) {
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem == newItem
+        }
+    }
+
+    private val movieItemClickListener = object : MovieItemClickListener {
+        override fun onItemClicked(movieId: Int) {
+
         }
     }
 

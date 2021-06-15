@@ -1,4 +1,4 @@
-package com.pavellukyanov.myaaproject.data.models
+package com.pavellukyanov.cinematic.data.api.pojo.nowplaying
 
 import com.google.gson.annotations.SerializedName
 import com.pavellukyanov.cinematic.data.api.pojo.MovieResponse

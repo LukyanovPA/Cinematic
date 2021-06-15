@@ -9,6 +9,11 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="TextAppearance.Cinematic.MovieDetailsTitle">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="TextAppearance.Cinematic.MovieRelease">
         <item name="fontFamily">@font/geometria_medium</item>
         <item name="android:textColor">@color/release_date</item>
@@ -17,6 +22,12 @@
 
     <style name="TextAppearance.Cinematic.TabLayout">
         <item name="fontFamily">@font/geometria_medium</item>
+        <item name="android:textColor">@color/release_and_director</item>
+    </style>
+
+    <style name="TextAppearance.Cinematic.TabLayout.DirectorAndRelease">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/release_and_director</item>
     </style>
 
     <style name="TextAppearance.Cinematic.MovieSubtitle">
@@ -32,5 +43,17 @@
     <style name="TextAppearance.Cinematic.GenreList">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/main_color</item>
+    </style>
+
+    <style name="CustomRatingBar" parent="android:style/Widget.Material.RatingBar.Small">
+        <item name="android:numStars">5</item>
+        <item name="android:rating">4</item>
+        <item name="android:stepSize">0.5</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:progressTint">@color/pink</item>
+        <item name="android:isIndicator">true</item>
+        <item name="android:progressBackgroundTint">@color/white</item>
+        <item name="android:scaleY">0.8</item>
     </style>
 </resources>

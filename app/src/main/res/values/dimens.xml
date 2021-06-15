@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="tab_margin_top">10dp</dimen>
+    <dimen name="nex_item_visible">0dp</dimen>
+    <dimen name="item_inner_margin">0dp</dimen>
+</resources>

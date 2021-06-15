@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,7 +13,9 @@ import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentPopularMovieBinding
 import com.pavellukyanov.cinematic.domain.ResourceState
 import com.pavellukyanov.cinematic.domain.models.Movie
+import com.pavellukyanov.cinematic.ui.adapters.MovieItemClickListener
 import com.pavellukyanov.cinematic.ui.adapters.MovieListAdapter
+import com.pavellukyanov.cinematic.ui.main.MainFragmentDirections
 import com.pavellukyanov.cinematic.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +24,12 @@ class PopularMovieFragment : Fragment(R.layout.fragment_popular_movie) {
     private var _binding: FragmentPopularMovieBinding? = null
     private val binding get() = _binding!!
     private val viewModel: PopularMovieViewModel by viewModels()
-    private val popAdapter by lazy { MovieListAdapter(PopularMovieComparator) }
+    private val popAdapter by lazy {
+        MovieListAdapter(
+            PopularMovieComparator,
+            movieItemClickListener
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -80,6 +88,16 @@ class PopularMovieFragment : Fragment(R.layout.fragment_popular_movie) {
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem == newItem
+        }
+    }
+
+    private val movieItemClickListener = object : MovieItemClickListener {
+        override fun onItemClicked(movieId: Int) {
+            val action =
+                MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(
+                    movieId
+                )
+            findNavController().navigate(action)
         }
     }
 

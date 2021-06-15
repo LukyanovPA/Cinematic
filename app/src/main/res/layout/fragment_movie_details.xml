@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_view_count"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/background_color">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/movie_details_poster"
+            android:layout_width="0dp"
+            android:layout_height="378dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/temp_movie" />
+
+        <ImageView
+            android:id="@+id/poster_mask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="0dp"
+            android:src="@drawable/bg_mask_list"
+            app:layout_constraintBottom_toBottomOf="@+id/movie_details_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/movie_details_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginBottom="25dp"
+            android:textAppearance="@style/TextAppearance.Cinematic.MovieDetailsTitle"
+            app:layout_constraintBottom_toBottomOf="@+id/movie_details_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Ford vs Ferrari" />
+
+        <TextView
+            android:id="@+id/release_and_director"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/TextAppearance.Cinematic.TabLayout.DirectorAndRelease"
+            app:layout_constraintEnd_toEndOf="@+id/movie_details_title"
+            app:layout_constraintStart_toStartOf="@+id/movie_details_title"
+            app:layout_constraintTop_toBottomOf="@+id/movie_details_title"
+            tools:text="2019 - James Mangold"/>
+
+        <RatingBar
+            android:id="@+id/rating_bar_details"
+            style="@style/CustomRatingBar"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/release_and_director"
+            app:layout_constraintTop_toBottomOf="@+id/release_and_director"
+            app:layout_constraintEnd_toEndOf="@+id/release_and_director" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

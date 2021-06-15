@@ -95,4 +95,10 @@ object NetworkModule {
     @Singleton
     fun provideUpcomingService(retrofit: Retrofit): UpcomingService =
         retrofit.create(UpcomingService::class.java)
+
+    @JvmStatic
+    @Provides
+    @Singleton
+    fun provideMovieDetailsService(retrofit: Retrofit): MovieDetailsService =
+        retrofit.create(MovieDetailsService::class.java)
 }

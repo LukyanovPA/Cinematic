@@ -2,7 +2,7 @@ package com.pavellukyanov.cinematic.data.api.pojo.upcoming
 
 import com.google.gson.annotations.SerializedName
 import com.pavellukyanov.cinematic.data.api.pojo.MovieResponse
-import com.pavellukyanov.myaaproject.data.models.DatesResponse
+import com.pavellukyanov.cinematic.data.api.pojo.nowplaying.DatesResponse
 
 
 data class UpcomingResponse(

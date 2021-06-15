@@ -12,6 +12,7 @@ import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentUpcomingBinding
 import com.pavellukyanov.cinematic.domain.ResourceState
 import com.pavellukyanov.cinematic.domain.models.Movie
+import com.pavellukyanov.cinematic.ui.adapters.MovieItemClickListener
 import com.pavellukyanov.cinematic.ui.adapters.MovieListAdapter
 import com.pavellukyanov.cinematic.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +22,7 @@ class UpcomingFragment : Fragment(R.layout.fragment_upcoming) {
     private var _binding: FragmentUpcomingBinding? = null
     private val binding get() = _binding!!
     private val viewModel: UpcomingViewModel by viewModels()
-    private val popAdapter by lazy { MovieListAdapter(UpcomingComparator) }
+    private val popAdapter by lazy { MovieListAdapter(UpcomingComparator, movieItemClickListener) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -82,6 +83,12 @@ class UpcomingFragment : Fragment(R.layout.fragment_upcoming) {
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem == newItem
+        }
+    }
+
+    private val movieItemClickListener = object : MovieItemClickListener {
+        override fun onItemClicked(movieId: Int) {
+
         }
     }
 
