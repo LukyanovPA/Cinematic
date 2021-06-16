@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="TextAppearance.Cinematic" parent="TextAppearance.AppCompat">
-        <item name="android:fontFamily">@font/gotham_pro</item>
+        <item name="android:fontFamily">@font/acrom_light</item>
         <item name="android:textColor">@color/main_color</item>
     </style>
 
@@ -15,13 +15,13 @@
     </style>
 
     <style name="TextAppearance.Cinematic.MovieRelease">
-        <item name="fontFamily">@font/geometria_medium</item>
+        <item name="fontFamily">@font/acrom_light</item>
         <item name="android:textColor">@color/release_date</item>
         <item name="android:textSize">12sp</item>
     </style>
 
     <style name="TextAppearance.Cinematic.TabLayout">
-        <item name="fontFamily">@font/geometria_medium</item>
+        <item name="fontFamily">@font/acrom_light</item>
         <item name="android:textColor">@color/release_and_director</item>
     </style>
 

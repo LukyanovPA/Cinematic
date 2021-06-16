@@ -23,6 +23,8 @@ object NetworkModule {
     private const val BASE_URL = "https://api.themoviedb.org/3/"
     private const val API_KEY_VALUE = "8a6444939a974846cb13a2ec5853c60a"
     private const val API_KEY = "api_key"
+    private const val LANGUAGE_RU = "ru-RU"
+    private const val LANGUAGE = "language"
 
     @JvmStatic
     @Provides
@@ -41,6 +43,7 @@ object NetworkModule {
             val url = request.url
                 .newBuilder()
                 .addQueryParameter(API_KEY, API_KEY_VALUE)
+//                .addQueryParameter(LANGUAGE, LANGUAGE_RU)
                 .build()
             it.proceed(request.newBuilder().url(url).build())
         }

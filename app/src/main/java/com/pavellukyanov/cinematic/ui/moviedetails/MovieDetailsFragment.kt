@@ -7,8 +7,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentMovieDetailsBinding
 import com.pavellukyanov.cinematic.domain.ResourceState
@@ -56,22 +54,12 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
     private fun handleSuccessState(data: MovieDetails) {
         handleLoadingState(false)
-        setupUi(data)
-    }
-
-    private fun setupUi(movieDetails: MovieDetails) {
-        Log.d("ttt", movieDetails.posterPath)
-        with(binding) {
-            Glide.with(requireContext())
-                .load(movieDetails.posterPath)
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .into(movieDetailsPoster)
-
-            movieDetailsTitle.text = movieDetails.title
-            releaseAndDirector.text =
-                getString(R.string.release_and_director, movieDetails.releaseDate)
-            ratingBarDetails.rating = (movieDetails.voteAverage / 2).toFloat()
+        activity?.let { activity ->
+            binding.bind(
+                data,
+                requireContext(),
+                activity
+            )
         }
     }
 

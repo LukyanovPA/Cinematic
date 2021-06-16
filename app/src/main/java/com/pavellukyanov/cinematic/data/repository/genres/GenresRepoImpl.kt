@@ -22,7 +22,7 @@ class GenresRepoImpl @Inject constructor(
                 if (!isAvailable) {
                     return@flatMap database.genres().getAllGenres()
                         .map { result ->
-                            result.toListGenre()
+                            result.listEntityToListGenre()
                         }
                 } else {
                     return@flatMap getGenresInApi()

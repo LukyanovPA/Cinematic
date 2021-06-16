@@ -4,7 +4,9 @@ import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitor
 import com.pavellukyanov.cinematic.data.api.services.ConfigurationService
 import com.pavellukyanov.cinematic.data.api.services.MovieDetailsService
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
-import com.pavellukyanov.cinematic.data.repository.configuration.toMovieDetails
+import com.pavellukyanov.cinematic.data.repository.configuration.toDetails
+import com.pavellukyanov.cinematic.data.repository.configuration.toListActor
+import com.pavellukyanov.cinematic.data.repository.configuration.toListCrew
 import com.pavellukyanov.cinematic.domain.models.MovieDetails
 import com.pavellukyanov.cinematic.domain.moviedetail.MovieDetailsRepo
 import io.reactivex.Single
@@ -26,9 +28,14 @@ class MovieDetailsRepoImpl @Inject constructor(
     private fun getMovieDetailsInApi(movieId: Int): Single<MovieDetails> {
         return Single.zip(
             api.getMovieId(movieId = movieId).subscribeOn(Schedulers.io()),
+            api.getCredits(movieId = movieId).subscribeOn(Schedulers.io()),
             config.getConfiguration().subscribeOn(Schedulers.io())
-        ) { movie, config ->
-            config.toMovieDetails(movie)
+        ) { movie, credits, config ->
+            MovieDetailsMapperImpl().invoke(
+                config.toDetails(movie),
+                config.toListActor(credits),
+                config.toListCrew(credits)
+            )
         }
     }
 }
