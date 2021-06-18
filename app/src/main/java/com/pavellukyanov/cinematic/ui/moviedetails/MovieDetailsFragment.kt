@@ -43,9 +43,10 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         handleLoadingState(false)
         Toast.makeText(
             requireContext(),
-            requireContext().getString(R.string.error_toast, error?.localizedMessage),
+            requireContext().getString(R.string.error_toast, error.localizedMessage),
             Toast.LENGTH_LONG
         ).show()
+        Log.d("ttt", error.localizedMessage)
     }
 
     private fun handleLoadingState(state: Boolean) {

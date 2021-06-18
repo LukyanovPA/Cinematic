@@ -1,21 +1,24 @@
 package com.pavellukyanov.cinematic.data.api.pojo.moviedetails.credits
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
-   
-data class CastResponse (
-   @SerializedName("adult") var adult : Boolean,
-   @SerializedName("gender") var gender : Int,
-   @SerializedName("id") var id : Int,
-   @SerializedName("known_for_department") var knownForDepartment : String,
-   @SerializedName("name") var name : String,
-   @SerializedName("original_name") var originalName : String,
-   @SerializedName("popularity") var popularity : Double,
-   @SerializedName("profile_path") var profilePath : String,
-   @SerializedName("cast_id") var castId : Int,
-   @SerializedName("character") var character : String,
-   @SerializedName("credit_id") var creditId : String,
-   @SerializedName("order") var order : Int
+@Serializable
+data class CastResponse(
+    @SerialName("adult") var adult: Boolean,
+    @SerialName("gender") var gender: Int,
+    @SerialName("id") var id: Int,
+    @SerialName("known_for_department") var knownForDepartment: String,
+    @SerialName("name") var name: String,
+    @SerialName("original_name") var originalName: String,
+    @SerialName("popularity") var popularity: Double,
+    @SerialName("profile_path") var profilePath: String? = null,
+    @SerialName("cast_id") var castId: Int,
+    @SerialName("character") var character: String,
+    @SerialName("credit_id") var creditId: String,
+    @SerialName("order") var order: Int
 ) {
-   var profilePoster = ""
+    @Transient
+    var profilePoster = ""
 }

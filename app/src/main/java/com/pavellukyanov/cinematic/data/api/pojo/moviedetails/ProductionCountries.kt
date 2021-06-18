@@ -1,11 +1,10 @@
 package com.pavellukyanov.cinematic.data.api.pojo.moviedetails
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-   
-data class ProductionCountries (
-
-   @SerializedName("iso_3166_1") var iso31661 : String,
-   @SerializedName("name") var name : String
-
+@Serializable
+data class ProductionCountries(
+    @SerialName("iso_3166_1") var iso31661: String,
+    @SerialName("name") var name: String
 )

@@ -1,22 +1,26 @@
 package com.pavellukyanov.cinematic.data.api.pojo
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
+@Serializable
 data class MovieResponse(
-    @SerializedName("adult") var adult: Boolean,
-    @SerializedName("backdrop_path") var backdropPath: String,
-    @SerializedName("genre_ids") var genreIds: List<Int>,
-    @SerializedName("id") var id: Int,
-    @SerializedName("original_language") var originalLanguage: String,
-    @SerializedName("original_title") var originalTitle: String,
-    @SerializedName("overview") var overview: String,
-    @SerializedName("popularity") var popularity: Double,
-    @SerializedName("poster_path") var posterPath: String,
-    @SerializedName("release_date") var releaseDate: String?,
-    @SerializedName("title") var title: String,
-    @SerializedName("video") var video: Boolean,
-    @SerializedName("vote_average") var voteAverage: Double,
-    @SerializedName("vote_count") var voteCount: Int
+    @SerialName("adult") var adult: Boolean,
+    @SerialName("backdrop_path") var backdropPath: String? = null,
+    @SerialName("genre_ids") var genreIds: List<Int>,
+    @SerialName("id") var id: Int,
+    @SerialName("original_language") var originalLanguage: String,
+    @SerialName("original_title") var originalTitle: String,
+    @SerialName("overview") var overview: String,
+    @SerialName("popularity") var popularity: Double,
+    @SerialName("poster_path") var posterPath: String? = null,
+    @SerialName("release_date") var releaseDate: String?,
+    @SerialName("title") var title: String,
+    @SerialName("video") var video: Boolean,
+    @SerialName("vote_average") var voteAverage: Double,
+    @SerialName("vote_count") var voteCount: Int
 ) {
+    @Transient
     var moviePoster = ""
 }

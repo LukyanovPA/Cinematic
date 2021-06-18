@@ -1,13 +1,12 @@
 package com.pavellukyanov.cinematic.data.api.pojo.moviedetails
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-   
-data class BelongsToCollection (
-
-   @SerializedName("id") var id : Int,
-   @SerializedName("name") var name : String,
-   @SerializedName("poster_path") var posterPath : String,
-   @SerializedName("backdrop_path") var backdropPath : String
-
+@Serializable
+data class BelongsToCollection(
+    @SerialName("id") var id: Int,
+    @SerialName("name") var name: String,
+    @SerialName("poster_path") var posterPath: String? = null,
+    @SerialName("backdrop_path") var backdropPath: String? = null
 )
