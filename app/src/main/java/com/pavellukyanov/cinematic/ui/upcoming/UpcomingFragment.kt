@@ -15,6 +15,7 @@ import com.pavellukyanov.cinematic.domain.models.Movie
 import com.pavellukyanov.cinematic.ui.adapters.MovieItemClickListener
 import com.pavellukyanov.cinematic.ui.adapters.MovieListAdapter
 import com.pavellukyanov.cinematic.utils.Constants
+import com.pavellukyanov.cinematic.utils.MovieComparator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,7 +23,7 @@ class UpcomingFragment : Fragment(R.layout.fragment_upcoming) {
     private var _binding: FragmentUpcomingBinding? = null
     private val binding get() = _binding!!
     private val viewModel: UpcomingViewModel by viewModels()
-    private val popAdapter by lazy { MovieListAdapter(UpcomingComparator, movieItemClickListener) }
+    private val popAdapter by lazy { MovieListAdapter(MovieComparator, movieItemClickListener) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -68,22 +69,6 @@ class UpcomingFragment : Fragment(R.layout.fragment_upcoming) {
             requireContext().getString(R.string.error_toast, error?.localizedMessage),
             Toast.LENGTH_LONG
         ).show()
-    }
-
-    object UpcomingComparator : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return when {
-                oldItem.id == newItem.id -> true
-                oldItem.voteAverage == newItem.voteAverage -> true
-                oldItem.releaseDate == newItem.releaseDate -> true
-                oldItem.isUpcoming == newItem.isUpcoming -> true
-                else -> false
-            }
-        }
-
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem == newItem
-        }
     }
 
     private val movieItemClickListener = object : MovieItemClickListener {

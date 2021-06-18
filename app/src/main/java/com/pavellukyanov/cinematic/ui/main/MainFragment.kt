@@ -6,13 +6,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentMainBinding
 import com.pavellukyanov.cinematic.domain.ResourceState
 import com.pavellukyanov.cinematic.domain.genre.Genre
 import com.pavellukyanov.cinematic.ui.adapters.GenresListAdapter
-import com.pavellukyanov.cinematic.ui.adapters.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,8 +18,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private val mainViewModel: MainViewModel by viewModels()
     private val genresAdapter by lazy { GenresListAdapter(listOf()) }
     private var _binding: FragmentMainBinding? = null
-    private lateinit var pageAdapter: ViewPagerAdapter
-    private lateinit var viewPager: ViewPager2
     private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

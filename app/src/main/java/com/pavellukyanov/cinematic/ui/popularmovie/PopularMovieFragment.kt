@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentPopularMovieBinding
@@ -17,6 +16,7 @@ import com.pavellukyanov.cinematic.ui.adapters.MovieItemClickListener
 import com.pavellukyanov.cinematic.ui.adapters.MovieListAdapter
 import com.pavellukyanov.cinematic.ui.main.MainFragmentDirections
 import com.pavellukyanov.cinematic.utils.Constants
+import com.pavellukyanov.cinematic.utils.MovieComparator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,7 +26,7 @@ class PopularMovieFragment : Fragment(R.layout.fragment_popular_movie) {
     private val viewModel: PopularMovieViewModel by viewModels()
     private val popAdapter by lazy {
         MovieListAdapter(
-            PopularMovieComparator,
+            MovieComparator,
             movieItemClickListener
         )
     }
@@ -75,20 +75,6 @@ class PopularMovieFragment : Fragment(R.layout.fragment_popular_movie) {
             requireContext().getString(R.string.error_toast, error?.localizedMessage),
             Toast.LENGTH_LONG
         ).show()
-    }
-
-    object PopularMovieComparator : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return when {
-                oldItem.id == newItem.id -> true
-                oldItem.voteAverage == newItem.voteAverage -> true
-                else -> false
-            }
-        }
-
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem == newItem
-        }
     }
 
     private val movieItemClickListener = object : MovieItemClickListener {

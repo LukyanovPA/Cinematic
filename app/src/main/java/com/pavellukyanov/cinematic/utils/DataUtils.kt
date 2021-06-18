@@ -1,5 +1,7 @@
 package com.pavellukyanov.cinematic.utils
 
+import androidx.recyclerview.widget.DiffUtil
+import com.pavellukyanov.cinematic.domain.models.Movie
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,4 +29,25 @@ enum class ProfileSize(val size: String?) {
     W185(ProfileSizeList.profileSizes[1]),
     H362(ProfileSizeList.profileSizes[2]),
     ORIGINAL(ProfileSizeList.profileSizes[3])
+}
+
+object MovieComparator : DiffUtil.ItemCallback<Movie>() {
+    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        return when (oldItem.id) {
+            newItem.id -> true
+            else -> false
+        }
+    }
+
+    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        return when {
+            oldItem.id == newItem.id -> true
+            oldItem.isUpcoming == newItem.isUpcoming -> true
+            oldItem.releaseDate == newItem.releaseDate -> true
+            oldItem.title == newItem.title -> true
+            oldItem.posterPath == newItem.posterPath -> true
+            oldItem.voteAverage == newItem.voteAverage -> true
+            else -> false
+        }
+    }
 }

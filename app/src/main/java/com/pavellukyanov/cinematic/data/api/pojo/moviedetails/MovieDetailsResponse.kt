@@ -14,7 +14,7 @@ data class MovieDetailsResponse(
     @SerialName("genres") var genres: List<GenreResponse>,
     @SerialName("homepage") var homepage: String,
     @SerialName("id") var id: Int,
-    @SerialName("imdb_id") var imdbId: String,
+    @SerialName("imdb_id") var imdbId: String? = null,
     @SerialName("original_language") var originalLanguage: String,
     @SerialName("original_title") var originalTitle: String,
     @SerialName("overview") var overview: String,
