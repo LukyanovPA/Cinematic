@@ -29,7 +29,7 @@ fun ViewPager2.bindMainViewPager(
         context.getString(R.string.top_rated),
         context.getString(R.string.upcoming),
     )
-    val fragmentList = arrayListOf(
+    val fragmentList = listOf(
         PopularMovieFragment(),
         NowPlayingFragment(),
         TopRatedFragment(),

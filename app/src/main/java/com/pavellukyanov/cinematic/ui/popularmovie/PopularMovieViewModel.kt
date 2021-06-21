@@ -24,8 +24,7 @@ import javax.inject.Inject
 class PopularMovieViewModel @Inject constructor(
     private val movieRepo: PopularMovieRepo
 ) : BaseViewModel() {
-    private var _popularMovies: MutableLiveData<ResourceState<PagingData<Movie>>> =
-        MutableLiveData()
+    private var _popularMovies = MutableLiveData<ResourceState<PagingData<Movie>>>()
     private val popularMovies: LiveData<ResourceState<PagingData<Movie>>> get() = _popularMovies
 
     fun getMovies(): LiveData<ResourceState<PagingData<Movie>>> {

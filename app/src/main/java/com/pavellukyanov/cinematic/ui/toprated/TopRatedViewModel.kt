@@ -24,8 +24,7 @@ import javax.inject.Inject
 class TopRatedViewModel @Inject constructor(
     private val repo: TopRatedRepo
 ) : BaseViewModel() {
-    private var _topRated: MutableLiveData<ResourceState<PagingData<Movie>>> =
-        MutableLiveData()
+    private var _topRated = MutableLiveData<ResourceState<PagingData<Movie>>>()
     private val topRated: LiveData<ResourceState<PagingData<Movie>>> get() = _topRated
 
     fun getMovies(): LiveData<ResourceState<PagingData<Movie>>> {

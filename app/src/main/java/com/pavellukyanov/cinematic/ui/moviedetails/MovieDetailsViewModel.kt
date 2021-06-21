@@ -15,8 +15,7 @@ import javax.inject.Inject
 class MovieDetailsViewModel @Inject constructor(
     private val repo: MovieDetailsRepo
 ) : BaseViewModel() {
-    private var _details: MutableLiveData<ResourceState<MovieDetails>> =
-        MutableLiveData()
+    private var _details = MutableLiveData<ResourceState<MovieDetails>>()
     private val details: LiveData<ResourceState<MovieDetails>> get() = _details
 
     fun getMovieDetails(movieId: Int): LiveData<ResourceState<MovieDetails>> {

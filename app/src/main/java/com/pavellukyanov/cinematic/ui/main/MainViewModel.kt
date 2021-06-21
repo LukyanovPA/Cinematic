@@ -15,7 +15,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val genresRepo: GenresRepo
 ) : BaseViewModel() {
-    private var _genres: MutableLiveData<ResourceState<List<Genre>>> = MutableLiveData()
+    private var _genres = MutableLiveData<ResourceState<List<Genre>>>()
     private val genres: LiveData<ResourceState<List<Genre>>> get() = _genres
 
     fun getAllGenres(): LiveData<ResourceState<List<Genre>>> {

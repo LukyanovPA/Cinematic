@@ -13,12 +13,13 @@ import com.pavellukyanov.cinematic.domain.ResourceState
 import com.pavellukyanov.cinematic.domain.models.Movie
 import com.pavellukyanov.cinematic.ui.adapters.MovieItemClickListener
 import com.pavellukyanov.cinematic.ui.adapters.MovieListAdapter
+import com.pavellukyanov.cinematic.ui.base.BaseFragment
 import com.pavellukyanov.cinematic.utils.Constants
 import com.pavellukyanov.cinematic.utils.MovieComparator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
+class NowPlayingFragment : BaseFragment<PagingData<Movie>>(R.layout.fragment_now_playing) {
     private var _binding: FragmentNowPlayingBinding? = null
     private val binding get() = _binding!!
     private val viewModel: NowPlayingViewModel by viewModels()
@@ -40,7 +41,7 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
         with(binding) {
             recyNowPlaying.apply {
                 adapter = popAdapter
-                layoutManager = GridLayoutManager(context, Constants.POPULAR_GRID_COLUMN)
+                layoutManager = GridLayoutManager(context, Constants.MOVIE_LIST_GRID_COLUMN)
             }
         }
     }
@@ -49,25 +50,18 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
         viewModel.getMovies().observe(viewLifecycleOwner, (this::onStateReceive))
     }
 
-    private fun onStateReceive(resourceState: ResourceState<PagingData<Movie>>) {
-        when (resourceState) {
-            is ResourceState.Success -> handleSuccessState(resourceState.data)
-            is ResourceState.Loading -> handleLoadingState(true)
-            is ResourceState.Error -> handleErrorState(resourceState.error)
-        }
-    }
-
-    private fun handleSuccessState(data: PagingData<Movie>) {
-        handleLoadingState(false)
+    override fun handleSuccessStateMovies(data: PagingData<Movie>) {
+        super.handleSuccessStateMovies(data)
         popAdapter.submitData(lifecycle, data)
     }
 
-    private fun handleLoadingState(state: Boolean) {
-
+    override fun handleLoadingStateMovies(state: Boolean) {
+        super.handleLoadingStateMovies(state)
+        //обработать
     }
 
-    private fun handleErrorState(error: Throwable?) {
-        handleLoadingState(false)
+    override fun handleErrorStateMovies(error: Throwable?) {
+        super.handleErrorStateMovies(error)
         Toast.makeText(
             requireContext(),
             requireContext().getString(R.string.error_toast, error?.localizedMessage),

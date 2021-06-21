@@ -4,14 +4,17 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
+import androidx.paging.PagingData
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.pavellukyanov.cinematic.domain.models.Movie
+import com.pavellukyanov.cinematic.ui.base.BaseFragment
 
 class ViewPagerAdapter(
     context: Context,
-    listFragment: ArrayList<Fragment>,
-    fm: FragmentManager,
+    listFragment: List<BaseFragment<*>>,
+    frag: FragmentManager,
     lifecycle: Lifecycle
-) : FragmentStateAdapter(fm, lifecycle) {
+) : FragmentStateAdapter(frag, lifecycle) {
 
     private val list = listFragment
 
