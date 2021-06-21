@@ -23,12 +23,7 @@ class PopularMovieFragment : BaseFragment<PagingData<Movie>>(R.layout.fragment_p
     private var _binding: FragmentPopularMovieBinding? = null
     private val binding get() = _binding!!
     private val viewModel: PopularMovieViewModel by viewModels()
-    private val popAdapter by lazy {
-        MovieListAdapter(
-            MovieComparator,
-            movieItemClickListener
-        )
-    }
+    private val popAdapter by lazy { MovieListAdapter(MovieComparator, movieItemClickListener) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,12 +33,7 @@ class PopularMovieFragment : BaseFragment<PagingData<Movie>>(R.layout.fragment_p
     }
 
     private fun initRecycler() {
-        with(binding) {
-            recyPopularMovie.apply {
-                adapter = popAdapter
-                layoutManager = GridLayoutManager(context, Constants.MOVIE_LIST_GRID_COLUMN)
-            }
-        }
+        binding.bindAdapter(requireContext(), popAdapter)
     }
 
     private fun subscribeViewModel() {
@@ -53,30 +43,6 @@ class PopularMovieFragment : BaseFragment<PagingData<Movie>>(R.layout.fragment_p
     override fun handleSuccessStateMovies(data: PagingData<Movie>) {
         super.handleSuccessStateMovies(data)
         popAdapter.submitData(lifecycle, data)
-    }
-
-    override fun handleLoadingStateMovies(state: Boolean) {
-        super.handleLoadingStateMovies(state)
-        //todo
-    }
-
-    override fun handleErrorStateMovies(error: Throwable?) {
-        super.handleErrorStateMovies(error)
-        Toast.makeText(
-            requireContext(),
-            requireContext().getString(R.string.error_toast, error?.localizedMessage),
-            Toast.LENGTH_LONG
-        ).show()
-    }
-
-    private val movieItemClickListener = object : MovieItemClickListener {
-        override fun onItemClicked(movieId: Int) {
-            val action =
-                MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(
-                    movieId
-                )
-            findNavController().navigate(action)
-        }
     }
 
     override fun onDestroy() {

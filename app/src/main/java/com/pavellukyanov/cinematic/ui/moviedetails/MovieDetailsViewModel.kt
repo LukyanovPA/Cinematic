@@ -18,6 +18,7 @@ class MovieDetailsViewModel @Inject constructor(
     private var _details = MutableLiveData<ResourceState<MovieDetails>>()
     private val details: LiveData<ResourceState<MovieDetails>> get() = _details
 
+
     fun getMovieDetails(movieId: Int): LiveData<ResourceState<MovieDetails>> {
         _details.postValue(ResourceState.Loading)
         dispose.add(repo.getMovieDetails(movieId)

@@ -5,10 +5,14 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.pavellukyanov.cinematic.R
+import com.pavellukyanov.cinematic.databinding.FragmentMainBinding
+import com.pavellukyanov.cinematic.domain.genre.Genre
+import com.pavellukyanov.cinematic.ui.adapters.GenresListAdapter
 import com.pavellukyanov.cinematic.ui.adapters.ViewPagerAdapter
 import com.pavellukyanov.cinematic.ui.nowplaying.NowPlayingFragment
 import com.pavellukyanov.cinematic.ui.popularmovie.PopularMovieFragment
@@ -94,4 +98,20 @@ private fun TabLayout.bindTabMediator(
             tab.customView = inflate
             inflate.findViewById<TextView>(R.id.tvTabItem).text = category[position]
         }).attach()
+}
+
+fun FragmentMainBinding.bindAdapter(
+    listGenre: List<Genre>,
+    context: Context
+) {
+    val genresAdapter = GenresListAdapter(listOf())
+    recyGenres.apply {
+        adapter = genresAdapter
+        layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    }
+    genresAdapter.apply {
+        addGenres(listGenre)
+        notifyDataSetChanged()
+    }
 }

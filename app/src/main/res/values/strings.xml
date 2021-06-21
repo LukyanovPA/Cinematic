@@ -10,4 +10,5 @@
     <string name="release">%1$s - </string>
     <string name="director"> %1$s</string>
     <string name="movie_description_title">Обзор</string>
+    <string name="movie_casts_title">В ролях</string>
 </resources>

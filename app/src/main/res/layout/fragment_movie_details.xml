@@ -127,9 +127,9 @@
                 android:id="@+id/movie_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="fill"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:gravity="fill"
                 android:textAppearance="@style/TextAppearance.Cinematic.TabLayout.DirectorAndRelease"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -142,9 +142,9 @@
             android:layout_width="match_parent"
             android:layout_height="16dp"
             android:background="@drawable/long_text_gradient_bottom"
+            app:layout_constraintBottom_toBottomOf="@+id/description_container"
             app:layout_constraintEnd_toEndOf="@+id/description_container"
-            app:layout_constraintStart_toStartOf="@+id/description_container"
-            app:layout_constraintBottom_toBottomOf="@+id/description_container"/>
+            app:layout_constraintStart_toStartOf="@+id/description_container" />
 
         <View
             android:id="@+id/top_text_gradient"
@@ -153,6 +153,30 @@
             android:background="@drawable/long_text_gradient_top"
             app:layout_constraintEnd_toEndOf="@+id/description_container"
             app:layout_constraintStart_toStartOf="@+id/description_container"
-            app:layout_constraintTop_toTopOf="@+id/description_container"/>
+            app:layout_constraintTop_toTopOf="@+id/description_container" />
+
+        <TextView
+            android:id="@+id/movie_casts_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:gravity="start"
+            android:text="@string/movie_casts_title"
+            android:textAppearance="@style/TextAppearance.Cinematic.MovieDetailsTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_container" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recy_casts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:scrollbars="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_casts_title" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </ScrollView>

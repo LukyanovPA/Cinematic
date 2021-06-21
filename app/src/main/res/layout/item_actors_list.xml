@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="120dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp">
+
+    <ImageView
+        android:id="@+id/actor_picture"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/emma" />
+
+    <TextView
+        android:id="@+id/actor_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.Cinematic.ActorName"
+        app:layout_constraintEnd_toEndOf="@+id/actor_picture"
+        app:layout_constraintStart_toStartOf="@+id/actor_picture"
+        app:layout_constraintTop_toBottomOf="@+id/actor_picture"
+        tools:text="Emma Stone" />
+
+    <TextView
+        android:id="@+id/actor_character"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.Cinematic.ActorCharacter"
+        app:layout_constraintEnd_toEndOf="@+id/actor_picture"
+        app:layout_constraintStart_toStartOf="@+id/actor_picture"
+        app:layout_constraintTop_toBottomOf="@+id/actor_name"
+        tools:text="Cruella" />
+</androidx.constraintlayout.widget.ConstraintLayout>

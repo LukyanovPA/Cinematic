@@ -9,12 +9,13 @@ import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentMovieDetailsBinding
 import com.pavellukyanov.cinematic.domain.models.Crew
 import com.pavellukyanov.cinematic.domain.models.MovieDetails
+import com.pavellukyanov.cinematic.ui.adapters.CastsAdapter
 import com.pavellukyanov.cinematic.ui.adapters.MovieDetailsGenresAdapter
 
-fun FragmentMovieDetailsBinding.bind(
+fun FragmentMovieDetailsBinding.bindMovieDetails(
     movie: MovieDetails,
     context: Context,
-    activity: FragmentActivity
+    activity: FragmentActivity?
 ) {
     val genresAdapter = MovieDetailsGenresAdapter(listOf())
     recyGenres.apply {
@@ -33,7 +34,7 @@ fun FragmentMovieDetailsBinding.bind(
         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
         .into(movieDetailsPoster)
 
-    buttonBack.setOnClickListener { activity.onBackPressed() }
+    buttonBack.setOnClickListener { activity?.onBackPressed() }
     movieDetailsTitle.text = movie.details.title
     release.text =
         context.getString(
@@ -47,6 +48,17 @@ fun FragmentMovieDetailsBinding.bind(
         )
     ratingBarDetails.rating = (movie.details.voteAverage / 2).toFloat()
     movieDescription.text = movie.details.overview
+
+    val castsAdapter = CastsAdapter(listOf())
+    recyCasts.apply {
+        adapter = castsAdapter
+        layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    }
+    castsAdapter.apply {
+        addCasts(movie.actors)
+        notifyDataSetChanged()
+    }
 }
 
 private fun getDirector(list: List<Crew>): String {

@@ -2,19 +2,13 @@ package com.pavellukyanov.cinematic.ui.toprated
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.paging.PagingData
-import androidx.recyclerview.widget.GridLayoutManager
 import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentTopRatedBinding
-import com.pavellukyanov.cinematic.domain.ResourceState
 import com.pavellukyanov.cinematic.domain.models.Movie
-import com.pavellukyanov.cinematic.ui.adapters.MovieItemClickListener
 import com.pavellukyanov.cinematic.ui.adapters.MovieListAdapter
 import com.pavellukyanov.cinematic.ui.base.BaseFragment
-import com.pavellukyanov.cinematic.utils.Constants
 import com.pavellukyanov.cinematic.utils.MovieComparator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +17,7 @@ class TopRatedFragment : BaseFragment<PagingData<Movie>>(R.layout.fragment_top_r
     private var _binding: FragmentTopRatedBinding? = null
     private val binding get() = _binding!!
     private val viewModel: TopRatedViewModel by viewModels()
-    private val popAdapter by lazy { MovieListAdapter(MovieComparator, movieItemClickListener) }
+    private val movieListAdapter by lazy { MovieListAdapter(MovieComparator, movieItemClickListener) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,12 +27,7 @@ class TopRatedFragment : BaseFragment<PagingData<Movie>>(R.layout.fragment_top_r
     }
 
     private fun initRecycler() {
-        with(binding) {
-            recyTopRated.apply {
-                adapter = popAdapter
-                layoutManager = GridLayoutManager(context, Constants.MOVIE_LIST_GRID_COLUMN)
-            }
-        }
+        binding.bindAdapter(requireContext(), movieListAdapter)
     }
 
     private fun subscribeViewModel() {
@@ -47,27 +36,7 @@ class TopRatedFragment : BaseFragment<PagingData<Movie>>(R.layout.fragment_top_r
 
     override fun handleSuccessStateMovies(data: PagingData<Movie>) {
         super.handleSuccessStateMovies(data)
-        popAdapter.submitData(lifecycle, data)
-    }
-
-    override fun handleLoadingStateMovies(state: Boolean) {
-        super.handleLoadingStateMovies(state)
-        //todo
-    }
-
-    override fun handleErrorStateMovies(error: Throwable?) {
-        super.handleErrorStateMovies(error)
-        Toast.makeText(
-            requireContext(),
-            requireContext().getString(R.string.error_toast, error?.localizedMessage),
-            Toast.LENGTH_LONG
-        ).show()
-    }
-
-    private val movieItemClickListener = object : MovieItemClickListener {
-        override fun onItemClicked(movieId: Int) {
-
-        }
+        movieListAdapter.submitData(lifecycle, data)
     }
 
     override fun onDestroy() {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="TextAppearance.Cinematic" parent="TextAppearance.AppCompat">
         <item name="android:fontFamily">@font/acrom_light</item>
         <item name="android:textColor">@color/main_color</item>
@@ -27,6 +28,18 @@
 
     <style name="TextAppearance.Cinematic.TabLayout.DirectorAndRelease">
         <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/release_and_director</item>
+    </style>
+
+    <style name="TextAppearance.Cinematic.ActorName">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/main_color</item>
+    </style>
+
+    <style name="TextAppearance.Cinematic.ActorCharacter">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">italic</item>
         <item name="android:textColor">@color/release_and_director</item>
     </style>
 

@@ -11,12 +11,12 @@ import com.pavellukyanov.cinematic.databinding.FragmentMainBinding
 import com.pavellukyanov.cinematic.domain.ResourceState
 import com.pavellukyanov.cinematic.domain.genre.Genre
 import com.pavellukyanov.cinematic.ui.adapters.GenresListAdapter
+import com.pavellukyanov.cinematic.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment(R.layout.fragment_main) {
+class MainFragment : BaseFragment<List<Genre>>(R.layout.fragment_main) {
     private val mainViewModel: MainViewModel by viewModels()
-    private val genresAdapter by lazy { GenresListAdapter(listOf()) }
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
@@ -36,45 +36,16 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 childFragmentManager,
                 viewLifecycleOwner.lifecycle
             )
-            recyGenres.apply {
-                adapter = genresAdapter
-                layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            }
         }
     }
 
     private fun subscribeViewModel() {
-        mainViewModel.getAllGenres().observe(viewLifecycleOwner, (this::onStateReceiveGenres))
+        mainViewModel.getAllGenres().observe(viewLifecycleOwner, (this::onStateReceive))
     }
 
-    private fun onStateReceiveGenres(resourceState: ResourceState<List<Genre>>) {
-        when (resourceState) {
-            is ResourceState.Success -> handleSuccessStateGenres(resourceState.data)
-            is ResourceState.Loading -> handleLoadingStateGenres(true)
-            is ResourceState.Error -> handleErrorStateGenres(resourceState.error)
-        }
-    }
-
-    private fun handleSuccessStateGenres(data: List<Genre>) {
-        handleLoadingStateGenres(false)
-        genresAdapter.apply {
-            addGenres(data)
-            notifyDataSetChanged()
-        }
-    }
-
-    private fun handleLoadingStateGenres(state: Boolean) {
-
-    }
-
-    private fun handleErrorStateGenres(error: Throwable?) {
-        handleLoadingStateGenres(false)
-        Toast.makeText(
-            requireContext(),
-            requireContext().getString(R.string.error_toast, error?.localizedMessage),
-            Toast.LENGTH_LONG
-        ).show()
+    override fun handleSuccessStateMovies(data: List<Genre>) {
+        super.handleSuccessStateMovies(data)
+        binding.bindAdapter(data, requireContext())
     }
 
     override fun onDestroy() {
