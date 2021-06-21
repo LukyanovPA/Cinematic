@@ -20,7 +20,7 @@ abstract class BaseFragment<T : Any>(
     }
 
     open fun handleLoadingStateMovies(state: Boolean) {
-
+        //test token
     }
 
     open fun handleErrorStateMovies(error: Throwable?) {
