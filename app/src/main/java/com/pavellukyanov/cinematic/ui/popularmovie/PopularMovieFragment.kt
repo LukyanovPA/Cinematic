@@ -11,6 +11,7 @@ import com.pavellukyanov.cinematic.ui.adapters.MovieListAdapter
 import com.pavellukyanov.cinematic.ui.base.BaseFragment
 import com.pavellukyanov.cinematic.utils.MovieComparator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 class PopularMovieFragment : BaseFragment<PagingData<Movie>>(R.layout.fragment_popular_movie) {
@@ -19,6 +20,7 @@ class PopularMovieFragment : BaseFragment<PagingData<Movie>>(R.layout.fragment_p
     private val viewModel: PopularMovieViewModel by viewModels()
     private val movieListAdapter by lazy { MovieListAdapter(MovieComparator, movieItemClickListener) }
 
+    @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentPopularMovieBinding.bind(view)
@@ -30,6 +32,7 @@ class PopularMovieFragment : BaseFragment<PagingData<Movie>>(R.layout.fragment_p
         binding.bindAdapter(requireContext(), movieListAdapter)
     }
 
+    @ExperimentalCoroutinesApi
     private fun subscribeViewModel() {
         viewModel.getMovies().observe(viewLifecycleOwner, (this::onStateReceive))
     }

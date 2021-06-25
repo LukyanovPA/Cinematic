@@ -1,4 +1,4 @@
-package com.pavellukyanov.cinematic.domain.popularmovie
+package com.pavellukyanov.cinematic.data.repository.popularmovie
 
 
 import com.pavellukyanov.cinematic.domain.models.Movie

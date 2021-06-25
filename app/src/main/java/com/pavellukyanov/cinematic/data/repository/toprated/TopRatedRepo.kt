@@ -1,4 +1,4 @@
-package com.pavellukyanov.cinematic.domain.toprated
+package com.pavellukyanov.cinematic.data.repository.toprated
 
 import com.pavellukyanov.cinematic.domain.models.Movie
 import io.reactivex.Single
