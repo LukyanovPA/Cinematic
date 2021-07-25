@@ -1,11 +1,13 @@
 package com.pavellukyanov.cinematic.data.api.pojo.popularmovie
 
-import com.google.gson.annotations.SerializedName
 import com.pavellukyanov.cinematic.data.api.pojo.MovieResponse
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PopularMovieResponse(
-    @SerializedName("page") var page : Int,
-    @SerializedName("results") var results : List<MovieResponse>,
-    @SerializedName("total_pages") var totalPages : Int,
-    @SerializedName("total_results") var totalResults : Int
+    @SerialName("page") var page: Int,
+    @SerialName("results") var results: List<MovieResponse>,
+    @SerialName("total_pages") var totalPages: Int,
+    @SerialName("total_results") var totalResults: Int
 )

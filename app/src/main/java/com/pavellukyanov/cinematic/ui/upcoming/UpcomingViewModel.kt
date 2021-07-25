@@ -24,8 +24,7 @@ import javax.inject.Inject
 class UpcomingViewModel @Inject constructor(
     private val repo: UpcomingRepo
 ) : BaseViewModel() {
-    private var _upcoming: MutableLiveData<ResourceState<PagingData<Movie>>> =
-        MutableLiveData()
+    private var _upcoming = MutableLiveData<ResourceState<PagingData<Movie>>>()
     private val upcoming: LiveData<ResourceState<PagingData<Movie>>> get() = _upcoming
 
     fun getMovies(): LiveData<ResourceState<PagingData<Movie>>> {

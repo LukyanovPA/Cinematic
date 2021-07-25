@@ -1,7 +1,9 @@
 package com.pavellukyanov.cinematic.data.api.pojo.genres
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 class GenresResponse(
-    @SerializedName("genres") val genres: List<GenreResponse>
+    @SerialName("genres") val genres: List<GenreResponse>
 )

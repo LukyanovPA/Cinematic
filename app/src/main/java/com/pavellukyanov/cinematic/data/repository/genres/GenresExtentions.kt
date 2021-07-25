@@ -22,16 +22,24 @@ fun Genre.toGenreEntity() = GenreEntity(
 
 fun GenresResponse.toListGenre(): List<Genre> {
     val mappingList = mutableListOf<Genre>()
-    this.genres.forEach {
-        mappingList.add(it.toGenre())
+    this.genres.forEach { genreResponse ->
+        mappingList.add(genreResponse.toGenre())
     }
     return mappingList
 }
 
-fun List<GenreEntity>.toListGenre(): List<Genre> {
+fun List<GenreEntity>.listEntityToListGenre(): List<Genre> {
     val mappingList = mutableListOf<Genre>()
-    this.forEach {
-        mappingList.add(it.toGenre())
+    this.forEach { genreEntity ->
+        mappingList.add(genreEntity.toGenre())
+    }
+    return mappingList
+}
+
+fun List<GenreResponse>.toListGenre(): List<Genre> {
+    val mappingList = mutableListOf<Genre>()
+    this.forEach { genreResponse ->
+        mappingList.add(genreResponse.toGenre())
     }
     return mappingList
 }

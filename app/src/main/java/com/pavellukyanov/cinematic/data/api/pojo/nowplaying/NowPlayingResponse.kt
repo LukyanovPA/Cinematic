@@ -1,13 +1,14 @@
-package com.pavellukyanov.myaaproject.data.models
+package com.pavellukyanov.cinematic.data.api.pojo.nowplaying
 
-import com.google.gson.annotations.SerializedName
 import com.pavellukyanov.cinematic.data.api.pojo.MovieResponse
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-
-data class NowPlayingResponse (
-   @SerializedName("dates") var dates : DatesResponse,
-   @SerializedName("page") var page : Int,
-   @SerializedName("results") var results : List<MovieResponse>,
-   @SerializedName("total_pages") var totalPages : Int,
-   @SerializedName("total_results") var totalResults : Int
+@Serializable
+data class NowPlayingResponse(
+    @SerialName("dates") var dates: DatesResponse,
+    @SerialName("page") var page: Int,
+    @SerialName("results") var results: List<MovieResponse>,
+    @SerialName("total_pages") var totalPages: Int,
+    @SerialName("total_results") var totalResults: Int
 )

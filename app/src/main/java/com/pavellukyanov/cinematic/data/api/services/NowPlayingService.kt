@@ -1,7 +1,7 @@
 package com.pavellukyanov.cinematic.data.api.services
 
+import com.pavellukyanov.cinematic.data.api.pojo.nowplaying.NowPlayingResponse
 import com.pavellukyanov.cinematic.utils.RequestParameters
-import com.pavellukyanov.myaaproject.data.models.NowPlayingResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query

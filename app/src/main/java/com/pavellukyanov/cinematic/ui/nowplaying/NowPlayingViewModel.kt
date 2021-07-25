@@ -24,8 +24,7 @@ import javax.inject.Inject
 class NowPlayingViewModel @Inject constructor(
     private val repo: NowPlayingRepo
 ) : BaseViewModel() {
-    private var _nowPlaying: MutableLiveData<ResourceState<PagingData<Movie>>> =
-        MutableLiveData()
+    private var _nowPlaying = MutableLiveData<ResourceState<PagingData<Movie>>>()
     private val nowPlaying: LiveData<ResourceState<PagingData<Movie>>> get() = _nowPlaying
 
     fun getMovies(): LiveData<ResourceState<PagingData<Movie>>> {

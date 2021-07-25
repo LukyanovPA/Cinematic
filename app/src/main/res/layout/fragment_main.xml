@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/background_color"
+    android:layout_marginTop="15dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.MainFragment">
@@ -38,6 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    app:layout_collapseMode="parallax"
                     android:src="@drawable/ic_logo"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -61,21 +63,16 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/tab_margin_top"
             android:layout_marginBottom="10dp"
             android:background="@color/background_color"
-            app:layout_collapseMode="pin"
+            app:layout_collapseMode="parallax"
             app:tabGravity="start"
             app:tabIndicator="@color/pink"
             app:tabIndicatorColor="@color/pink"
             app:tabIndicatorHeight="2dp"
-            app:tabMode="scrollable"
-            app:tabPaddingStart="1dp"
-            app:tabPaddingEnd="0dp"
-            app:tabSelectedTextColor="@color/main_color"
-            app:tabTextColor="@color/pink" />
+            app:tabMode="fixed"
+            app:tabPaddingStart="2dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recy_genres"

@@ -4,11 +4,13 @@ import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitor
 import com.pavellukyanov.cinematic.data.api.services.*
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
 import com.pavellukyanov.cinematic.data.repository.genres.GenresRepoImpl
+import com.pavellukyanov.cinematic.data.repository.moviedetails.MovieDetailsRepoImpl
 import com.pavellukyanov.cinematic.data.repository.nowplaying.NowPlayingRepoImpl
 import com.pavellukyanov.cinematic.data.repository.popularmovie.PopularMovieRepoImpl
 import com.pavellukyanov.cinematic.data.repository.toprated.TopRatedRepoImpl
 import com.pavellukyanov.cinematic.data.repository.upcoming.UpcomingRepoImpl
 import com.pavellukyanov.cinematic.domain.genre.GenresRepo
+import com.pavellukyanov.cinematic.domain.moviedetail.MovieDetailsRepo
 import com.pavellukyanov.cinematic.domain.nowplaying.NowPlayingRepo
 import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovieRepo
 import com.pavellukyanov.cinematic.domain.toprated.TopRatedRepo
@@ -60,4 +62,12 @@ object RepoModule {
         networkMonitor: NetworkMonitor,
         database: MovieDatabase
     ): UpcomingRepo = UpcomingRepoImpl(api, config, networkMonitor, database)
+
+    @Provides
+    fun provideMovieDetailsRepo(
+        api: MovieDetailsService,
+        config: ConfigurationService,
+        networkMonitor: NetworkMonitor,
+        database: MovieDatabase
+    ): MovieDetailsRepo = MovieDetailsRepoImpl(api, config, networkMonitor, database)
 }

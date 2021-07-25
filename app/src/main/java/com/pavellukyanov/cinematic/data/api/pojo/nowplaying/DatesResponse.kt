@@ -1,9 +1,10 @@
-package com.pavellukyanov.myaaproject.data.models
+package com.pavellukyanov.cinematic.data.api.pojo.nowplaying
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-   
-data class DatesResponse (
-   @SerializedName("maximum") var maximum : String,
-   @SerializedName("minimum") var minimum : String
+@Serializable
+data class DatesResponse(
+    @SerialName("maximum") var maximum: String,
+    @SerialName("minimum") var minimum: String
 )

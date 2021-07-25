@@ -1,8 +1,10 @@
 package com.pavellukyanov.cinematic.data.api.pojo.configuration
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class ConfigurationResponse(
-    @SerializedName("images") var images : ImagesResponse,
-    @SerializedName("change_keys") var changeKeys : List<String>
+    @SerialName("images") var images : ImagesResponse,
+    @SerialName("change_keys") var changeKeys : List<String>
 )

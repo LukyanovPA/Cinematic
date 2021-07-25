@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_view_count"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/background_color">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/movie_details_poster"
+            android:layout_width="0dp"
+            android:layout_height="378dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/temp_movie" />
+
+        <ImageView
+            android:id="@+id/poster_mask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_mask_list"
+            app:layout_constraintBottom_toBottomOf="@+id/movie_details_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/ic_button_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/movie_details_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textAppearance="@style/TextAppearance.Cinematic.MovieDetailsTitle"
+            app:layout_constraintBottom_toBottomOf="@+id/movie_details_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Ford vs Ferrari" />
+
+        <LinearLayout
+            android:id="@+id/release_and_director"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/movie_details_title"
+            app:layout_constraintStart_toStartOf="@+id/movie_details_title"
+            app:layout_constraintTop_toBottomOf="@+id/movie_details_title">
+
+            <TextView
+                android:id="@+id/release"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Cinematic.TabLayout.DirectorAndRelease"
+                tools:text="2019 - " />
+
+            <TextView
+                android:id="@+id/director"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:textAppearance="@style/TextAppearance.Cinematic.TabLayout.DirectorAndRelease"
+                tools:text="James Mangold" />
+
+        </LinearLayout>
+
+        <RatingBar
+            android:id="@+id/rating_bar_details"
+            style="@style/CustomRatingBar"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/release_and_director"
+            app:layout_constraintStart_toStartOf="@+id/release_and_director"
+            app:layout_constraintTop_toBottomOf="@+id/release_and_director" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recy_genres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:scrollbars="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rating_bar_details" />
+
+        <TextView
+            android:id="@+id/movie_description_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:gravity="start"
+            android:text="@string/movie_description_title"
+            android:textAppearance="@style/TextAppearance.Cinematic.MovieDetailsTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recy_genres" />
+
+        <ScrollView
+            android:id="@+id/description_container"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_description_title">
+
+            <TextView
+                android:id="@+id/movie_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="fill"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textAppearance="@style/TextAppearance.Cinematic.TabLayout.DirectorAndRelease"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/movie_description_title"
+                tools:text="Действия сериала происходят параллельно с событиями зомби-апокалипсиса, показанными в сериале «Ходячие мертвецы», но в совершенно другом месте — Лос-Анджелесе. Акцент будет сделан на семейные отношения, в частности, проблемы отцов и детей. История вращается вокруг Шона — разведённого школьного учителя и Нэнси руководительницы женского совета. А так же детей Нэнси: Ника, который борется с наркотической зависимостью и амбициозной дочери Эшли." />
+        </ScrollView>
+
+        <View
+            android:id="@+id/bottom_text_gradient"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:background="@drawable/long_text_gradient_bottom"
+            app:layout_constraintBottom_toBottomOf="@+id/description_container"
+            app:layout_constraintEnd_toEndOf="@+id/description_container"
+            app:layout_constraintStart_toStartOf="@+id/description_container" />
+
+        <View
+            android:id="@+id/top_text_gradient"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:background="@drawable/long_text_gradient_top"
+            app:layout_constraintEnd_toEndOf="@+id/description_container"
+            app:layout_constraintStart_toStartOf="@+id/description_container"
+            app:layout_constraintTop_toTopOf="@+id/description_container" />
+
+        <TextView
+            android:id="@+id/movie_casts_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:gravity="start"
+            android:text="@string/movie_casts_title"
+            android:textAppearance="@style/TextAppearance.Cinematic.MovieDetailsTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_container" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recy_casts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:scrollbars="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_casts_title"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
