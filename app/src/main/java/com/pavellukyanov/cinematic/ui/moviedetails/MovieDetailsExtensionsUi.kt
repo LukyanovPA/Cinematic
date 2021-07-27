@@ -11,6 +11,7 @@ import com.pavellukyanov.cinematic.domain.models.Crew
 import com.pavellukyanov.cinematic.domain.models.MovieDetails
 import com.pavellukyanov.cinematic.ui.adapters.CastsAdapter
 import com.pavellukyanov.cinematic.ui.adapters.MovieDetailsGenresAdapter
+import com.pavellukyanov.cinematic.utils.load
 
 fun FragmentMovieDetailsBinding.bindMovieDetails(
     movie: MovieDetails,
@@ -28,11 +29,13 @@ fun FragmentMovieDetailsBinding.bindMovieDetails(
         notifyDataSetChanged()
     }
 
-    Glide.with(context)
-        .load(movie.details.posterPath)
-        .centerCrop()
-        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-        .into(movieDetailsPoster)
+    movieDetailsPoster.load(movie.details.posterPath, context)
+
+//    Glide.with(context)
+//        .load(movie.details.posterPath)
+//        .centerCrop()
+//        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+//        .into(movieDetailsPoster)
 
     buttonBack.setOnClickListener { activity?.onBackPressed() }
     movieDetailsTitle.text = movie.details.title

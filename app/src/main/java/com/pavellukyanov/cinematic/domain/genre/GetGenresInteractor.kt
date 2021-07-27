@@ -6,8 +6,8 @@ import javax.inject.Inject
 interface GetGenresInteractor : () -> Single<List<Genre>>
 
 class GetGenresInteractorImpl @Inject constructor(
-    private val genresRepo: GenresRepo
+    private val repo: GenresRepo
 ) : GetGenresInteractor {
-    override fun invoke(): Single<List<Genre>> = genresRepo.getGenres()
-        .map { it }
+    override fun invoke(): Single<List<Genre>> =
+        repo.getGenres()
 }

@@ -2,6 +2,7 @@ package com.pavellukyanov.cinematic.ui.main
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -19,6 +20,8 @@ import com.pavellukyanov.cinematic.ui.popularmovie.PopularMovieFragment
 import com.pavellukyanov.cinematic.ui.toprated.TopRatedFragment
 import com.pavellukyanov.cinematic.ui.upcoming.UpcomingFragment
 import com.pavellukyanov.cinematic.utils.ZoomOutFadePageTransformer
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
@@ -113,4 +116,20 @@ fun FragmentMainBinding.bindAdapter(
         addGenres(listGenre)
         notifyDataSetChanged()
     }
+}
+
+fun SearchView.search(): Flowable<String> {
+    return Flowable.create({ subscriber ->
+        setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                subscriber.onNext(newText!!)
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                subscriber.onNext(query!!)
+                return false
+            }
+        })
+    }, BackpressureStrategy.BUFFER)
 }

@@ -9,8 +9,9 @@ import com.pavellukyanov.cinematic.domain.search.SearchItem
 import com.pavellukyanov.cinematic.domain.search.SearchRepo
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class SearchRepoImpl(
+class SearchRepoImpl @Inject constructor(
     private val api: SearchService,
     private val config: ConfigurationService,
     private val networkMonitor: NetworkMonitor,
