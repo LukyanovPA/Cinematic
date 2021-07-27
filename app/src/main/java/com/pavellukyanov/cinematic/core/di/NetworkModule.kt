@@ -106,4 +106,9 @@ object NetworkModule {
     @Singleton
     fun provideMovieDetailsService(retrofit: Retrofit): MovieDetailsService =
         retrofit.create(MovieDetailsService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideSearchService(retrofit: Retrofit): SearchService =
+        retrofit.create(SearchService::class.java)
 }
