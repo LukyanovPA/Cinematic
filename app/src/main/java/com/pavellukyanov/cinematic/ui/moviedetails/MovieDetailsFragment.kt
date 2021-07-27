@@ -11,31 +11,29 @@ import com.pavellukyanov.cinematic.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MovieDetailsFragment : BaseFragment<MovieDetails>(R.layout.fragment_movie_details) {
+class MovieDetailsFragment :
+    BaseFragment<MovieDetails, MovieDetailsViewModel>(R.layout.fragment_movie_details) {
     private val args: MovieDetailsFragmentArgs by navArgs()
     private val movieId by lazy { args.movieId }
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MovieDetailsViewModel by viewModels()
+    private val vm: MovieDetailsViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMovieDetailsBinding.bind(view)
-        subscribeViewModel(movieId)
+        onSubscribeViewModel(vm)
+        vm.getMovieDetails(movieId)
     }
 
-    private fun subscribeViewModel(movieId: Int) {
-        viewModel.getMovieDetails(movieId).observe(viewLifecycleOwner, (this::onStateReceive))
-    }
-
-    override fun handleSuccessStateMovies(data: MovieDetails) {
-        super.handleSuccessStateMovies(data)
+    override fun handleSuccessState(data: MovieDetails) {
+        super.handleSuccessState(data)
         binding.bindMovieDetails(data, requireContext(), activity)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-        viewModel.onDestroy()
+        vm.onDestroy()
     }
 }

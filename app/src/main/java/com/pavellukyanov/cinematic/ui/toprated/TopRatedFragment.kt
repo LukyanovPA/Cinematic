@@ -13,38 +13,40 @@ import com.pavellukyanov.cinematic.utils.MovieComparator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class TopRatedFragment : BaseFragment<PagingData<Movie>>(R.layout.fragment_top_rated) {
+class TopRatedFragment :
+    BaseFragment<PagingData<Movie>, TopRatedViewModel>(R.layout.fragment_top_rated) {
     private var _binding: FragmentTopRatedBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: TopRatedViewModel by viewModels()
-    private val movieListAdapter by lazy { MovieListAdapter(MovieComparator, movieItemClickListener) }
 
-    @ExperimentalCoroutinesApi
+    private val vm: TopRatedViewModel by viewModels()
+    private val movieListAdapter by lazy {
+        MovieListAdapter(
+            MovieComparator,
+            movieItemClickListener
+        )
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentTopRatedBinding.bind(view)
         initRecycler()
-        subscribeViewModel()
+        onSubscribeViewModel(vm)
     }
 
     private fun initRecycler() {
         binding.bindAdapter(requireContext(), movieListAdapter)
     }
 
-    @ExperimentalCoroutinesApi
-    private fun subscribeViewModel() {
-        viewModel.getMovies().observe(viewLifecycleOwner, (this::onStateReceive))
-    }
-
-    override fun handleSuccessStateMovies(data: PagingData<Movie>) {
-        super.handleSuccessStateMovies(data)
+    override fun handleSuccessState(data: PagingData<Movie>) {
+        super.handleSuccessState(data)
         movieListAdapter.submitData(lifecycle, data)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.onDestroy()
+        vm.onDestroy()
         _binding = null
     }
 }

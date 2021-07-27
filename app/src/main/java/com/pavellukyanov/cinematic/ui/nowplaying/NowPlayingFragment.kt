@@ -13,38 +13,34 @@ import com.pavellukyanov.cinematic.utils.MovieComparator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class NowPlayingFragment : BaseFragment<PagingData<Movie>>(R.layout.fragment_now_playing) {
+class NowPlayingFragment :
+    BaseFragment<PagingData<Movie>, NowPlayingViewModel>(R.layout.fragment_now_playing) {
     private var _binding: FragmentNowPlayingBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: NowPlayingViewModel by viewModels()
+    private val vm: NowPlayingViewModel by viewModels()
     private val popAdapter by lazy { MovieListAdapter(MovieComparator, movieItemClickListener) }
 
-    @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentNowPlayingBinding.bind(view)
         initRecycler()
-        subscribeViewModel()
+        onSubscribeViewModel(vm)
     }
 
     private fun initRecycler() {
         binding.bindAdapter(requireContext(), popAdapter)
     }
 
-    @ExperimentalCoroutinesApi
-    private fun subscribeViewModel() {
-        viewModel.getMovies().observe(viewLifecycleOwner, (this::onStateReceive))
-    }
-
-    override fun handleSuccessStateMovies(data: PagingData<Movie>) {
-        super.handleSuccessStateMovies(data)
+    override fun handleSuccessState(data: PagingData<Movie>) {
+        super.handleSuccessState(data)
         popAdapter.submitData(lifecycle, data)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.onDestroy()
+        vm.onDestroy()
         _binding = null
     }
 }
