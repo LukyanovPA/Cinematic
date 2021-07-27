@@ -11,37 +11,41 @@ import com.pavellukyanov.cinematic.ui.adapters.MovieListAdapter
 import com.pavellukyanov.cinematic.ui.base.BaseFragment
 import com.pavellukyanov.cinematic.utils.MovieComparator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class PopularMovieFragment : BaseFragment<PagingData<Movie>>(R.layout.fragment_popular_movie) {
+class PopularMovieFragment :
+    BaseFragment<PagingData<Movie>, PopularMovieViewModel>(R.layout.fragment_popular_movie) {
     private var _binding: FragmentPopularMovieBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: PopularMovieViewModel by viewModels()
-    private val movieListAdapter by lazy { MovieListAdapter(MovieComparator, movieItemClickListener) }
+    private val vm: PopularMovieViewModel by viewModels()
+    private val movieListAdapter by lazy {
+        MovieListAdapter(
+            MovieComparator,
+            movieItemClickListener
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentPopularMovieBinding.bind(view)
         initRecycler()
-        subscribeViewModel()
+        onSubscribeViewModel(vm)
     }
 
     private fun initRecycler() {
         binding.bindAdapter(requireContext(), movieListAdapter)
     }
 
-    private fun subscribeViewModel() {
-        viewModel.getMovies().observe(viewLifecycleOwner, (this::onStateReceive))
-    }
-
-    override fun handleSuccessStateMovies(data: PagingData<Movie>) {
-        super.handleSuccessStateMovies(data)
+    override fun handleSuccessState(data: PagingData<Movie>) {
+        super.handleSuccessState(data)
         movieListAdapter.submitData(lifecycle, data)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.onDestroy()
+        vm.onDestroy()
         _binding = null
     }
 }

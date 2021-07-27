@@ -1,56 +1,33 @@
 package com.pavellukyanov.cinematic.ui.toprated
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.rxjava2.cachedIn
-import androidx.paging.rxjava2.flowable
-import com.pavellukyanov.cinematic.data.repository.toprated.TopRatedDataSource
 import com.pavellukyanov.cinematic.domain.ResourceState
 import com.pavellukyanov.cinematic.domain.models.Movie
-import com.pavellukyanov.cinematic.domain.toprated.TopRatedRepo
+import com.pavellukyanov.cinematic.domain.toprated.TopRatedDataSource
 import com.pavellukyanov.cinematic.ui.base.BaseViewModel
-import com.pavellukyanov.cinematic.utils.Page
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class TopRatedViewModel @Inject constructor(
-    private val repo: TopRatedRepo
-) : BaseViewModel() {
-    private var _topRated = MutableLiveData<ResourceState<PagingData<Movie>>>()
-    private val topRated: LiveData<ResourceState<PagingData<Movie>>> get() = _topRated
-
-    fun getMovies(): LiveData<ResourceState<PagingData<Movie>>> {
-        _topRated.postValue(ResourceState.Loading)
-        dispose.add(getTopRatedMovies()
+    private val repo: TopRatedDataSource
+) : BaseViewModel<PagingData<Movie>>() {
+    init {
+        getPagingSource(repo)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { _topRated.postValue(ResourceState.Loading) }
+            .doOnSubscribe { onSetResource(ResourceState.Loading) }
             .subscribe(
                 { success ->
-                    _topRated.postValue(ResourceState.Success(success))
+                    onSetResource(ResourceState.Success(success))
                 },
                 { error ->
-                    _topRated.postValue(ResourceState.Error(error))
+                    onSetResource(ResourceState.Error(error))
                 }
-            )
-        )
-        return topRated
-    }
-
-    private fun getTopRatedMovies(): Flowable<PagingData<Movie>> {
-        return Pager(
-            config = PagingConfig(pageSize = Page.PAGE_SIZE, enablePlaceholders = false),
-            pagingSourceFactory = { TopRatedDataSource(repo) }
-        )
-            .flowable
-            .cachedIn(viewModelScope)
+            ).untilDestroy()
     }
 }

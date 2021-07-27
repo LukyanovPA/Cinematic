@@ -17,8 +17,7 @@ import com.pavellukyanov.cinematic.domain.models.Details
 import com.pavellukyanov.cinematic.domain.models.Movie
 
 fun ConfigurationResponse.toMovieList(
-    listMovieResponse: List<MovieResponse>,
-    upcoming: Int
+    listMovieResponse: List<MovieResponse>
 ): List<Movie> {
     val mappingList = mutableListOf<Movie>()
     listMovieResponse.forEach { movieResponse ->
@@ -26,7 +25,7 @@ fun ConfigurationResponse.toMovieList(
             this.images.posterSizes,
             this.images.baseUrl
         )
-        mappingList.add(movieResponse.toMovie(upcoming))
+        mappingList.add(movieResponse.toMovie())
     }
     return mappingList
 }

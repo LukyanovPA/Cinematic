@@ -14,10 +14,10 @@ interface MovieDao {
     fun getAllMovies(): Single<List<MovieEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovie(photoEntity: MovieEntity): Completable
+    fun insertMovies(movies: List<MovieEntity>): Completable
 
     @Update
-    fun updateMovie(photoEntity: MovieEntity)
+    fun updateMovie(movie: MovieEntity)
 
     @Query("DELETE FROM movie WHERE id = :id")
     fun deleteMovie(id: Int)

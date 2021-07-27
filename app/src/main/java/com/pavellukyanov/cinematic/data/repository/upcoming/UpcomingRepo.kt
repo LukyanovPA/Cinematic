@@ -1,4 +1,4 @@
-package com.pavellukyanov.cinematic.domain.upcoming
+package com.pavellukyanov.cinematic.data.repository.upcoming
 
 import com.pavellukyanov.cinematic.domain.models.Movie
 import io.reactivex.Single

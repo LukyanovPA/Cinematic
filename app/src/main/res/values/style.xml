@@ -22,8 +22,8 @@
     </style>
 
     <style name="TextAppearance.Cinematic.TabLayout">
-        <item name="fontFamily">@font/acrom_light</item>
-        <item name="android:textColor">@color/release_and_director</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextAppearance.Cinematic.TabLayout.DirectorAndRelease">
