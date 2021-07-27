@@ -19,7 +19,9 @@ import com.pavellukyanov.cinematic.ui.popularmovie.PopularMovieFragment
 import com.pavellukyanov.cinematic.ui.toprated.TopRatedFragment
 import com.pavellukyanov.cinematic.ui.upcoming.UpcomingFragment
 import com.pavellukyanov.cinematic.utils.ZoomOutFadePageTransformer
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 fun ViewPager2.bindMainViewPager(
     tabLayout: TabLayout,
     context: Context,
@@ -41,7 +43,6 @@ fun ViewPager2.bindMainViewPager(
     )
 
     adapter = ViewPagerAdapter(
-        context,
         fragmentList,
         childFragmentManager,
         lifecycle
@@ -76,15 +77,13 @@ private fun TabLayout.bindTabMediator(
         }
 
         override fun onTabUnselected(tab: TabLayout.Tab?) {
-            (tab?.customView?.findViewById(R.id.tvTabItem) as TextView).textSize = 10f
-            (tab.customView?.findViewById(R.id.tvTabItem) as TextView).setTextColor(
+            (tab?.customView?.findViewById(R.id.tvTabItem) as TextView).setTextColor(
                 context.getColor(R.color.release_and_director)
             )
         }
 
         override fun onTabSelected(tab: TabLayout.Tab?) {
-            (tab?.customView?.findViewById(R.id.tvTabItem) as TextView).textSize = 26f
-            (tab.customView?.findViewById(R.id.tvTabItem) as TextView).setTextColor(
+            (tab?.customView?.findViewById(R.id.tvTabItem) as TextView).setTextColor(
                 context.getColor(R.color.main_color)
             )
         }

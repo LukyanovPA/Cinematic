@@ -1,9 +1,9 @@
-package com.pavellukyanov.cinematic.data.repository.nowplaying
+package com.pavellukyanov.cinematic.domain.nowplaying
 
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxPagingSource
+import com.pavellukyanov.cinematic.data.repository.nowplaying.NowPlayingRepo
 import com.pavellukyanov.cinematic.domain.models.Movie
-import com.pavellukyanov.cinematic.domain.nowplaying.NowPlayingRepo
 import com.pavellukyanov.cinematic.utils.Page
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers

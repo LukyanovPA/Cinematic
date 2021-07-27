@@ -15,7 +15,7 @@ data class MovieResponse(
     @SerialName("overview") var overview: String,
     @SerialName("popularity") var popularity: Double,
     @SerialName("poster_path") var posterPath: String? = null,
-    @SerialName("release_date") var releaseDate: String?,
+    @SerialName("release_date") var releaseDate: String? = null,
     @SerialName("title") var title: String,
     @SerialName("video") var video: Boolean,
     @SerialName("vote_average") var voteAverage: Double,

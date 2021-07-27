@@ -1,9 +1,9 @@
-package com.pavellukyanov.cinematic.data.repository.upcoming
+package com.pavellukyanov.cinematic.domain.toprated
 
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxPagingSource
+import com.pavellukyanov.cinematic.data.repository.toprated.TopRatedRepo
 import com.pavellukyanov.cinematic.domain.models.Movie
-import com.pavellukyanov.cinematic.domain.upcoming.UpcomingRepo
 import com.pavellukyanov.cinematic.utils.Page
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -11,8 +11,8 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class UpcomingDataSource @Inject constructor(
-    private val repo: UpcomingRepo
+class TopRatedDataSource @Inject constructor(
+    private val repo: TopRatedRepo
 ) : RxPagingSource<Int, Movie>() {
     override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
         return state.anchorPosition?.let { state.closestItemToPosition(it)?.id }
@@ -21,7 +21,7 @@ class UpcomingDataSource @Inject constructor(
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, Movie>> {
         val nextPage = params.key ?: Page.STARTING_PAGE
 
-        return repo.getUpcoming(nextPage)
+        return repo.getTopRated(nextPage)
             .subscribeOn(Schedulers.io())
             .map<LoadResult<Int, Movie>> { result ->
                 LoadResult.Page(
