@@ -26,11 +26,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextAppearance.Cinematic.SearchItem">
-        <item name="android:textSize">24sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
     <style name="TextAppearance.Cinematic.TabLayout.DirectorAndRelease">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/release_and_director</item>

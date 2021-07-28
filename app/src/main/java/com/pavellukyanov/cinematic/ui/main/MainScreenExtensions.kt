@@ -4,16 +4,21 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.widget.SearchView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentMainBinding
 import com.pavellukyanov.cinematic.domain.genre.Genre
+import com.pavellukyanov.cinematic.domain.search.SearchItem
+import com.pavellukyanov.cinematic.ui.adapters.AdapterDivider
 import com.pavellukyanov.cinematic.ui.adapters.GenresListAdapter
+import com.pavellukyanov.cinematic.ui.adapters.SearchResultAdapter
 import com.pavellukyanov.cinematic.ui.adapters.ViewPagerAdapter
 import com.pavellukyanov.cinematic.ui.nowplaying.NowPlayingFragment
 import com.pavellukyanov.cinematic.ui.popularmovie.PopularMovieFragment
@@ -22,7 +27,17 @@ import com.pavellukyanov.cinematic.ui.upcoming.UpcomingFragment
 import com.pavellukyanov.cinematic.utils.ZoomOutFadePageTransformer
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
+import io.reactivex.FlowableOnSubscribe
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.util.concurrent.TimeUnit
+
+private val dispose = CompositeDisposable()
+
+fun Disposable.untilDestroy() {
+    dispose.add(this)
+}
 
 @ExperimentalCoroutinesApi
 fun ViewPager2.bindMainViewPager(
@@ -118,9 +133,9 @@ fun FragmentMainBinding.bindAdapter(
     }
 }
 
-fun SearchView.search(): Flowable<String> {
-    return Flowable.create({ subscriber ->
-        setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+fun FragmentMainBinding.search(vm: MainViewModel) {
+    Flowable.create(FlowableOnSubscribe<String> { subscriber ->
+        searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String?): Boolean {
                 subscriber.onNext(newText!!)
                 return false
@@ -132,4 +147,32 @@ fun SearchView.search(): Flowable<String> {
             }
         })
     }, BackpressureStrategy.BUFFER)
+        .debounce(300, TimeUnit.MILLISECONDS)
+        .filter { text -> text.isNotEmpty() }
+        .distinctUntilChanged()
+        .subscribe { text ->
+            vm.onSearch(text)
+        }
+        .untilDestroy()
+}
+
+fun RecyclerView.bind(
+    mAdapter: SearchResultAdapter,
+    list: List<SearchItem>,
+    context: Context
+) {
+    adapter = mAdapter
+    addItemDecoration(AdapterDivider(context, R.drawable.item_rectangle))
+    layoutManager =
+        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    mAdapter.apply {
+        addItems(list)
+        notifyDataSetChanged()
+    }
+}
+
+fun FragmentMainBinding.closeSearch() {
+    logo.isVisible = true
+    pager.isVisible = true
+    searchResult.isVisible = false
 }

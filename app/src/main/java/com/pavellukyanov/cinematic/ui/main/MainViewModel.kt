@@ -1,5 +1,7 @@
 package com.pavellukyanov.cinematic.ui.main
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.pavellukyanov.cinematic.domain.ResourceState
 import com.pavellukyanov.cinematic.domain.genre.Genre
 import com.pavellukyanov.cinematic.domain.genre.GetGenresInteractor
@@ -16,7 +18,8 @@ class MainViewModel @Inject constructor(
     private val genresRepo: GetGenresInteractor,
     private val search: SearchInteractor
 ) : BaseViewModel<List<Genre>>() {
-    private var response = emptyList<SearchItem>()
+    private val _searchResult = MutableLiveData<ResourceState<List<SearchItem>>>()
+    private val searchResult get() = _searchResult
 
     fun getAllGenres() {
         genresRepo.invoke()
@@ -33,14 +36,20 @@ class MainViewModel @Inject constructor(
             ).untilDestroy()
     }
 
-    fun search(query: String) {
+    fun onSearch(query: String) {
         search.invoke(query)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { succes ->
-                response = succes
-            }.untilDestroy()
+            .doOnSubscribe { _searchResult.postValue(ResourceState.Loading) }
+            .subscribe(
+                { success ->
+                    _searchResult.postValue(ResourceState.Success(success))
+                },
+                { error ->
+                    _searchResult.postValue(ResourceState.Error(error))
+                })
+            .untilDestroy()
     }
 
-    fun getSearchingResult(): List<SearchItem> = response
+    fun getSearchResult(): LiveData<ResourceState<List<SearchItem>>> = searchResult
 }

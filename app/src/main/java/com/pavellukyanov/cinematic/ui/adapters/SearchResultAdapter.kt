@@ -8,7 +8,7 @@ import com.pavellukyanov.cinematic.domain.search.SearchItem
 import com.pavellukyanov.cinematic.utils.load
 
 class SearchResultAdapter(
-    private var listItem: List<SearchItem>
+    private var listItem: MutableList<SearchItem>
 ) : RecyclerView.Adapter<SearchResultAdapter.SearchResultViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
@@ -29,8 +29,10 @@ class SearchResultAdapter(
     private fun getItem(position: Int) = listItem[position]
 
     fun addItems(items: List<SearchItem>) {
-        listItem = items
+        listItem = items.toMutableList()
     }
+
+    fun clearAdapter() = listItem.clear()
 
     class SearchResultViewHolder(private val binding: ItemSearchResultBinding) :
         RecyclerView.ViewHolder(binding.root) {
