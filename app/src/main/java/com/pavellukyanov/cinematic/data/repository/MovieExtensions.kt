@@ -1,4 +1,4 @@
-package com.pavellukyanov.cinematic.data.repository.movie
+package com.pavellukyanov.cinematic.data.repository
 
 import android.util.Log
 import com.pavellukyanov.cinematic.data.api.pojo.MovieResponse
