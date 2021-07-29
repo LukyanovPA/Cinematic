@@ -2,14 +2,16 @@ package com.pavellukyanov.cinematic.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pavellukyanov.cinematic.databinding.ItemSearchResultBinding
 import com.pavellukyanov.cinematic.domain.models.Movie
 import com.pavellukyanov.cinematic.utils.load
 
 class SearchResultAdapter(
-    private var listItem: MutableList<Movie>
-) : RecyclerView.Adapter<SearchResultAdapter.SearchResultViewHolder>() {
+    diffCallback: DiffUtil.ItemCallback<Movie>
+) : PagingDataAdapter<Movie, SearchResultAdapter.SearchResultViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
         val binding = ItemSearchResultBinding.inflate(
@@ -21,18 +23,12 @@ class SearchResultAdapter(
     }
 
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        getItem(position).let {
+            if (it != null) {
+                holder.bind(it)
+            }
+        }
     }
-
-    override fun getItemCount(): Int = listItem.size
-
-    private fun getItem(position: Int) = listItem[position]
-
-    fun addItems(items: List<Movie>) {
-        listItem = items.toMutableList()
-    }
-
-    fun clearAdapter() = listItem.clear()
 
     class SearchResultViewHolder(private val binding: ItemSearchResultBinding) :
         RecyclerView.ViewHolder(binding.root) {

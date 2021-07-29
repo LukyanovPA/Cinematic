@@ -4,5 +4,5 @@ import com.pavellukyanov.cinematic.domain.models.Movie
 import io.reactivex.Single
 
 interface SearchRepo {
-    fun doSearch(query: String): Single<List<Movie>>
+    fun doSearch(query: String, page: Int): Single<List<Movie>>
 }

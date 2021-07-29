@@ -22,9 +22,9 @@ class SearchRepoImpl @Inject constructor(
     private val networkMonitor: NetworkMonitor,
     private val database: MovieDatabase
 ) : SearchRepo {
-    override fun doSearch(query: String): Single<List<Movie>> {
+    override fun doSearch(query: String, page: Int): Single<List<Movie>> {
         return Single.zip(
-            api.searchMovie(query).subscribeOn(Schedulers.io()),
+            api.searchMovie(query = query, page = page).subscribeOn(Schedulers.io()),
             config.getConfiguration().subscribeOn(Schedulers.io())
         ) { searchResult, config ->
             searchResult.results.let { config.toMovieList(it as List<MovieResponse>) }

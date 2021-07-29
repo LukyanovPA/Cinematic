@@ -9,6 +9,7 @@ import com.pavellukyanov.cinematic.domain.ResourceState
 import com.pavellukyanov.cinematic.domain.genre.Genre
 import com.pavellukyanov.cinematic.ui.adapters.SearchResultAdapter
 import com.pavellukyanov.cinematic.ui.base.BaseFragment
+import com.pavellukyanov.cinematic.utils.MovieComparator
 import com.pavellukyanov.cinematic.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,7 +18,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MainFragment : BaseFragment<List<Genre>, MainViewModel>(R.layout.fragment_main) {
     private val vm: MainViewModel by viewModels()
-    private val searchAdapter by lazy { SearchResultAdapter(mutableListOf()) }
+    private val searchAdapter by lazy { SearchResultAdapter(MovieComparator) }
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
@@ -40,7 +41,6 @@ class MainFragment : BaseFragment<List<Genre>, MainViewModel>(R.layout.fragment_
 
             searchBar.setOnCloseListener {
                 closeSearch()
-                searchAdapter.clearAdapter()
                 hideKeyboard()
                 false
             }
@@ -60,11 +60,11 @@ class MainFragment : BaseFragment<List<Genre>, MainViewModel>(R.layout.fragment_
             when (result) {
                 is ResourceState.Success -> {
                     with(binding) {
-                        searchAdapter.clearAdapter()
                         mainSearchResult.bind(
                             searchAdapter,
                             result.data,
-                            requireContext()
+                            requireContext(),
+                            lifecycle
                         )
                     }
                 }

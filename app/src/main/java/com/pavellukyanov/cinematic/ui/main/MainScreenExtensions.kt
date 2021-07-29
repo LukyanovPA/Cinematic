@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -159,8 +160,9 @@ fun FragmentMainBinding.search(vm: MainViewModel) {
 
 fun LayoutSearchResultBinding.bind(
     mAdapter: SearchResultAdapter,
-    list: List<Movie>,
-    context: Context
+    data: PagingData<Movie>,
+    context: Context,
+    lifecycle: Lifecycle
 ) {
 
     root.isVisible = true
@@ -171,10 +173,7 @@ fun LayoutSearchResultBinding.bind(
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
     }
-    mAdapter.apply {
-        addItems(list)
-        notifyDataSetChanged()
-    }
+    mAdapter.submitData(lifecycle, data)
 }
 
 fun FragmentMainBinding.closeSearch() {
