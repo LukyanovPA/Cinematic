@@ -18,7 +18,12 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MainFragment : BaseFragment<List<Genre>, MainViewModel>(R.layout.fragment_main) {
     private val vm: MainViewModel by viewModels()
-    private val searchAdapter by lazy { SearchResultAdapter(MovieComparator) }
+    private val searchAdapter by lazy {
+        SearchResultAdapter(
+            MovieComparator,
+            movieItemClickListener
+        )
+    }
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
@@ -34,13 +39,12 @@ class MainFragment : BaseFragment<List<Genre>, MainViewModel>(R.layout.fragment_
     private fun initUi() {
         with(binding) {
             search(vm)
-
             searchBar.setOnSearchClickListener {
-                openSearch()
+                isSearchVisible(true)
             }
 
             searchBar.setOnCloseListener {
-                closeSearch()
+                isSearchVisible(false)
                 hideKeyboard()
                 false
             }

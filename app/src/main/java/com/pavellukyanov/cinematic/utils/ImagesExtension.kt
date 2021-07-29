@@ -3,6 +3,7 @@ package com.pavellukyanov.cinematic.utils
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.pavellukyanov.cinematic.R
 
 fun ImageView.load(
     value: String?,
@@ -18,6 +19,7 @@ fun ImageView.load(
                 centerCrop()
             }
         }
+        .placeholder(R.drawable.ic_movie_placeholder)
         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
         .into(this)
 }

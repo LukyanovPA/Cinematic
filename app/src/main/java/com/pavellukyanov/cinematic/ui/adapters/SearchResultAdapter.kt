@@ -2,6 +2,7 @@ package com.pavellukyanov.cinematic.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,8 @@ import com.pavellukyanov.cinematic.domain.models.Movie
 import com.pavellukyanov.cinematic.utils.load
 
 class SearchResultAdapter(
-    diffCallback: DiffUtil.ItemCallback<Movie>
+    diffCallback: DiffUtil.ItemCallback<Movie>,
+    private val movieItemClickListener: MovieItemClickListener
 ) : PagingDataAdapter<Movie, SearchResultAdapter.SearchResultViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
@@ -23,9 +25,13 @@ class SearchResultAdapter(
     }
 
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
-        getItem(position).let {
-            if (it != null) {
-                holder.bind(it)
+        val item = getItem(position)
+        if (item != null) {
+            holder.bind(item)
+        }
+        holder.itemView.setOnClickListener {
+            item?.let { movie ->
+                movieItemClickListener.onItemClicked(movie.id)
             }
         }
     }
@@ -38,6 +44,13 @@ class SearchResultAdapter(
                 with(item) {
                     image.load(posterPath)
                     itemTitle.text = title
+                    itemReleaseDate.text = releaseDate?.substringBefore('-')
+                    if (voteAverage != 0.0) {
+                        itemVoteCount.text = voteAverage.toString()
+                    } else {
+                        voteStar.isVisible = false
+                        itemVoteCount.isVisible = false
+                    }
                 }
             }
         }

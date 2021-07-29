@@ -164,8 +164,6 @@ fun LayoutSearchResultBinding.bind(
     context: Context,
     lifecycle: Lifecycle
 ) {
-
-    root.isVisible = true
     searchResult.apply {
         adapter = mAdapter
         addItemDecoration(AdapterDivider(context, R.drawable.item_rectangle))
@@ -176,19 +174,20 @@ fun LayoutSearchResultBinding.bind(
     mAdapter.submitData(lifecycle, data)
 }
 
-fun FragmentMainBinding.closeSearch() {
-    logo.isVisible = true
-    mainPager.root.isVisible = true
-    tabLayout.isVisible = true
-    recyGenres.isVisible = true
-    mainSearchResult.root.isVisible = false
-}
-
-fun FragmentMainBinding.openSearch() {
-    logo.isVisible = false
-    tabLayout.isVisible = false
-    recyGenres.isVisible = false
-    mainPager.root.isVisible = false
+fun FragmentMainBinding.isSearchVisible(state: Boolean) {
+    if (state) {
+        mainSearchResult.root.isVisible = true
+        logo.isVisible = false
+        tabLayout.isVisible = false
+        recyGenres.isVisible = false
+        mainPager.root.isVisible = false
+    } else {
+        mainSearchResult.root.isVisible = false
+        logo.isVisible = true
+        mainPager.root.isVisible = true
+        tabLayout.isVisible = true
+        recyGenres.isVisible = true
+    }
 }
 
 @ExperimentalCoroutinesApi

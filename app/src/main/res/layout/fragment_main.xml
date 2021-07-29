@@ -102,7 +102,7 @@
         <include
             android:id="@+id/main_search_result"
             layout="@layout/layout_search_result"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
