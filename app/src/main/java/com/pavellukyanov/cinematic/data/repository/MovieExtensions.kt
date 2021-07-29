@@ -5,10 +5,8 @@ import com.pavellukyanov.cinematic.data.api.pojo.MovieResponse
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
 import com.pavellukyanov.cinematic.data.database.entity.MovieEntity
 import com.pavellukyanov.cinematic.domain.models.Movie
-import com.pavellukyanov.cinematic.domain.search.SearchItem
 import com.pavellukyanov.cinematic.utils.PosterSizeList
 import com.pavellukyanov.cinematic.utils.PosterSizes
-import com.pavellukyanov.cinematic.utils.SearchItemType
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
@@ -74,10 +72,3 @@ fun List<Movie>.insertInDatabase(
         }
     }
 }
-
-fun Movie.toSearchItem() =
-    SearchItem(
-        this.title,
-        this.posterPath,
-        SearchItemType.MOVIE
-    )

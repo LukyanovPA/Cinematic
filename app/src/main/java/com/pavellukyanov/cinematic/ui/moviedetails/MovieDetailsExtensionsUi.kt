@@ -3,8 +3,6 @@ package com.pavellukyanov.cinematic.ui.moviedetails
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentMovieDetailsBinding
 import com.pavellukyanov.cinematic.domain.models.Crew
@@ -29,14 +27,7 @@ fun FragmentMovieDetailsBinding.bindMovieDetails(
         notifyDataSetChanged()
     }
 
-    movieDetailsPoster.load(movie.details.posterPath, context)
-
-//    Glide.with(context)
-//        .load(movie.details.posterPath)
-//        .centerCrop()
-//        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-//        .into(movieDetailsPoster)
-
+    movieDetailsPoster.load(movie.details.posterPath)
     buttonBack.setOnClickListener { activity?.onBackPressed() }
     movieDetailsTitle.text = movie.details.title
     release.text =

@@ -42,7 +42,7 @@ class MovieListAdapter @Inject constructor(
 
         fun bind(movie: Movie?) {
             with(binding) {
-                moviePoster.load(movie?.posterPath, itemView.context)
+                moviePoster.load(movie?.posterPath)
                 movieTitle.text = movie?.title
                 rating.text = movie?.voteAverage.toString()
 

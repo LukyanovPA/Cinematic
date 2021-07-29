@@ -88,6 +88,7 @@ class MainFragment : BaseFragment<List<Genre>, MainViewModel>(R.layout.fragment_
 
     override fun onDestroy() {
         super.onDestroy()
+        binding.onDestroy()
         _binding = null
         vm.onDestroy()
     }

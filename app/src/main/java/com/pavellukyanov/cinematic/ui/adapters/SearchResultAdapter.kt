@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pavellukyanov.cinematic.databinding.ItemSearchResultBinding
-import com.pavellukyanov.cinematic.domain.search.SearchItem
+import com.pavellukyanov.cinematic.domain.models.Movie
 import com.pavellukyanov.cinematic.utils.load
 
 class SearchResultAdapter(
-    private var listItem: MutableList<SearchItem>
+    private var listItem: MutableList<Movie>
 ) : RecyclerView.Adapter<SearchResultAdapter.SearchResultViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
@@ -28,7 +28,7 @@ class SearchResultAdapter(
 
     private fun getItem(position: Int) = listItem[position]
 
-    fun addItems(items: List<SearchItem>) {
+    fun addItems(items: List<Movie>) {
         listItem = items.toMutableList()
     }
 
@@ -37,10 +37,12 @@ class SearchResultAdapter(
     class SearchResultViewHolder(private val binding: ItemSearchResultBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: SearchItem) {
+        fun bind(item: Movie) {
             with(binding) {
-                image.load(item.image, itemView.context)
-                itemTitle.text = item.title
+                with(item) {
+                    image.load(posterPath)
+                    itemTitle.text = title
+                }
             }
         }
     }

@@ -15,7 +15,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentMainBinding
 import com.pavellukyanov.cinematic.domain.genre.Genre
-import com.pavellukyanov.cinematic.domain.search.SearchItem
+import com.pavellukyanov.cinematic.domain.models.Movie
 import com.pavellukyanov.cinematic.ui.adapters.AdapterDivider
 import com.pavellukyanov.cinematic.ui.adapters.GenresListAdapter
 import com.pavellukyanov.cinematic.ui.adapters.SearchResultAdapter
@@ -158,7 +158,7 @@ fun FragmentMainBinding.search(vm: MainViewModel) {
 
 fun RecyclerView.bind(
     mAdapter: SearchResultAdapter,
-    list: List<SearchItem>,
+    list: List<Movie>,
     context: Context
 ) {
     adapter = mAdapter
@@ -175,4 +175,8 @@ fun FragmentMainBinding.closeSearch() {
     logo.isVisible = true
     pager.isVisible = true
     searchResult.isVisible = false
+}
+
+fun FragmentMainBinding.onDestroy() {
+    dispose.dispose()
 }
