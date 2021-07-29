@@ -20,6 +20,7 @@ fun MovieResponse.setupMoviePoster(posterSizes: List<String>, baseUrl: String) {
 fun MovieResponse.toMovie() = Movie(
     id = id,
     title = title,
+    originalTitle = originalTitle,
     posterPath = moviePoster,
     releaseDate = releaseDate,
     voteAverage = voteAverage
@@ -27,7 +28,8 @@ fun MovieResponse.toMovie() = Movie(
 
 fun MovieEntity.toMovie() = Movie(
     id = id,
-    title = originalTitle,
+    title = title,
+    originalTitle = originalTitle,
     posterPath = posterPath,
     releaseDate = releaseDate,
     voteAverage = voteAverage
@@ -36,7 +38,8 @@ fun MovieEntity.toMovie() = Movie(
 fun Movie.toMovieEntity() = releaseDate?.let {
     MovieEntity(
         id = id,
-        originalTitle = title,
+        title = title,
+        originalTitle = originalTitle,
         posterPath = posterPath,
         releaseDate = it,
         voteAverage = voteAverage

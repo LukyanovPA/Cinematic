@@ -42,7 +42,7 @@ fun Disposable.untilDestroy() {
 }
 
 @ExperimentalCoroutinesApi
-fun ViewPager2.bindMainViewPager(
+fun ViewPager2.bind(
     tabLayout: TabLayout,
     context: Context,
     layoutInflater: LayoutInflater,
@@ -198,7 +198,7 @@ fun LayoutMainPagerBinding.bind(
     childFragmentManager: FragmentManager,
     lifecycle: Lifecycle
 ) {
-    pager.bindMainViewPager(
+    pager.bind(
         tabLayout, context, layoutInflater, childFragmentManager, lifecycle
     )
 }

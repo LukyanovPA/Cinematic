@@ -17,6 +17,7 @@ fun MovieDetailsResponse.setupMoviePoster(posterSizes: List<String>, baseUrl: St
 fun MovieDetailsResponse.toDetails() = Details(
     id = id,
     title = title,
+    originalTitle = originalTitle,
     posterPath = moviePoster,
     voteAverage = voteAverage,
     releaseDate = releaseDate,

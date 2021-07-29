@@ -26,23 +26,6 @@ fun FragmentMovieDetailsBinding.bindMovieDetails(
         addGenres(movie.details.genres)
         notifyDataSetChanged()
     }
-
-    movieDetailsPoster.load(movie.details.posterPath)
-    buttonBack.setOnClickListener { activity?.onBackPressed() }
-    movieDetailsTitle.text = movie.details.title
-    release.text =
-        context.getString(
-            R.string.release,
-            movie.details.releaseDate.substringBefore('-')
-        )
-    director.text =
-        context.getString(
-            R.string.director,
-            getDirector(movie.crew)
-        )
-    ratingBarDetails.rating = (movie.details.voteAverage / 2).toFloat()
-    movieDescription.text = movie.details.overview
-
     val castsAdapter = CastsAdapter(listOf())
     recyCasts.apply {
         adapter = castsAdapter
@@ -53,6 +36,25 @@ fun FragmentMovieDetailsBinding.bindMovieDetails(
         addCasts(movie.actors)
         notifyDataSetChanged()
     }
+
+    with(movie.details) {
+        movieDetailsPoster.load(posterPath)
+        buttonBack.setOnClickListener { activity?.onBackPressed() }
+        movieDetailsTitle.text = title
+        movieOriginalTitle.text = originalTitle
+        release.text =
+            context.getString(
+                R.string.release,
+                releaseDate.substringBefore('-')
+            )
+        ratingBarDetails.rating = (voteAverage / 2).toFloat()
+        movieDescription.text = overview
+    }
+    director.text =
+        context.getString(
+            R.string.director,
+            getDirector(movie.crew)
+        )
 }
 
 private fun getDirector(list: List<Crew>): String {
