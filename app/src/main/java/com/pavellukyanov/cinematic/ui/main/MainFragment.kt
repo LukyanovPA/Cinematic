@@ -2,7 +2,6 @@ package com.pavellukyanov.cinematic.ui.main
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentMainBinding
@@ -36,7 +35,7 @@ class MainFragment : BaseFragment<List<Genre>, MainViewModel>(R.layout.fragment_
             search(vm)
 
             searchBar.setOnSearchClickListener {
-                logo.isVisible = false
+                openSearch()
             }
 
             searchBar.setOnCloseListener {
@@ -46,7 +45,7 @@ class MainFragment : BaseFragment<List<Genre>, MainViewModel>(R.layout.fragment_
                 false
             }
 
-            pager.bindMainViewPager(
+            mainPager.bind(
                 tabLayout,
                 requireContext(),
                 layoutInflater,
@@ -61,10 +60,8 @@ class MainFragment : BaseFragment<List<Genre>, MainViewModel>(R.layout.fragment_
             when (result) {
                 is ResourceState.Success -> {
                     with(binding) {
-                        searchResult.isVisible = true
-                        pager.isVisible = false
                         searchAdapter.clearAdapter()
-                        searchResult.bind(
+                        mainSearchResult.bind(
                             searchAdapter,
                             result.data,
                             requireContext()

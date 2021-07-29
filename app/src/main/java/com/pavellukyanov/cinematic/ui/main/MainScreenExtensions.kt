@@ -8,12 +8,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentMainBinding
+import com.pavellukyanov.cinematic.databinding.LayoutMainPagerBinding
+import com.pavellukyanov.cinematic.databinding.LayoutSearchResultBinding
 import com.pavellukyanov.cinematic.domain.genre.Genre
 import com.pavellukyanov.cinematic.domain.models.Movie
 import com.pavellukyanov.cinematic.ui.adapters.AdapterDivider
@@ -156,15 +157,20 @@ fun FragmentMainBinding.search(vm: MainViewModel) {
         .untilDestroy()
 }
 
-fun RecyclerView.bind(
+fun LayoutSearchResultBinding.bind(
     mAdapter: SearchResultAdapter,
     list: List<Movie>,
     context: Context
 ) {
-    adapter = mAdapter
-    addItemDecoration(AdapterDivider(context, R.drawable.item_rectangle))
-    layoutManager =
-        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+    root.isVisible = true
+    searchResult.apply {
+        adapter = mAdapter
+        addItemDecoration(AdapterDivider(context, R.drawable.item_rectangle))
+        layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+    }
     mAdapter.apply {
         addItems(list)
         notifyDataSetChanged()
@@ -173,8 +179,30 @@ fun RecyclerView.bind(
 
 fun FragmentMainBinding.closeSearch() {
     logo.isVisible = true
-    pager.isVisible = true
-    searchResult.isVisible = false
+    mainPager.root.isVisible = true
+    tabLayout.isVisible = true
+    recyGenres.isVisible = true
+    mainSearchResult.root.isVisible = false
+}
+
+fun FragmentMainBinding.openSearch() {
+    logo.isVisible = false
+    tabLayout.isVisible = false
+    recyGenres.isVisible = false
+    mainPager.root.isVisible = false
+}
+
+@ExperimentalCoroutinesApi
+fun LayoutMainPagerBinding.bind(
+    tabLayout: TabLayout,
+    context: Context,
+    layoutInflater: LayoutInflater,
+    childFragmentManager: FragmentManager,
+    lifecycle: Lifecycle
+) {
+    pager.bindMainViewPager(
+        tabLayout, context, layoutInflater, childFragmentManager, lifecycle
+    )
 }
 
 fun FragmentMainBinding.onDestroy() {
