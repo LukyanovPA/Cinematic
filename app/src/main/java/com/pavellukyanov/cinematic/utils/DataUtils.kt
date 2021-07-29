@@ -2,8 +2,6 @@ package com.pavellukyanov.cinematic.utils
 
 import androidx.recyclerview.widget.DiffUtil
 import com.pavellukyanov.cinematic.domain.models.Movie
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 object PosterSizeList {
@@ -50,4 +48,10 @@ object MovieComparator : DiffUtil.ItemCallback<Movie>() {
             else -> false
         }
     }
+}
+
+enum class SearchItemType {
+    MOVIE,
+    TV,
+    PERSON
 }

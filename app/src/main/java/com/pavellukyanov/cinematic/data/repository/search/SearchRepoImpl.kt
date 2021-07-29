@@ -1,30 +1,33 @@
-package com.pavellukyanov.cinematic.data.repository.popularmovie
+package com.pavellukyanov.cinematic.data.repository.search
 
 import android.util.Log
+import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitor
+import com.pavellukyanov.cinematic.data.api.pojo.MovieResponse
 import com.pavellukyanov.cinematic.data.api.services.ConfigurationService
-import com.pavellukyanov.cinematic.data.api.services.PopularMovieService
+import com.pavellukyanov.cinematic.data.api.services.SearchService
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
 import com.pavellukyanov.cinematic.data.repository.configuration.toMovieList
 import com.pavellukyanov.cinematic.data.repository.insertInDatabase
 import com.pavellukyanov.cinematic.domain.models.Movie
+import com.pavellukyanov.cinematic.domain.search.SearchRepo
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class PopularMovieRepoImpl @Inject constructor(
-    private val api: PopularMovieService,
+class SearchRepoImpl @Inject constructor(
+    private val api: SearchService,
     private val config: ConfigurationService,
+    private val networkMonitor: NetworkMonitor,
     private val database: MovieDatabase
-) : PopularMovieRepo {
-
-    override fun getPopularMovie(page: Int): Single<List<Movie>> {
+) : SearchRepo {
+    override fun doSearch(query: String, page: Int): Single<List<Movie>> {
         return Single.zip(
-            api.getPopularMovie(page = page).subscribeOn(Schedulers.io()),
+            api.searchMovie(query = query, page = page).subscribeOn(Schedulers.io()),
             config.getConfiguration().subscribeOn(Schedulers.io())
-        ) { movies, config ->
-            config.toMovieList(movies.results)
+        ) { searchResult, config ->
+            searchResult.results.let { config.toMovieList(it as List<MovieResponse>) }
         }
             .doOnSuccess { it.insertInDatabase(database) }
             .doOnError { e ->
@@ -37,6 +40,6 @@ class PopularMovieRepoImpl @Inject constructor(
     }
 
     companion object {
-        const val ERROR_LOG = "PopularRepo"
+        const val ERROR_LOG = "SearchRepo"
     }
 }

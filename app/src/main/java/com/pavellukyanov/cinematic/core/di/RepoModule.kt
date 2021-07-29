@@ -9,12 +9,14 @@ import com.pavellukyanov.cinematic.data.repository.nowplaying.NowPlayingRepo
 import com.pavellukyanov.cinematic.data.repository.nowplaying.NowPlayingRepoImpl
 import com.pavellukyanov.cinematic.data.repository.popularmovie.PopularMovieRepo
 import com.pavellukyanov.cinematic.data.repository.popularmovie.PopularMovieRepoImpl
+import com.pavellukyanov.cinematic.data.repository.search.SearchRepoImpl
 import com.pavellukyanov.cinematic.data.repository.toprated.TopRatedRepo
 import com.pavellukyanov.cinematic.data.repository.toprated.TopRatedRepoImpl
 import com.pavellukyanov.cinematic.data.repository.upcoming.UpcomingRepo
 import com.pavellukyanov.cinematic.data.repository.upcoming.UpcomingRepoImpl
 import com.pavellukyanov.cinematic.domain.genre.GenresRepo
 import com.pavellukyanov.cinematic.domain.moviedetail.MovieDetailsRepo
+import com.pavellukyanov.cinematic.domain.search.SearchRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -66,4 +68,12 @@ object RepoModule {
         networkMonitor: NetworkMonitor,
         database: MovieDatabase
     ): MovieDetailsRepo = MovieDetailsRepoImpl(api, config, networkMonitor, database)
+
+    @Provides
+    fun provideSearchRepo(
+        api: SearchService,
+        config: ConfigurationService,
+        networkMonitor: NetworkMonitor,
+        database: MovieDatabase
+    ): SearchRepo = SearchRepoImpl(api, config, networkMonitor, database)
 }

@@ -6,6 +6,8 @@ import com.pavellukyanov.cinematic.data.repository.toprated.TopRatedRepo
 import com.pavellukyanov.cinematic.data.repository.upcoming.UpcomingRepo
 import com.pavellukyanov.cinematic.domain.nowplaying.NowPlayingDataSource
 import com.pavellukyanov.cinematic.domain.popularmovie.PopularMovieDataSource
+import com.pavellukyanov.cinematic.domain.search.SearchInteractor
+import com.pavellukyanov.cinematic.domain.search.SearchMovieDataSource
 import com.pavellukyanov.cinematic.domain.toprated.TopRatedDataSource
 import com.pavellukyanov.cinematic.domain.upcoming.UpcomingDataSource
 import dagger.Module
@@ -36,4 +38,9 @@ object DataSourceModule {
     fun provideUpcomingDataSource(
         upcomingRepo: UpcomingRepo
     ) = UpcomingDataSource(upcomingRepo)
+
+    @Provides
+    fun provideSearchMovieDataSource(
+        searchRepo: SearchInteractor
+    ) = SearchMovieDataSource(searchRepo)
 }

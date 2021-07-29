@@ -7,10 +7,8 @@ import javax.inject.Inject
 interface GetMovieDetailsInteractor : (Int) -> Single<MovieDetails>
 
 class GetMovieDetailsInteractorImpl @Inject constructor(
-    private val movieDetailsRepo: MovieDetailsRepo
+    private val repo: MovieDetailsRepo
 ) : GetMovieDetailsInteractor {
-    override fun invoke(movieId: Int): Single<MovieDetails> {
-        return movieDetailsRepo.getMovieDetails(movieId)
-            .map { it }
-    }
+    override fun invoke(movieId: Int): Single<MovieDetails> =
+        repo.getMovieDetails(movieId)
 }
