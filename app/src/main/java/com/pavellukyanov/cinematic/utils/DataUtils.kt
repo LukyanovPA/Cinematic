@@ -2,6 +2,8 @@ package com.pavellukyanov.cinematic.utils
 
 import androidx.recyclerview.widget.DiffUtil
 import com.pavellukyanov.cinematic.domain.models.Movie
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 object PosterSizeList {
@@ -50,10 +52,18 @@ object MovieComparator : DiffUtil.ItemCallback<Movie>() {
     }
 }
 
-enum class SearchItemType {
-    MOVIE,
-    TV,
-    PERSON
-}
-
 const val APP_METRICA_KEY = "43581778-9841-47dd-9722-dc60518cb069"
+
+//Доделать!!
+object DateHelper {
+    private val locale = Locale("ru")
+    private val c = Calendar.getInstance(locale)
+    private var year = c.get(Calendar.YEAR)
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    private val currentTime = Date(System.currentTimeMillis())
+
+    fun getAge(birthday: String): Int {
+        val birthdayDate = dateFormat.parse(birthday)
+        return Date(currentTime.time - birthdayDate.time).year
+    }
+}
