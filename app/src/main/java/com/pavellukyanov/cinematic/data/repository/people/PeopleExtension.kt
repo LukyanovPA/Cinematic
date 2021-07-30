@@ -1,33 +1,57 @@
 package com.pavellukyanov.cinematic.data.repository.people
 
 import android.util.Log
+import com.pavellukyanov.cinematic.data.api.pojo.configuration.ConfigurationResponse
 import com.pavellukyanov.cinematic.data.api.pojo.people.PeopleResponse
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
 import com.pavellukyanov.cinematic.data.database.entity.PeopleEntity
 import com.pavellukyanov.cinematic.data.repository.LOG
 import com.pavellukyanov.cinematic.domain.models.PeopleDetails
+import com.pavellukyanov.cinematic.utils.PosterSizeList
+import com.pavellukyanov.cinematic.utils.PosterSizes
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 import java.io.IOException
 
-fun PeopleResponse.toEntity() =
-    PeopleEntity(id, biography, birthday, deathday, name, place_of_birth, profile_path)
+fun PeopleResponse.setupPoster(config: ConfigurationResponse) {
+    PosterSizeList.posterSizes = config.images.posterSizes
+    poster = "${config.images.baseUrl}/${PosterSizes.W500.size}/$profile_path"
+}
 
-fun PeopleResponse.toPojo() =
-    PeopleDetails(id, biography, birthday, deathday, name, place_of_birth, profile_path)
+fun PeopleResponse.toEntity() =
+    PeopleEntity(id, biography, birthday, deathday, name, place_of_birth, poster)
+
+fun PeopleResponse.toDomain() =
+    PeopleDetails(id, biography, birthday, deathday, name, place_of_birth, poster)
 
 fun PeopleEntity.toPeopleDetails() =
-    PeopleDetails(id, biography, birthday, deathday, name, place_of_birth, profile_path)
+    PeopleDetails(
+        id = id,
+        biography = biography,
+        birthday = birthday,
+        deathday = deathday,
+        name = name,
+        place_of_birth = place_of_birth,
+        profile_path = profile_path
+    )
 
 fun PeopleDetails.toPeopleEntity() =
-    PeopleEntity(id, biography, birthday, deathday, name, place_of_birth, profile_path)
+    PeopleEntity(
+        id = id,
+        biography = biography,
+        birthday = birthday,
+        deathday = deathday,
+        name = name,
+        place_of_birth = place_of_birth,
+        profile_path = profile_path
+    )
 
-fun PeopleResponse.insertInDatabase(
+fun PeopleDetails.insertInDatabase(
     database: MovieDatabase
 ): Completable {
     return Completable.fromAction {
-        toEntity().let { people ->
+        toPeopleEntity().let { people ->
             database.people()
                 .insertPeople(people)
                 .subscribeOn(Schedulers.io())

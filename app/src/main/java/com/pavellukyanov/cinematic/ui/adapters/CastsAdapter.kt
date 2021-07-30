@@ -9,7 +9,8 @@ import com.pavellukyanov.cinematic.domain.models.Actor
 import com.pavellukyanov.cinematic.utils.load
 
 class CastsAdapter(
-    private var actors: List<Actor>
+    private var actors: List<Actor>,
+    private val peopleItemClickListener: PeopleItemClickListener
 ) : RecyclerView.Adapter<CastsAdapter.CastsVH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CastsVH {
@@ -23,6 +24,9 @@ class CastsAdapter(
 
     override fun onBindViewHolder(holder: CastsVH, position: Int) {
         holder.bind(getItem(position))
+        holder.itemView.setOnClickListener {
+            peopleItemClickListener.onItemClicked(getItem(position).id)
+        }
     }
 
     override fun getItemCount(): Int = actors.size

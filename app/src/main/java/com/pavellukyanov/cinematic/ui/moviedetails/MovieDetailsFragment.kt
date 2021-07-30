@@ -28,7 +28,7 @@ class MovieDetailsFragment :
 
     override fun handleSuccessState(data: MovieDetails) {
         super.handleSuccessState(data)
-        binding.bindMovieDetails(data, requireContext(), activity)
+        binding.bind(data, requireContext(), activity, peopleItemClickListener)
     }
 
     override fun onDestroy() {

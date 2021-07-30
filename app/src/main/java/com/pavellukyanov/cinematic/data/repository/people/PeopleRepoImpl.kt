@@ -30,11 +30,13 @@ class PeopleRepoImpl @Inject constructor(
     }
 
     private fun getPeopleInApi(id: Int): Single<PeopleDetails> {
-        return api.getPeopleDetails(id = id)
-            .subscribeOn(Schedulers.io())
+        return Single.zip(
+            api.getPeopleDetails(id = id).subscribeOn(Schedulers.io()),
+            config.getConfiguration().subscribeOn(Schedulers.io())
+        ) { peopleResponse, config ->
+            peopleResponse.setupPoster(config)
+            peopleResponse.toDomain()
+        }
             .doOnSuccess { it.insertInDatabase(database) }
-            .map { peopleResponse ->
-                peopleResponse.toPojo()
-            }
     }
 }

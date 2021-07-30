@@ -9,12 +9,14 @@ import com.pavellukyanov.cinematic.domain.models.Crew
 import com.pavellukyanov.cinematic.domain.models.MovieDetails
 import com.pavellukyanov.cinematic.ui.adapters.CastsAdapter
 import com.pavellukyanov.cinematic.ui.adapters.MovieDetailsGenresAdapter
+import com.pavellukyanov.cinematic.ui.adapters.PeopleItemClickListener
 import com.pavellukyanov.cinematic.utils.load
 
-fun FragmentMovieDetailsBinding.bindMovieDetails(
+fun FragmentMovieDetailsBinding.bind(
     movie: MovieDetails,
     context: Context,
-    activity: FragmentActivity?
+    activity: FragmentActivity?,
+    peopleItemClickListener: PeopleItemClickListener
 ) {
     val genresAdapter = MovieDetailsGenresAdapter(listOf())
     recyGenres.apply {
@@ -26,7 +28,7 @@ fun FragmentMovieDetailsBinding.bindMovieDetails(
         addGenres(movie.details.genres)
         notifyDataSetChanged()
     }
-    val castsAdapter = CastsAdapter(listOf())
+    val castsAdapter = CastsAdapter(listOf(), peopleItemClickListener)
     recyCasts.apply {
         adapter = castsAdapter
         layoutManager =

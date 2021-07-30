@@ -7,7 +7,8 @@ import com.pavellukyanov.cinematic.R
 
 fun ImageView.load(
     value: String?,
-    circleCrop: Boolean = false
+    circleCrop: Boolean = false,
+    fit: Boolean = false
 ) {
     Glide.with(this)
         .asBitmap()
@@ -16,7 +17,11 @@ fun ImageView.load(
             if (circleCrop) {
                 circleCrop()
             } else {
-                centerCrop()
+                if (fit) {
+                    fitCenter()
+                } else {
+                    centerCrop()
+                }
             }
         }
         .placeholder(R.drawable.ic_movie_placeholder)

@@ -1,6 +1,7 @@
 package com.pavellukyanov.cinematic.ui.people
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -16,7 +17,7 @@ class PeopleDetailsFragment :
     private val vm: PeopleViewModel by viewModels()
     private val args: PeopleDetailsFragmentArgs by navArgs()
     private var _binding: FragmentPeopleDetailsBinding? = null
-    private val binding get() = _binding
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,6 +28,16 @@ class PeopleDetailsFragment :
 
     private fun getPeopleDetails(id: Int) {
         vm.getPeopleDetails(id)
+    }
+
+    override fun handleSuccessState(data: PeopleDetails) {
+        super.handleSuccessState(data)
+        binding.bind(data, activity)
+    }
+
+    override fun handleErrorState(error: Throwable?) {
+        super.handleErrorState(error)
+        Log.d("ttt", "error -> ${error?.message}")
     }
 
     override fun onDestroy() {

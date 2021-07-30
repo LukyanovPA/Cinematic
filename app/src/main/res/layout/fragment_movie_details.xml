@@ -15,7 +15,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/movie_details_poster"
             android:layout_width="0dp"
-            android:layout_height="378dp"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

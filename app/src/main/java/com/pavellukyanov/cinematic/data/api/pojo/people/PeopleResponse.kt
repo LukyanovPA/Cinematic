@@ -9,9 +9,9 @@ class PeopleResponse(
     @SerialName("also_known_as") val also_known_as: List<String>,
     @SerialName("biography") val biography: String,
     @SerialName("birthday") val birthday: String,
-    @SerialName("deathday") val deathday: String,
+    @SerialName("deathday") val deathday: String? = null,
     @SerialName("gender") val gender: Int,
-    @SerialName("homepage") val homepage: String,
+    @SerialName("homepage") val homepage: String? = null,
     @SerialName("id") val id: Int,
     @SerialName("imdb_id") val imdb_id: String,
     @SerialName("known_for_department") val known_for_department: String,
@@ -19,4 +19,6 @@ class PeopleResponse(
     @SerialName("place_of_birth") val place_of_birth: String,
     @SerialName("popularity") val popularity: Double,
     @SerialName("profile_path") val profile_path: String
-)
+) {
+    var poster = ""
+}
