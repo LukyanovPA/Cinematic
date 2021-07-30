@@ -55,3 +55,5 @@ enum class SearchItemType {
     TV,
     PERSON
 }
+
+const val APP_METRICA_KEY = "43581778-9841-47dd-9722-dc60518cb069"
