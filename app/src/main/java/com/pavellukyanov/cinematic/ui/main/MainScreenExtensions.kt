@@ -2,24 +2,44 @@ package com.pavellukyanov.cinematic.ui.main
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.widget.SearchView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.databinding.FragmentMainBinding
+import com.pavellukyanov.cinematic.databinding.LayoutMainPagerBinding
+import com.pavellukyanov.cinematic.databinding.LayoutSearchResultBinding
 import com.pavellukyanov.cinematic.domain.genre.Genre
+import com.pavellukyanov.cinematic.domain.models.Movie
+import com.pavellukyanov.cinematic.ui.adapters.AdapterDivider
 import com.pavellukyanov.cinematic.ui.adapters.GenresListAdapter
+import com.pavellukyanov.cinematic.ui.adapters.SearchResultAdapter
 import com.pavellukyanov.cinematic.ui.adapters.ViewPagerAdapter
 import com.pavellukyanov.cinematic.ui.nowplaying.NowPlayingFragment
 import com.pavellukyanov.cinematic.ui.popularmovie.PopularMovieFragment
 import com.pavellukyanov.cinematic.ui.toprated.TopRatedFragment
 import com.pavellukyanov.cinematic.ui.upcoming.UpcomingFragment
 import com.pavellukyanov.cinematic.utils.ZoomOutFadePageTransformer
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
+import io.reactivex.FlowableOnSubscribe
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.util.concurrent.TimeUnit
+
+private val dispose = CompositeDisposable()
+
+fun Disposable.untilDestroy() {
+    dispose.add(this)
+}
 
 @ExperimentalCoroutinesApi
 fun ViewPager2.bindMainViewPager(
@@ -113,4 +133,76 @@ fun FragmentMainBinding.bindAdapter(
         addGenres(listGenre)
         notifyDataSetChanged()
     }
+}
+
+fun FragmentMainBinding.search(vm: MainViewModel) {
+    Flowable.create(FlowableOnSubscribe<String> { subscriber ->
+        searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                subscriber.onNext(newText!!)
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                subscriber.onNext(query!!)
+                return false
+            }
+        })
+    }, BackpressureStrategy.BUFFER)
+        .debounce(300, TimeUnit.MILLISECONDS)
+        .filter { text -> text.isNotEmpty() }
+        .distinctUntilChanged()
+        .subscribe { text ->
+            vm.onSearch(text)
+        }
+        .untilDestroy()
+}
+
+fun LayoutSearchResultBinding.bind(
+    mAdapter: SearchResultAdapter,
+    data: PagingData<Movie>,
+    context: Context,
+    lifecycle: Lifecycle
+) {
+    searchResult.apply {
+        adapter = mAdapter
+        addItemDecoration(AdapterDivider(context, R.drawable.item_rectangle))
+        layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+    }
+    mAdapter.submitData(lifecycle, data)
+}
+
+fun FragmentMainBinding.isSearchVisible(state: Boolean) {
+    if (state) {
+        mainSearchResult.root.isVisible = true
+        logo.isVisible = false
+        tabLayout.isVisible = false
+        recyGenres.isVisible = false
+        mainPager.root.isVisible = false
+    } else {
+        mainSearchResult.root.isVisible = false
+        logo.isVisible = true
+        mainPager.root.isVisible = true
+        tabLayout.isVisible = true
+        recyGenres.isVisible = true
+    }
+}
+
+@ExperimentalCoroutinesApi
+fun LayoutMainPagerBinding.bind(
+    tabLayout: TabLayout,
+    context: Context,
+    layoutInflater: LayoutInflater,
+    childFragmentManager: FragmentManager,
+    lifecycle: Lifecycle
+) {
+    pager.bindMainViewPager(
+        tabLayout, context, layoutInflater, childFragmentManager, lifecycle
+    )
+}
+
+fun FragmentMainBinding.onDestroy() {
+    dispose.dispose()
 }

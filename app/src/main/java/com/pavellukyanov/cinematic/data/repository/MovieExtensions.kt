@@ -1,7 +1,6 @@
-package com.pavellukyanov.cinematic.data.repository.movie
+package com.pavellukyanov.cinematic.data.repository
 
 import android.util.Log
-import androidx.paging.PagingSource
 import com.pavellukyanov.cinematic.data.api.pojo.MovieResponse
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
 import com.pavellukyanov.cinematic.data.database.entity.MovieEntity

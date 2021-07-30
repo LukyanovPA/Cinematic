@@ -4,13 +4,13 @@ import com.pavellukyanov.cinematic.data.api.pojo.MovieResponse
 import com.pavellukyanov.cinematic.data.api.pojo.configuration.ConfigurationResponse
 import com.pavellukyanov.cinematic.data.api.pojo.moviedetails.MovieDetailsResponse
 import com.pavellukyanov.cinematic.data.api.pojo.moviedetails.credits.CreditsResponse
-import com.pavellukyanov.cinematic.data.repository.movie.setupMoviePoster
-import com.pavellukyanov.cinematic.data.repository.movie.toMovie
 import com.pavellukyanov.cinematic.data.repository.moviedetails.credits.setupProfilePoster
 import com.pavellukyanov.cinematic.data.repository.moviedetails.credits.toActor
 import com.pavellukyanov.cinematic.data.repository.moviedetails.credits.toCrew
 import com.pavellukyanov.cinematic.data.repository.moviedetails.setupMoviePoster
 import com.pavellukyanov.cinematic.data.repository.moviedetails.toDetails
+import com.pavellukyanov.cinematic.data.repository.setupMoviePoster
+import com.pavellukyanov.cinematic.data.repository.toMovie
 import com.pavellukyanov.cinematic.domain.models.Actor
 import com.pavellukyanov.cinematic.domain.models.Crew
 import com.pavellukyanov.cinematic.domain.models.Details

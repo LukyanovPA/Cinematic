@@ -2,8 +2,6 @@ package com.pavellukyanov.cinematic.utils
 
 import androidx.recyclerview.widget.DiffUtil
 import com.pavellukyanov.cinematic.domain.models.Movie
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 object PosterSizeList {
@@ -51,3 +49,11 @@ object MovieComparator : DiffUtil.ItemCallback<Movie>() {
         }
     }
 }
+
+enum class SearchItemType {
+    MOVIE,
+    TV,
+    PERSON
+}
+
+const val APP_METRICA_KEY = "43581778-9841-47dd-9722-dc60518cb069"
