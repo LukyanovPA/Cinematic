@@ -6,7 +6,9 @@ import androidx.navigation.fragment.findNavController
 import com.pavellukyanov.cinematic.R
 import com.pavellukyanov.cinematic.domain.ResourceState
 import com.pavellukyanov.cinematic.ui.adapters.MovieItemClickListener
+import com.pavellukyanov.cinematic.ui.adapters.PeopleItemClickListener
 import com.pavellukyanov.cinematic.ui.main.MainFragmentDirections
+import com.pavellukyanov.cinematic.ui.moviedetails.MovieDetailsFragmentDirections
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -23,6 +25,17 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>>(
                 )
             findNavController().navigate(action)
         }
+    }
+
+    protected val peopleItemClickListener = object : PeopleItemClickListener {
+        override fun onItemClicked(id: Int) {
+            val action =
+                MovieDetailsFragmentDirections.actionMovieDetailsFragmentToPeopleDetailsFragment(
+                    id
+                )
+            findNavController().navigate(action)
+        }
+
     }
 
     open fun onSubscribeViewModel(vm: VM) {

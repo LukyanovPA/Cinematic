@@ -9,7 +9,6 @@ import com.pavellukyanov.cinematic.data.database.MovieDatabase
 import com.pavellukyanov.cinematic.data.repository.configuration.toMovieList
 import com.pavellukyanov.cinematic.data.repository.insertInDatabase
 import com.pavellukyanov.cinematic.domain.models.Movie
-import com.pavellukyanov.cinematic.domain.search.SearchRepo
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException

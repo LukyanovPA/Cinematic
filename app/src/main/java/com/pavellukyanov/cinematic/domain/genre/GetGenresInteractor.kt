@@ -1,5 +1,6 @@
 package com.pavellukyanov.cinematic.domain.genre
 
+import com.pavellukyanov.cinematic.data.repository.genres.GenresRepo
 import io.reactivex.Single
 import javax.inject.Inject
 

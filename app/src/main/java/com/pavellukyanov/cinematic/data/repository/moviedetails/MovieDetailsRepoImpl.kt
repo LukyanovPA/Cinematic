@@ -8,7 +8,6 @@ import com.pavellukyanov.cinematic.data.repository.configuration.toDetails
 import com.pavellukyanov.cinematic.data.repository.configuration.toListActor
 import com.pavellukyanov.cinematic.data.repository.configuration.toListCrew
 import com.pavellukyanov.cinematic.domain.models.MovieDetails
-import com.pavellukyanov.cinematic.domain.moviedetail.MovieDetailsRepo
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject

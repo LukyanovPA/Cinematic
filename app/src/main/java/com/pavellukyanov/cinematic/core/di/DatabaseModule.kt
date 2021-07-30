@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
 import com.pavellukyanov.cinematic.data.database.dao.GenresDao
 import com.pavellukyanov.cinematic.data.database.dao.MovieDao
+import com.pavellukyanov.cinematic.data.database.dao.PeopleDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,4 +37,9 @@ object DatabaseModule {
     @Provides
     fun provideGenres(database: MovieDatabase): GenresDao =
         database.genres()
+
+    @Provides
+    fun providePeopleDao(database: MovieDatabase): PeopleDao =
+        database.people()
+
 }

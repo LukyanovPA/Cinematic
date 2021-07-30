@@ -1,14 +1,17 @@
 package com.pavellukyanov.cinematic.core.di
 
-import com.pavellukyanov.cinematic.domain.genre.GenresRepo
+import com.pavellukyanov.cinematic.data.repository.genres.GenresRepo
+import com.pavellukyanov.cinematic.data.repository.moviedetails.MovieDetailsRepo
+import com.pavellukyanov.cinematic.data.repository.people.PeopleRepo
+import com.pavellukyanov.cinematic.data.repository.search.SearchRepo
 import com.pavellukyanov.cinematic.domain.genre.GetGenresInteractor
 import com.pavellukyanov.cinematic.domain.genre.GetGenresInteractorImpl
 import com.pavellukyanov.cinematic.domain.moviedetail.GetMovieDetailsInteractor
 import com.pavellukyanov.cinematic.domain.moviedetail.GetMovieDetailsInteractorImpl
-import com.pavellukyanov.cinematic.domain.moviedetail.MovieDetailsRepo
+import com.pavellukyanov.cinematic.domain.people.GetPeopleDetailsInteractor
+import com.pavellukyanov.cinematic.domain.people.GetPeopleDetailsInteractorImpl
 import com.pavellukyanov.cinematic.domain.search.SearchInteractor
 import com.pavellukyanov.cinematic.domain.search.SearchInteractorImpl
-import com.pavellukyanov.cinematic.domain.search.SearchRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,6 +37,12 @@ object InteractorsModule {
     @Provides
     @Singleton
     fun provideSearchInteractor(
-        searchRepo: SearchRepo
-    ): SearchInteractor = SearchInteractorImpl(searchRepo)
+        repo: SearchRepo
+    ): SearchInteractor = SearchInteractorImpl(repo)
+
+    @Provides
+    @Singleton
+    fun provideGetPeopleDetailsInteractor(
+        repo: PeopleRepo
+    ): GetPeopleDetailsInteractor = GetPeopleDetailsInteractorImpl(repo)
 }

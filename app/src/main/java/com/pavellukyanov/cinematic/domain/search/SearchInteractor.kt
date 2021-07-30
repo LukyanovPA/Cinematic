@@ -1,5 +1,6 @@
 package com.pavellukyanov.cinematic.domain.search
 
+import com.pavellukyanov.cinematic.data.repository.search.SearchRepo
 import com.pavellukyanov.cinematic.domain.models.Movie
 import io.reactivex.Single
 import javax.inject.Inject

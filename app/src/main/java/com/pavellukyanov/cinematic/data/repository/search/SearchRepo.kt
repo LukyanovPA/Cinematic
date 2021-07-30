@@ -1,4 +1,4 @@
-package com.pavellukyanov.cinematic.domain.search
+package com.pavellukyanov.cinematic.data.repository.search
 
 import com.pavellukyanov.cinematic.domain.models.Movie
 import io.reactivex.Single

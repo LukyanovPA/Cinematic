@@ -111,4 +111,9 @@ object NetworkModule {
     @Singleton
     fun provideSearchService(retrofit: Retrofit): SearchService =
         retrofit.create(SearchService::class.java)
+
+    @Provides
+    @Singleton
+    fun providePeopleService(retrofit: Retrofit): PeopleService =
+        retrofit.create(PeopleService::class.java)
 }

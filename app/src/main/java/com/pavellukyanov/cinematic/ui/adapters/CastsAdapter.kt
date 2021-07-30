@@ -1,5 +1,6 @@
 package com.pavellukyanov.cinematic.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -42,6 +43,7 @@ class CastsAdapter(
                     actorCharacter.text = character
                 }
             }
+            Log.d("ttt", "actor - ${actor.id}")
         }
     }
 }

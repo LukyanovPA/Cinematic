@@ -1,4 +1,4 @@
-package com.pavellukyanov.cinematic.domain.moviedetail
+package com.pavellukyanov.cinematic.data.repository.moviedetails
 
 import com.pavellukyanov.cinematic.domain.models.MovieDetails
 import io.reactivex.Single

@@ -1,5 +1,6 @@
 package com.pavellukyanov.cinematic.domain.moviedetail
 
+import com.pavellukyanov.cinematic.data.repository.moviedetails.MovieDetailsRepo
 import com.pavellukyanov.cinematic.domain.models.MovieDetails
 import io.reactivex.Single
 import javax.inject.Inject

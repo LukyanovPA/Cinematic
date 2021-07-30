@@ -4,7 +4,6 @@ import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitor
 import com.pavellukyanov.cinematic.data.api.services.GenresService
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
 import com.pavellukyanov.cinematic.domain.genre.Genre
-import com.pavellukyanov.cinematic.domain.genre.GenresRepo
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
