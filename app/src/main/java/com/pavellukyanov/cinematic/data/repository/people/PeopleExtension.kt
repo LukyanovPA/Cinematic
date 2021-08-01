@@ -7,6 +7,7 @@ import com.pavellukyanov.cinematic.data.database.MovieDatabase
 import com.pavellukyanov.cinematic.data.database.entity.PeopleEntity
 import com.pavellukyanov.cinematic.data.repository.LOG
 import com.pavellukyanov.cinematic.domain.models.PeopleDetails
+import com.pavellukyanov.cinematic.utils.DateHelper
 import com.pavellukyanov.cinematic.utils.PosterSizeList
 import com.pavellukyanov.cinematic.utils.PosterSizes
 import io.reactivex.Completable
@@ -20,10 +21,28 @@ fun PeopleResponse.setupPoster(config: ConfigurationResponse) {
 }
 
 fun PeopleResponse.toEntity() =
-    PeopleEntity(id, biography, birthday, deathday, name, place_of_birth, poster)
+    PeopleEntity(
+        id,
+        biography,
+        birthday,
+        deathday,
+        DateHelper.getAge(birthday, deathday).toString(),
+        name,
+        place_of_birth,
+        poster
+    )
 
 fun PeopleResponse.toDomain() =
-    PeopleDetails(id, biography, birthday, deathday, name, place_of_birth, poster)
+    PeopleDetails(
+        id,
+        biography,
+        birthday,
+        deathday,
+        DateHelper.getAge(birthday, deathday).toString(),
+        name,
+        place_of_birth,
+        poster
+    )
 
 fun PeopleEntity.toPeopleDetails() =
     PeopleDetails(
@@ -31,6 +50,7 @@ fun PeopleEntity.toPeopleDetails() =
         biography = biography,
         birthday = birthday,
         deathday = deathday,
+        age = age,
         name = name,
         place_of_birth = place_of_birth,
         profile_path = profile_path
@@ -42,6 +62,7 @@ fun PeopleDetails.toPeopleEntity() =
         biography = biography,
         birthday = birthday,
         deathday = deathday,
+        age = age,
         name = name,
         place_of_birth = place_of_birth,
         profile_path = profile_path

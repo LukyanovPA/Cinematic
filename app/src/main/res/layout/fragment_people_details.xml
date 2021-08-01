@@ -54,15 +54,122 @@
             tools:text="Scarlett Johansson" />
 
         <TextView
-            android:id="@+id/person_age"
+            android:id="@+id/person_birthday_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/person_name"
+            android:text="@string/birthday_title"
+            android:textAppearance="@style/TextAppearance.Cinematic.CastValuesTitle"
+            app:layout_constraintEnd_toStartOf="@+id/person_deathday_title"
             app:layout_constraintStart_toStartOf="@+id/person_name"
-            app:layout_constraintTop_toBottomOf="@+id/person_name"
-            android:text="Возраст - "/>
+            app:layout_constraintTop_toBottomOf="@+id/person_name" />
+
+        <TextView
+            android:id="@+id/person_birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal"
+            android:textAppearance="@style/TextAppearance.Cinematic.CastValues"
+            app:layout_constraintEnd_toEndOf="@+id/person_birthday_title"
+            app:layout_constraintStart_toStartOf="@+id/person_birthday_title"
+            app:layout_constraintTop_toBottomOf="@+id/person_birthday_title" />
+
+        <TextView
+            android:id="@+id/person_deathday_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/deathday_title"
+            android:textAppearance="@style/TextAppearance.Cinematic.CastValuesTitle"
+            app:layout_constraintEnd_toStartOf="@+id/person_age_title"
+            app:layout_constraintStart_toEndOf="@+id/person_birthday_title"
+            app:layout_constraintTop_toBottomOf="@+id/person_name" />
+
+        <TextView
+            android:id="@+id/person_deathday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal"
+            android:textAppearance="@style/TextAppearance.Cinematic.CastValues"
+            app:layout_constraintEnd_toEndOf="@+id/person_deathday_title"
+            app:layout_constraintStart_toStartOf="@+id/person_deathday_title"
+            app:layout_constraintTop_toBottomOf="@+id/person_deathday_title" />
+
+        <TextView
+            android:id="@+id/person_age_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/age_title"
+            android:textAppearance="@style/TextAppearance.Cinematic.CastValuesTitle"
+            app:layout_constraintEnd_toEndOf="@+id/person_name"
+            app:layout_constraintStart_toEndOf="@+id/person_deathday_title"
+            app:layout_constraintTop_toBottomOf="@+id/person_name" />
+
+        <TextView
+            android:id="@+id/person_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal"
+            android:textAppearance="@style/TextAppearance.Cinematic.CastValues"
+            app:layout_constraintEnd_toEndOf="@+id/person_age_title"
+            app:layout_constraintStart_toStartOf="@+id/person_age_title"
+            app:layout_constraintTop_toBottomOf="@+id/person_age_title"
+            tools:text="36" />
+
+        <TextView
+            android:id="@+id/person_bio_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:gravity="start"
+            android:text="@string/person_bio_title"
+            android:textAppearance="@style/TextAppearance.Cinematic.MovieDetailsTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/person_age" />
+
+        <TextView
+            android:id="@+id/person_place_of_birthday_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/person_place_of_birthday"
+            android:textAppearance="@style/TextAppearance.Cinematic.TabLayout.DirectorAndRelease"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/person_bio_title" />
+
+        <TextView
+            android:id="@+id/person_place_of_birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
+            android:text="@string/person_place_of_birthday"
+            android:textAppearance="@style/TextAppearance.Cinematic.TabLayout.PlaceOfBirthday"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/person_place_of_birthday_title" />
+
+        <TextView
+            android:id="@+id/person_bio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="fill"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textAppearance="@style/TextAppearance.Cinematic.TabLayout.DirectorAndRelease"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/person_place_of_birthday"
+            tools:text="Действия сериала происходят параллельно с событиями зомби-апокалипсиса, показанными в сериале «Ходячие мертвецы», но в совершенно другом месте — Лос-Анджелесе. Акцент будет сделан на семейные отношения, в частности, проблемы отцов и детей. История вращается вокруг Шона — разведённого школьного учителя и Нэнси руководительницы женского совета. А так же детей Нэнси: Ника, который борется с наркотической зависимостью и амбициозной дочери Эшли." />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

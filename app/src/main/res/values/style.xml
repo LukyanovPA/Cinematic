@@ -27,8 +27,23 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TextAppearance.Cinematic.CastValuesTitle">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextAppearance.Cinematic.CastValues">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="TextAppearance.Cinematic.TabLayout.DirectorAndRelease">
         <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/release_and_director</item>
+    </style>
+
+    <style name="TextAppearance.Cinematic.TabLayout.PlaceOfBirthday">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/release_and_director</item>
     </style>
 

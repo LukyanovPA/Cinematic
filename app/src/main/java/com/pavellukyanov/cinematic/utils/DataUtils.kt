@@ -1,7 +1,5 @@
 package com.pavellukyanov.cinematic.utils
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import com.pavellukyanov.cinematic.domain.models.Movie
 import java.time.LocalDate
@@ -58,12 +56,22 @@ const val APP_METRICA_KEY = "43581778-9841-47dd-9722-dc60518cb069"
 
 
 object DateHelper {
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getAge(birthday: String): Int {
-        val year = birthday.substringBefore('-').toInt()
-        val month = birthday.substringAfter('-').substringBefore('-').toInt()
-        val day = birthday.substring(8).toInt()
-        val age = LocalDate.of(year, month, day)
-        return Period.between(age, LocalDate.now()).years
+    fun getAge(birthday: String, deathday: String?): Int {
+        val yearBirthday = birthday.substringBefore('-').toInt()
+        val monthBirthday = birthday.substringAfter('-').substringBefore('-').toInt()
+        val dayBirthday = birthday.substring(8).toInt()
+        val startBirthday = LocalDate.of(yearBirthday, monthBirthday, dayBirthday)
+
+        return if (deathday != null) {
+            val yearDeathday = deathday.substringBefore('-').toInt()
+            val monthDeathday = deathday.substringAfter('-').substringBefore('-').toInt()
+            val dayDeathday = deathday.substring(8).toInt()
+
+            val endDate = LocalDate.of(yearDeathday, monthDeathday, dayDeathday)
+
+            Period.between(startBirthday, endDate).years
+        } else {
+            Period.between(startBirthday, LocalDate.now()).years
+        }
     }
 }

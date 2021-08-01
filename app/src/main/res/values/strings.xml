@@ -11,4 +11,9 @@
     <string name="director"> %1$s</string>
     <string name="movie_description_title">Обзор</string>
     <string name="movie_casts_title">В ролях</string>
+    <string name="age_title">Возраст</string>
+    <string name="birthday_title">Дата рождения</string>
+    <string name="deathday_title">Дата смерти</string>
+    <string name="person_bio_title">Биография</string>
+    <string name="person_place_of_birthday">Место рождения:</string>
 </resources>
