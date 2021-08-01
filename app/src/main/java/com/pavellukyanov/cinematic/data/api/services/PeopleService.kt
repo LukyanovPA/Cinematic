@@ -1,5 +1,6 @@
 package com.pavellukyanov.cinematic.data.api.services
 
+import com.pavellukyanov.cinematic.data.api.pojo.people.PeopleCreditsResponse
 import com.pavellukyanov.cinematic.data.api.pojo.people.PeopleResponse
 import com.pavellukyanov.cinematic.utils.RequestParameters
 import io.reactivex.Single
@@ -14,4 +15,10 @@ interface PeopleService {
         @Path("person_id") id: Int,
         @Query("language") language: String = RequestParameters.LANGUAGE_RU
     ): Single<PeopleResponse>
+
+    @GET("person/{person_id}/movie_credits")
+    fun getPeopleCredits(
+        @Path("person_id") id: Int,
+        @Query("language") language: String = RequestParameters.LANGUAGE_RU
+    ): Single<PeopleCreditsResponse>
 }

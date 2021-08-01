@@ -8,6 +8,8 @@ import com.pavellukyanov.cinematic.domain.genre.GetGenresInteractor
 import com.pavellukyanov.cinematic.domain.genre.GetGenresInteractorImpl
 import com.pavellukyanov.cinematic.domain.moviedetail.GetMovieDetailsInteractor
 import com.pavellukyanov.cinematic.domain.moviedetail.GetMovieDetailsInteractorImpl
+import com.pavellukyanov.cinematic.domain.people.GetPeopleCreditsInteractor
+import com.pavellukyanov.cinematic.domain.people.GetPeopleCreditsInteractorImpl
 import com.pavellukyanov.cinematic.domain.people.GetPeopleDetailsInteractor
 import com.pavellukyanov.cinematic.domain.people.GetPeopleDetailsInteractorImpl
 import com.pavellukyanov.cinematic.domain.search.SearchInteractor
@@ -45,4 +47,10 @@ object InteractorsModule {
     fun provideGetPeopleDetailsInteractor(
         repo: PeopleRepo
     ): GetPeopleDetailsInteractor = GetPeopleDetailsInteractorImpl(repo)
+
+    @Provides
+    @Singleton
+    fun provideGetPeopleCreditsInteractor(
+        repo: PeopleRepo
+    ): GetPeopleCreditsInteractor = GetPeopleCreditsInteractorImpl(repo)
 }

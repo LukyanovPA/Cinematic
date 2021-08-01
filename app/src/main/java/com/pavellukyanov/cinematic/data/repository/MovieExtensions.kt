@@ -2,6 +2,7 @@ package com.pavellukyanov.cinematic.data.repository
 
 import android.util.Log
 import com.pavellukyanov.cinematic.data.api.pojo.MovieResponse
+import com.pavellukyanov.cinematic.data.api.pojo.people.CreditsCastResponse
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
 import com.pavellukyanov.cinematic.data.database.entity.MovieEntity
 import com.pavellukyanov.cinematic.domain.models.Movie
@@ -16,6 +17,20 @@ fun MovieResponse.setupMoviePoster(posterSizes: List<String>, baseUrl: String) {
     PosterSizeList.posterSizes = posterSizes
     moviePoster = "$baseUrl/${PosterSizes.W500.size}/$posterPath"
 }
+
+fun CreditsCastResponse.setupMoviePoster(posterSizes: List<String>, baseUrl: String) {
+    PosterSizeList.posterSizes = posterSizes
+    moviePoster = "$baseUrl/${PosterSizes.W500.size}/$poster_path"
+}
+
+fun CreditsCastResponse.toMovie() = Movie(
+    id = id,
+    title = title,
+    originalTitle = original_title,
+    posterPath = moviePoster,
+    releaseDate = release_date,
+    voteAverage = vote_average
+)
 
 fun MovieResponse.toMovie() = Movie(
     id = id,

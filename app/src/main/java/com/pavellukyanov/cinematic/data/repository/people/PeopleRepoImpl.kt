@@ -4,6 +4,8 @@ import com.pavellukyanov.cinematic.core.networkmonitor.NetworkMonitor
 import com.pavellukyanov.cinematic.data.api.services.ConfigurationService
 import com.pavellukyanov.cinematic.data.api.services.PeopleService
 import com.pavellukyanov.cinematic.data.database.MovieDatabase
+import com.pavellukyanov.cinematic.data.repository.configuration.toCreditsMovie
+import com.pavellukyanov.cinematic.domain.models.Movie
 import com.pavellukyanov.cinematic.domain.models.PeopleDetails
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -38,5 +40,18 @@ class PeopleRepoImpl @Inject constructor(
             peopleResponse.toDomain()
         }
             .doOnSuccess { it.insertInDatabase(database) }
+    }
+
+    override fun getPeopleCredits(id: Int): Single<List<Movie>> {
+        return getPeopleCreditsInApi(id)
+    }
+
+    private fun getPeopleCreditsInApi(id: Int): Single<List<Movie>> {
+        return Single.zip(
+            api.getPeopleCredits(id = id).subscribeOn(Schedulers.io()),
+            config.getConfiguration().subscribeOn(Schedulers.io())
+        ) { peopleCreditsResponse, config ->
+            config.toCreditsMovie(peopleCreditsResponse.cast)
+        }
     }
 }

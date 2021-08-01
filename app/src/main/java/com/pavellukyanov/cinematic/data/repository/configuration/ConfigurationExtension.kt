@@ -4,6 +4,7 @@ import com.pavellukyanov.cinematic.data.api.pojo.MovieResponse
 import com.pavellukyanov.cinematic.data.api.pojo.configuration.ConfigurationResponse
 import com.pavellukyanov.cinematic.data.api.pojo.moviedetails.MovieDetailsResponse
 import com.pavellukyanov.cinematic.data.api.pojo.moviedetails.credits.CreditsResponse
+import com.pavellukyanov.cinematic.data.api.pojo.people.CreditsCastResponse
 import com.pavellukyanov.cinematic.data.repository.moviedetails.credits.setupProfilePoster
 import com.pavellukyanov.cinematic.data.repository.moviedetails.credits.toActor
 import com.pavellukyanov.cinematic.data.repository.moviedetails.credits.toCrew
@@ -66,4 +67,18 @@ fun ConfigurationResponse.toListCrew(
         mapList.add(crewResponse.toCrew())
     }
     return mapList
+}
+
+fun ConfigurationResponse.toCreditsMovie(
+    cast: List<CreditsCastResponse>
+): List<Movie> {
+    val mappingList = mutableListOf<Movie>()
+    cast.forEach { movieResponse ->
+        movieResponse.setupMoviePoster(
+            this.images.posterSizes,
+            this.images.baseUrl
+        )
+        mappingList.add(movieResponse.toMovie())
+    }
+    return mappingList
 }
