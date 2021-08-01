@@ -1,9 +1,11 @@
 package com.pavellukyanov.cinematic.utils
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import com.pavellukyanov.cinematic.domain.models.Movie
-import java.text.SimpleDateFormat
-import java.util.*
+import java.time.LocalDate
+import java.time.Period
 
 
 object PosterSizeList {
@@ -54,16 +56,14 @@ object MovieComparator : DiffUtil.ItemCallback<Movie>() {
 
 const val APP_METRICA_KEY = "43581778-9841-47dd-9722-dc60518cb069"
 
-//Доделать!!
-object DateHelper {
-    private val locale = Locale("ru")
-    private val c = Calendar.getInstance(locale)
-    private var year = c.get(Calendar.YEAR)
-    private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-    private val currentTime = Date(System.currentTimeMillis())
 
+object DateHelper {
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getAge(birthday: String): Int {
-        val birthdayDate = dateFormat.parse(birthday)
-        return Date(currentTime.time - birthdayDate.time).year
+        val year = birthday.substringBefore('-').toInt()
+        val month = birthday.substringAfter('-').substringBefore('-').toInt()
+        val day = birthday.substring(8).toInt()
+        val age = LocalDate.of(year, month, day)
+        return Period.between(age, LocalDate.now()).years
     }
 }
